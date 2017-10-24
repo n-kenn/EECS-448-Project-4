@@ -26,6 +26,7 @@ while True:
     quit_check()
     display.fill(colors['black'])
     ground = Ground((width, height / 2), colors['white'])
-    display.blit(ground, (0, height / 2))
+    display.blit(ground.image, ground.image.get_rect())
+    ground.update()
     pg.display.update()
     clock.tick(FPS)
