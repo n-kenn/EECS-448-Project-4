@@ -8,4 +8,5 @@ class Ground(sprite.Sprite):
         self.image.fill(color)
 
     def update(self):
+        # this is where collision detection will go
         print 'in' if self.image.get_rect().collidepoint(mouse.get_pos()) else 'out'
