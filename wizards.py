@@ -40,8 +40,8 @@ while True:
     # get_rect will draw from the top-left corner of the rect
     sprites.draw(display)
     # need to move this if statement somewhere else
-    if player.rect.colliderect(ground.rect):
-        player.rect.top = display.get_rect().top
+    if player.rect.colliderect(ground.rect) and player.in_air:
+        player.land()
     # call the update method on all sprites in the group
     sprites.update()
     pg.display.update()
