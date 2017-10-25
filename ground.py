@@ -1,12 +1,12 @@
-from pygame import Surface, sprite, mouse
+from pygame import Surface, sprite
 
 
 class Ground(sprite.Sprite):
-    def __init__(self, (width, height), color):
+    def __init__(self, size, color):
         super(Ground, self).__init__()
-        self.image = Surface((width, height))
+        self.image = Surface(size)
+        self.rect = self.image.get_rect(top = self.image.get_rect().bottom)
         self.image.fill(color)
 
     def update(self):
-        # this is where collision detection will go
-        print 'in' if self.image.get_rect().collidepoint(mouse.get_pos()) else 'out'
+        pass

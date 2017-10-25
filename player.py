@@ -1,8 +1,11 @@
-from pygame import sprite, image
+from pygame import sprite, Surface
 
 class Player(sprite.Sprite):
-    def __init__(self, file_name):
+    def __init__(self, size, color, gravity):
         super(Player, self).__init__()
-        self.image = image.load(file_name)
+        self.image = Surface(size)
+        self.rect = self.image.get_rect()
+        self.image.fill(color)
+        self.gravity = gravity
     def update(self):
-        pass
+        self.rect = self.rect.move(0, self.gravity)
