@@ -9,6 +9,9 @@ class Player(sprite.Sprite):
         self.image.fill(color)
         self.gravity = gravity
         self.in_air = True
+        self.angle = 45
+        self.power = 30
+        self.rect = self.rect.move(30, 450)
 
     def update(self):
         if (self.in_air):
@@ -16,3 +19,9 @@ class Player(sprite.Sprite):
 
     def land(self):
         self.in_air = False
+
+    def get_angle(self):
+        return self.angle
+
+    def get_power(self):
+        return self.power
