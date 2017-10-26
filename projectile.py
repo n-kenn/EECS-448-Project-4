@@ -7,7 +7,7 @@ class Projectile(sprite.Sprite):
         super(Projectile, self).__init__()
         self.angle = math.radians(player.get_angle())
         self.power = player.get_power()
-        (self.x_pos,self.y_pos,_,_) =player.rect
+        (self.x_pos,self.y_pos) =player.rect.center
         self.image = Surface((5,5))
         self.rect = self.image.get_rect()
         self.image.fill((123,53,164))
@@ -22,5 +22,3 @@ class Projectile(sprite.Sprite):
         self.rect = self.rect.move(int(self.x_vel),int(self.y_vel))
         if (self.rect.x < 0 or self.rect.x > 1024 or self.rect.y > 512):
             self.kill()
-
-    

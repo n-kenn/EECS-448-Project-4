@@ -1,5 +1,5 @@
 from pygame import sprite, Surface
-
+import math
 
 class Player(sprite.Sprite):
 
@@ -9,9 +9,9 @@ class Player(sprite.Sprite):
         self.rect = self.image.get_rect(bottom=start_pos)
         self.image.fill(color)
         self.in_air = True
-        self.angle = 45
+        self.angle = 0
         self.power = 0
-        
+
 
     def player_move(self, x, y):
         self.rect = self.rect.move(x, y)
@@ -28,8 +28,8 @@ class Player(sprite.Sprite):
     def get_power(self):
         return self.power
 
-    def set_angle(self, angle):
-        self.angle = angle
+    def set_angle(self, (x_dist,y_dist)):
+        self.angle = math.degrees(math.atan2(y_dist,x_dist))
 
     def set_power(self, power):
         self.power = power

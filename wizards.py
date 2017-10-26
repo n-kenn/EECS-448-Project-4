@@ -25,7 +25,7 @@ display = pg.display.set_mode((width, height))
 pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
-ground = Ground((width, 20), colors['white'])
+ground = Ground((width, 20), colors['white'], height)
 player = Player((25, 25),ground.rect.top, colors['red'])
 proj = 0
 fired = False
@@ -59,12 +59,8 @@ while True:
         (m_x,m_y) = pg.mouse.get_pos()
         x_dist = (m_x-player.rect.x)
         y_dist = (player.rect.y-m_y)
-        angle = math.degrees(math.atan2(y_dist,x_dist))
-        p_num = pow((pow(x_dist,2) + pow(y_dist,2)),(1.0/2.0))
-        p_den = pow((pow(width,2) + pow(height,2)),(1.0/2.0))
-        power = (1.25) * p_num / p_den * 50.0
-        player.set_angle(angle)
-        player.set_power(power)
+        player.set_angle((x_dist,y_dist))
+        player.set_power(30)
         proj = Projectile(player, world['gravity'])
         sprites.add(proj)
         fired = True
