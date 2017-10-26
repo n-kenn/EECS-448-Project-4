@@ -8,13 +8,12 @@ class Player(sprite.Sprite):
         self.image = Surface(size)
         self.rect = self.image.get_rect(bottom=start_pos)
         self.image.fill(color)
-        self.gravity = gravity
         self.in_air = True
         self.angle = 45
         self.power = 0
-        self.rect = self.rect.move(30, 450)
+        
 
-    def move(self, x, y):
+    def player_move(self, x, y):
         self.rect = self.rect.move(x, y)
 
     def update(self):
@@ -34,6 +33,3 @@ class Player(sprite.Sprite):
 
     def set_power(self, power):
         self.power = power
-
-    def player_move(self, movement):
-        self.rect = self.rect.move(movement, 0)

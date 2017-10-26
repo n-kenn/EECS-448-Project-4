@@ -23,5 +23,4 @@ class Projectile(sprite.Sprite):
         if (self.rect.x < 0 or self.rect.x > 1024 or self.rect.y > 512):
             self.kill()
 
-    def __del__(self):
-        print("buh-bye")
+    

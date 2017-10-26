@@ -26,7 +26,7 @@ pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
 ground = Ground((width, 20), colors['white'])
-player = Player((25, 25), colors['red'], world['gravity'])
+player = Player((25, 25),ground.rect.top, colors['red'])
 proj = 0
 fired = False
 # make a sprite group
@@ -38,24 +38,18 @@ def check_keys():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
-        elif event.type is pg.KEYDOWN:
-            # move player if key is right or left. may change this later on
-            if event.key == pg.K_RIGHT:
-                player.move(5, 0)
-            elif event.key == pg.K_LEFT:
-                player.move(-5, 0)
+    # move player if key is right or left. may change this later on
+    keys = pg.key.get_pressed()
+    if keys[pg.K_LEFT]:
+            player.player_move(-1, 0)
+    elif keys[pg.K_RIGHT]:
+            player.player_move(1, 0)
 
 
 while True:
     check_keys()
     display.fill(colors['black'])
-    for event in pg.event.get():
-        
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_LEFT:
-                player.player_move(-3)
-            if event.key == pg.K_RIGHT:
-                player.player_move(3)
+
 
     #This checks to see if the left mous button is pressed
     #It then calculates the angle and power of the shot and updates player accordingly
@@ -69,7 +63,6 @@ while True:
         p_num = pow((pow(x_dist,2) + pow(y_dist,2)),(1.0/2.0))
         p_den = pow((pow(width,2) + pow(height,2)),(1.0/2.0))
         power = (1.25) * p_num / p_den * 50.0
-        print (power)
         player.set_angle(angle)
         player.set_power(power)
         proj = Projectile(player, world['gravity'])
