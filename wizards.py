@@ -1,4 +1,5 @@
 import sys
+import math
 import pygame as pg
 from ground import Ground
 from player import Player
@@ -40,14 +41,28 @@ while True:
     quit_check()
     display.fill(colors['black'])
     if (pg.mouse.get_pressed() == (True,False,False) and has_clicked == False):
+        (m_x,m_y) = pg.mouse.get_pos()
+        x_dist = (m_x-player.rect.x)
+        y_dist = (player.rect.y-m_y)
+
+        angle = math.degrees(math.atan2(y_dist,x_dist))
+        player.set_angle(angle)
         proj = Projectile(player, world['gravity'])
         sprites.add(proj)
         has_clicked = True
 
     if(has_clicked):
+        delete_proj = False
+        if (proj.rect.colliderect(ground.rect)):
+            delete_proj = True
         if (not(proj.alive())):
-            del proj
-            has_clicked = False
+            delete_proj = True
+            if (delete_proj):
+                del proj
+                has_clicked = False
+
+
+
 
     # get_rect will draw from the top-left corner of the rect
     sprites.draw(display)

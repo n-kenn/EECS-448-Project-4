@@ -5,7 +5,7 @@ class Projectile(sprite.Sprite):
 
     def __init__(self, player, gravity):
         super(Projectile, self).__init__()
-        self.angle = player.get_angle()
+        self.angle = math.radians(player.get_angle())
         self.power = player.get_power()
         (self.x_pos,self.y_pos,_,_) =player.rect
         self.image = Surface((5,5))
