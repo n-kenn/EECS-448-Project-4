@@ -25,7 +25,7 @@ display = pg.display.set_mode((width, height))
 pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
-ground = Ground((width, 20), colors['white'], height)
+ground = Ground((width, 20), colors['white'], (0,height-20))
 player = Player((25, 25),ground.rect.top, colors['red'])
 proj = 0
 fired = False
@@ -40,9 +40,9 @@ def check_keys():
             sys.exit()
     # move player if key is right or left. may change this later on
     keys = pg.key.get_pressed()
-    if keys[pg.K_LEFT]:
+    if keys[pg.K_a]:
             player.player_move(-1, 0)
-    elif keys[pg.K_RIGHT]:
+    elif keys[pg.K_d]:
             player.player_move(1, 0)
 
 
@@ -61,7 +61,7 @@ while True:
         y_dist = (player.rect.y-m_y)
         player.set_angle((x_dist,y_dist))
         player.set_power(30)
-        proj = Projectile(player, world['gravity'])
+        proj = Projectile(player, world['gravity'],[ground.rect])
         sprites.add(proj)
         fired = True
 
@@ -70,7 +70,7 @@ while True:
     #If not, this deletes it
     if(fired):
         delete_proj = False
-        if (not(proj.alive()) or proj.rect.colliderect(ground.rect)):
+        if (not(proj.alive())):
             delete_proj = True
             if (delete_proj):
                 del proj
