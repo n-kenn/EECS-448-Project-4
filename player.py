@@ -10,7 +10,7 @@ class Player(sprite.Sprite):
         self.gravity = gravity
         self.in_air = True
         self.angle = 45
-        self.power = 30
+        self.power = 0
         self.rect = self.rect.move(30, 450)
 
     def update(self):
@@ -28,3 +28,6 @@ class Player(sprite.Sprite):
 
     def set_angle(self, angle):
         self.angle = angle
+
+    def set_power(self, power):
+        self.power = power
