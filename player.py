@@ -1,11 +1,12 @@
 from pygame import sprite, Surface
 
+
 class Player(sprite.Sprite):
 
-    def __init__(self, size, color, gravity):
+    def __init__(self, size, start_pos, color):
         super(Player, self).__init__()
         self.image = Surface(size)
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(bottom=start_pos)
         self.image.fill(color)
         self.gravity = gravity
         self.in_air = True
@@ -13,9 +14,11 @@ class Player(sprite.Sprite):
         self.power = 0
         self.rect = self.rect.move(30, 450)
 
+    def move(self, x, y):
+        self.rect = self.rect.move(x, y)
+
     def update(self):
-        if (self.in_air):
-            self.rect = self.rect.move(0, self.gravity)
+        pass
 
     def land(self):
         self.in_air = False

@@ -12,7 +12,7 @@ FPS = 60
 colors = {
     'black': (0, 0, 0),
     'white': (255, 255, 255),
-    'red': (255, 0 , 0)
+    'red': (255, 0, 0)
 }
 # dict for world constants
 world = {
@@ -32,14 +32,22 @@ fired = False
 # make a sprite group
 sprites = pg.sprite.Group(ground, player)
 
-def quit_check():
+
+def check_keys():
     for event in pg.event.get():
-        if event.type == pg.QUIT:
+        if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
+        elif event.type is pg.KEYDOWN:
+            # move player if key is right or left. may change this later on
+            if event.key == pg.K_RIGHT:
+                player.move(5, 0)
+            elif event.key == pg.K_LEFT:
+                player.move(-5, 0)
+
 
 while True:
-    quit_check()
+    check_keys()
     display.fill(colors['black'])
     for event in pg.event.get():
         
@@ -84,10 +92,7 @@ while True:
 
     # get_rect will draw from the top-left corner of the rect
     sprites.draw(display)
-    # need to move this if statement somewhere else
-    if player.rect.colliderect(ground.rect) and player.in_air:
-        player.land()
-    # call the update method on all sprites in the group
+    # call each sprite's update method. currently no sprites do anything with update
     sprites.update()
     pg.display.update()
     # force the program to run at 60 frames per second
