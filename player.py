@@ -25,3 +25,6 @@ class Player(sprite.Sprite):
 
     def get_power(self):
         return self.power
+
+    def set_angle(self, angle):
+        self.angle = angle

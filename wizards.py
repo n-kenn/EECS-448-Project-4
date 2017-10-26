@@ -5,7 +5,7 @@ from player import Player
 from projectile import Projectile
 
 width, height = 1024, 512
-FPS = 30
+FPS = 60
 
 # dict for color rgb values
 colors = {
@@ -25,6 +25,7 @@ clock = pg.time.Clock()
 
 ground = Ground((width, 20), colors['white'])
 player = Player((25, 25), colors['red'], world['gravity'])
+proj = 0
 has_clicked = False
 # make a sprite group
 sprites = pg.sprite.Group(ground, player)
@@ -42,6 +43,12 @@ while True:
         proj = Projectile(player, world['gravity'])
         sprites.add(proj)
         has_clicked = True
+
+    if(has_clicked):
+        if (not(proj.alive())):
+            del proj
+            has_clicked = False
+
     # get_rect will draw from the top-left corner of the rect
     sprites.draw(display)
     # need to move this if statement somewhere else
