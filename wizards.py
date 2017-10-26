@@ -20,7 +20,7 @@ world = {
 }
 
 pg.init()
-
+pg.event.set_blocked((3,4,6))
 display = pg.display.set_mode((width, height))
 pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
@@ -41,11 +41,18 @@ def quit_check():
 while True:
     quit_check()
     display.fill(colors['black'])
+    for event in pg.event.get():
+        
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_LEFT:
+                player.player_move(-3)
+            if event.key == pg.K_RIGHT:
+                player.player_move(3)
+
     #This checks to see if the left mous button is pressed
     #It then calculates the angle and power of the shot and updates player accordingly
     #Then it creates a new projectile, and adds it to the sprites group
-    for event in pg.event.get():
-        print(event)
+
     if (pg.mouse.get_pressed() == (True,False,False) and fired == False):
         (m_x,m_y) = pg.mouse.get_pos()
         x_dist = (m_x-player.rect.x)

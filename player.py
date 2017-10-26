@@ -31,3 +31,6 @@ class Player(sprite.Sprite):
 
     def set_power(self, power):
         self.power = power
+
+    def player_move(self, movement):
+        self.rect = self.rect.move(movement, 0)
