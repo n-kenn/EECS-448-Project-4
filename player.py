@@ -1,18 +1,16 @@
-from pygame import sprite, Surface
+from pygame import sprite, Surface, Rect
+
 
 class Player(sprite.Sprite):
 
-    def __init__(self, size, color, gravity):
+    def __init__(self, size, start, color):
         super(Player, self).__init__()
         self.image = Surface(size)
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(bottom=start)
         self.image.fill(color)
-        self.gravity = gravity
-        self.in_air = True
+
+    def move(self, x, y):
+        self.rect = self.rect.move(x, y)
 
     def update(self):
-        if (self.in_air):
-            self.rect = self.rect.move(0, self.gravity)
-
-    def land(self):
-        self.in_air = False
+        pass
