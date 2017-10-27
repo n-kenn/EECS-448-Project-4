@@ -6,9 +6,9 @@ class Player(sprite.Sprite):
 
     def __init__(self, size, start_pos, color, gravity, ground_list):
         super(Player, self).__init__()
-        self.image = image.load("images/snake_wizard.bmp")
+        self.image = image.load("images/snake_wizard.png")
         self.rect = self.image.get_rect(bottom=start_pos)
-        self.image.fill(color)
+
         self.in_air = True
         self.angle = 0
         self.power = 10
