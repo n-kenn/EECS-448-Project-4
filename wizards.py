@@ -12,11 +12,12 @@ FPS = 60
 colors = {
     'black': (0, 0, 0),
     'white': (255, 255, 255),
-    'red': (255, 0, 0)
+    'red': (255, 0, 0),
+    'green': (40,230,40)
 }
 # dict for world constants
 world = {
-    'gravity': 0.1
+    'gravity': 0.0981
 }
 
 pg.init()
@@ -27,11 +28,12 @@ clock = pg.time.Clock()
 
 ground = Ground((width, 20), colors['white'], (0,height-20))
 wall = Ground((20,height-20),colors['white'],(width-20,0))
-player = Player((25, 25),ground.rect.top, colors['red'], world['gravity'],[ground.rect,wall.rect])
+target = Ground((30,30), colors['green'], (width-(0.1*width),height/2))
+player = Player((25, 25),ground.rect.top, colors['red'], world['gravity'],[ground.rect,wall.rect,target.rect])
 proj = 0
 fired = False
 # make a sprite group
-sprites = pg.sprite.Group(ground, player, wall)
+sprites = pg.sprite.Group(ground, player, wall, target)
 
 
 def check_keys():
@@ -42,9 +44,11 @@ def check_keys():
     # move player if key is right or left. may change this later on
     keys = pg.key.get_pressed()
     if keys[pg.K_a]:
-            player.player_move(-1, 0)
+        player.player_move(-1, 0)
     elif keys[pg.K_d]:
-            player.player_move(1, 0)
+        player.player_move(1, 0)
+
+
 
 
 while True:
@@ -61,7 +65,7 @@ while True:
         x_dist = (m_x-player.rect.x)
         y_dist = (player.rect.y-m_y)
         player.set_angle((x_dist,y_dist))
-        player.set_power(10)
+
         proj = player.fire()
         sprites.add(proj)
         fired = True

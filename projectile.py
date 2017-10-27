@@ -11,7 +11,7 @@ class Projectile(sprite.Sprite):
         (self.x_pos,self.y_pos) =player.rect.center
         self.image = Surface((5,5))
         self.rect = self.image.get_rect()
-        self.image.fill((123,53,164))
+        self.image.fill((2,53,164))
         self.gravity = gravity
         self.rect = self.rect.move(self.x_pos,self.y_pos)
         self.x_vel = (self.power * math.cos(self.angle))
@@ -24,7 +24,10 @@ class Projectile(sprite.Sprite):
         self.rect = self.rect.move(int(self.x_vel),int(self.y_vel))
 
         if (self.rect.collidelist(self.ground_list) != -1):
-            print ("Hit something.")
+            if(self.rect.collidelist(self.ground_list) == 2):
+                print("Target hit")
+            else:
+                print ("You missed")
             self.kill()
 
         if (self.rect.x < 0 or self.rect.x > 1024 or self.rect.y > 512):
