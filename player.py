@@ -1,9 +1,10 @@
 from pygame import sprite, Surface
 import math
+from projectile import Projectile
 
 class Player(sprite.Sprite):
 
-    def __init__(self, size, start_pos, color):
+    def __init__(self, size, start_pos, color, gravity, ground_list):
         super(Player, self).__init__()
         self.image = Surface(size)
         self.rect = self.image.get_rect(bottom=start_pos)
@@ -11,7 +12,8 @@ class Player(sprite.Sprite):
         self.in_air = True
         self.angle = 0
         self.power = 0
-
+        self.gravity = gravity
+        self.ground_list = ground_list
 
     def player_move(self, x, y):
         self.rect = self.rect.move(x, y)
@@ -33,3 +35,7 @@ class Player(sprite.Sprite):
 
     def set_power(self, power):
         self.power = power
+
+    def fire(self):
+        proj = Projectile(self, self.gravity,self.ground_list)
+        return proj

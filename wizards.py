@@ -3,7 +3,7 @@ import math
 import pygame as pg
 from ground import Ground
 from player import Player
-from projectile import Projectile
+
 
 width, height = 1024, 512
 FPS = 60
@@ -16,7 +16,7 @@ colors = {
 }
 # dict for world constants
 world = {
-    'gravity': 1
+    'gravity': 0.1
 }
 
 pg.init()
@@ -26,11 +26,12 @@ pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
 ground = Ground((width, 20), colors['white'], (0,height-20))
-player = Player((25, 25),ground.rect.top, colors['red'])
+wall = Ground((20,height-20),colors['white'],(width-20,0))
+player = Player((25, 25),ground.rect.top, colors['red'], world['gravity'],[ground.rect,wall.rect])
 proj = 0
 fired = False
 # make a sprite group
-sprites = pg.sprite.Group(ground, player)
+sprites = pg.sprite.Group(ground, player, wall)
 
 
 def check_keys():
@@ -60,8 +61,8 @@ while True:
         x_dist = (m_x-player.rect.x)
         y_dist = (player.rect.y-m_y)
         player.set_angle((x_dist,y_dist))
-        player.set_power(30)
-        proj = Projectile(player, world['gravity'],[ground.rect])
+        player.set_power(10)
+        proj = player.fire()
         sprites.add(proj)
         fired = True
 
@@ -72,9 +73,9 @@ while True:
         delete_proj = False
         if (not(proj.alive())):
             delete_proj = True
-            if (delete_proj):
-                del proj
-                fired = False
+        if (delete_proj):
+            del proj
+            fired = False
 
 
 
@@ -83,6 +84,7 @@ while True:
     sprites.draw(display)
     # call each sprite's update method. currently no sprites do anything with update
     sprites.update()
+
     pg.display.update()
     # force the program to run at 60 frames per second
     clock.tick(FPS)
