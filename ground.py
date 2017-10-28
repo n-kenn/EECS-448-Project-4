@@ -7,6 +7,7 @@ class Ground(sprite.Sprite):
         self.image = Surface(size).convert()
         self.rect = self.image.get_rect(topleft=pos)
         self.image.fill(color)
+        # will be used in explosion handling
         self.color_key = color_key
         self.image.set_colorkey(self.color_key)
 
