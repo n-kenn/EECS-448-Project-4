@@ -2,16 +2,10 @@ import sys
 import pygame as pg
 from ground import Ground
 from player import Player
+from explosive import Explosive
 
 width, height = 1024, 512
 FPS = 60
-
-# dict for color rgb values
-colors = {
-    'black': (0, 0, 0),
-    'white': (255, 255, 255),
-    'red': (255, 0, 0)
-}
 # dict for world constants
 world = {
     'gravity': 2
@@ -22,11 +16,14 @@ display = pg.display.set_mode((width, height))
 pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
-ground = Ground((width, height / 2), colors['white'])
-player = Player((height / 8, width / 8), ground.rect.top, colors['red'])
+ground = Ground((width, height / 2), (display.get_rect().left, height / 2),
+                pg.Color('white'), pg.Color('red'))
+player = Player((height / 8, width / 8), ground.rect.topleft, pg.Color('red'))
+explosive = Explosive((16, 16), display.get_rect().midtop,
+                      pg.Color('green'), [ground])
 
 # make a sprite group
-sprites = pg.sprite.Group(ground, player)
+sprites = pg.sprite.Group(ground, player, explosive)
 
 
 def check_keys():
@@ -44,7 +41,7 @@ def check_keys():
 
 while True:
     check_keys()
-    display.fill(colors['black'])
+    display.fill(pg.Color('black'))
     # draw will take the sprite's image as surface and it's rect as the position
     sprites.draw(display)
     # call each sprite's update method. currently no sprites do anything with update

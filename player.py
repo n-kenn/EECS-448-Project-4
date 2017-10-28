@@ -1,4 +1,4 @@
-from pygame import sprite, Surface
+from pygame import sprite, Surface, mask
 
 
 class Player(sprite.Sprite):
@@ -6,11 +6,13 @@ class Player(sprite.Sprite):
     def __init__(self, size, start_pos, color):
         super(Player, self).__init__()
         self.image = Surface(size)
-        self.rect = self.image.get_rect(bottom=start_pos)
         self.image.fill(color)
+        self.rect = self.image.get_rect(bottomleft=start_pos)
+        self.vel = (0, 0)
 
     def move(self, x, y):
-        self.rect = self.rect.move(x, y)
+        self.vel = tuple(i + j for i, j in zip(self.vel, (x, y)))
 
     def update(self):
-        pass
+        self.rect.move_ip(self.vel)
+        self.vel = (0, 0)
