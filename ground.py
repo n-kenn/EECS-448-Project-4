@@ -1,4 +1,4 @@
-from pygame import Surface, sprite, draw
+from pygame import Surface, sprite
 
 
 class Ground(sprite.Sprite):

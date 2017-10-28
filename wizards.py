@@ -19,8 +19,8 @@ clock = pg.time.Clock()
 ground = Ground((width, height / 2), (display.get_rect().left, height / 2),
                 pg.Color('white'), pg.Color('red'))
 player = Player((height / 8, width / 8), ground.rect.topleft, pg.Color('red'))
-explosive = Explosive((16, 16), display.get_rect().midtop,
-                      pg.Color('green'), [ground])
+explosive = Explosive((16, 16), display.get_rect().topleft,
+                      pg.Color('green'), [ground, player])
 
 # make a sprite group
 sprites = pg.sprite.Group(ground, player, explosive)
@@ -42,10 +42,10 @@ def check_keys():
 while True:
     check_keys()
     display.fill(pg.Color('black'))
+    # presumably we'll want to send the gravity constant to all the sprites
+    sprites.update()
     # draw will take the sprite's image as surface and it's rect as the position
     sprites.draw(display)
-    # call each sprite's update method. currently no sprites do anything with update
-    sprites.update()
     pg.display.update()
     # force the program to run at 60 frames per second
     clock.tick(FPS)

@@ -1,4 +1,4 @@
-from pygame import sprite, Surface, mask
+from pygame import sprite, Surface
 
 
 class Player(sprite.Sprite):
