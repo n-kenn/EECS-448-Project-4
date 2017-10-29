@@ -10,4 +10,4 @@ class Ground(sprite.Sprite):
         self.image.fill(color)
 
     def update(self):
-        pass
+        self.mask = mask.from_surface(self.image)

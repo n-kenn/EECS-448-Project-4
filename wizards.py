@@ -19,11 +19,9 @@ clock = pg.time.Clock()
 ground = Ground((width, height / 2), (display.get_rect().left,
                                       height / 2), pg.Color('white'))
 player = Player((height / 8, width / 8), ground.rect.topleft, pg.Color('red'))
-explosive = Explosive((32, 32), display.get_rect().midtop,
-                      pg.Color('green'), [ground, player])
 
 # make a sprite group
-sprites = pg.sprite.Group(ground, player, explosive)
+sprites = pg.sprite.Group(ground, player)
 
 
 def check_keys():
@@ -37,6 +35,9 @@ def check_keys():
                 player.move(5, 0)
             elif event.key == pg.K_LEFT:
                 player.move(-5, 0)
+            elif event.key == pg.K_SPACE:
+                sprites.add(Explosive((32, 32), display.get_rect().midtop,
+                                      pg.Color('green'), [ground, player]))
 
 
 while True:
