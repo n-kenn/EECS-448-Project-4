@@ -13,7 +13,6 @@ world = {
 
 pg.init()
 display = pg.display.set_mode((width, height))
-pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
 ground = Ground((width, height / 2), (display.get_rect().left,
@@ -30,7 +29,6 @@ def check_keys():
             pg.quit()
             sys.exit()
         elif event.type is pg.KEYDOWN:
-            # move player if key is right or left. may change this later on
             if event.key == pg.K_RIGHT:
                 player.move(5, 0)
             elif event.key == pg.K_LEFT:
@@ -49,4 +47,5 @@ while True:
     sprites.draw(display)
     pg.display.update()
     # force the program to run at 60 frames per second
+    pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
     clock.tick(FPS)
