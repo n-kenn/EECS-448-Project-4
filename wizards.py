@@ -16,11 +16,11 @@ display = pg.display.set_mode((width, height))
 pg.display.set_caption('Wizards')
 clock = pg.time.Clock()
 
-ground = Ground((width, height / 2), (display.get_rect().left, height / 2),
-                pg.Color('white'), pg.Color('red'))
+ground = Ground((width, height / 2), (display.get_rect().left,
+                                      height / 2), pg.Color('white'), pg.Color('red'))
 player = Player((height / 8, width / 8), ground.rect.topleft, pg.Color('red'))
-explosive = Explosive((16, 16), display.get_rect().topleft,
-                      pg.Color('green'), [ground, player])
+explosive = Explosive((32, 32), display.get_rect().midtop,
+                      pg.Color('green'), [ground])
 
 # make a sprite group
 sprites = pg.sprite.Group(ground, player, explosive)
