@@ -9,7 +9,7 @@ class Ground(sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
         self.image.fill(color)
 
-    def update(self, gravity):
+    def update(self):
         # update mask to compensate for explosions occuring
         # may need to do layered updating later on
         self.mask = mask.from_surface(self.image)

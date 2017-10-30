@@ -6,7 +6,7 @@ from explosive import Explosive
 
 width, height = 1024, 512
 FPS = 60
-# dict for world constants
+
 world = {
     'gravity': 5
 }
@@ -19,6 +19,7 @@ ground = Ground((width, height / 2), (display.get_rect().left, height / 2), pg.C
 player = Player((height / 16, width / 16), ground.rect.topleft, pg.Color('red'))
 
 fallables = pg.sprite.Group(player)
+statics = pg.sprite.Group(ground)
 
 
 def check_keys():
@@ -39,10 +40,11 @@ def check_keys():
 while True:
     check_keys()
     display.fill(pg.Color('black'))
-    fallables.update(world['gravity'])
+    statics.update()
+    fallables.update(world['gravity'], ground)
     # draw will take the sprite's image as surface and its rect as the position
     fallables.draw(display)
-    display.blit(ground.image, ground.rect)
+    statics.draw(display)
     pg.display.update()
     pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
     # force the program to run at 60 frames per second

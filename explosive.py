@@ -25,7 +25,7 @@ class Explosive(sprite.Sprite):
                         self.image.get_size()).move(0, -collidable.rect.height + self.image.get_rect().centery))
                     break
 
-    def update(self, gravity):
+    def update(self, gravity, ground):
         # move_ip overwrites the rect
         self.rect.move_ip((0, gravity))
         self.collision_check()
