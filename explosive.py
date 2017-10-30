@@ -1,4 +1,4 @@
-from pygame import sprite, Surface, draw, mask
+from pygame import draw, mask, sprite, Surface
 
 
 class Explosive(sprite.Sprite):
@@ -25,7 +25,7 @@ class Explosive(sprite.Sprite):
                         self.image.get_size()).move(0, -collidable.rect.height + self.image.get_rect().centery))
                     break
 
-    def update(self):
+    def update(self, gravity):
         # move_ip overwrites the rect
-        self.rect.move_ip((0, 5))
+        self.rect.move_ip((0, gravity))
         self.collision_check()

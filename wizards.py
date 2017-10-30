@@ -8,19 +8,17 @@ width, height = 1024, 512
 FPS = 60
 # dict for world constants
 world = {
-    'gravity': 2
+    'gravity': 5
 }
 
 pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground((width, height / 2), (display.get_rect().left,
-                                      height / 2), pg.Color('white'))
-player = Player((height / 8, width / 8), ground.rect.topleft, pg.Color('red'))
+ground = Ground((width, height / 2), (display.get_rect().left, height / 2), pg.Color('white'))
+player = Player((height / 16, width / 16), ground.rect.topleft, pg.Color('red'))
 
-# make a sprite group
-sprites = pg.sprite.Group(ground, player)
+fallables = pg.sprite.Group(player)
 
 
 def check_keys():
@@ -34,18 +32,18 @@ def check_keys():
             elif event.key == pg.K_LEFT:
                 player.move(-5, 0)
             elif event.key == pg.K_SPACE:
-                sprites.add(Explosive((32, 32), display.get_rect().midtop,
-                                      pg.Color('green'), [ground, player]))
+                fallables.add(Explosive((32, 32), display.get_rect().midtop,
+                                        pg.Color('green'), [ground, player]))
 
 
 while True:
     check_keys()
     display.fill(pg.Color('black'))
-    # presumably we'll want to send the gravity constant to all the sprites
-    sprites.update()
-    # draw will take the sprite's image as surface and it's rect as the position
-    sprites.draw(display)
+    fallables.update(world['gravity'])
+    # draw will take the sprite's image as surface and its rect as the position
+    fallables.draw(display)
+    display.blit(ground.image, ground.rect)
     pg.display.update()
-    # force the program to run at 60 frames per second
     pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
+    # force the program to run at 60 frames per second
     clock.tick(FPS)
