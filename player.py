@@ -10,13 +10,13 @@ class Player(sprite.Sprite):
         super(Player, self).__init__()
         self.image = image.load("images/snake_wizard.png")
         self.rect = self.image.get_rect(bottom=start_pos)
-
         self.in_air = True
         self.angle = 0
         self.power = 10
         self.gravity = gravity
         self.object_list = []
         self.health = 100
+        self.current_weapon = 'Explosive'
 
     def set_collidables(self, object_list):
         self.object_list = (object_list)
@@ -43,7 +43,8 @@ class Player(sprite.Sprite):
         self.power = power
 
     def fire(self):
-        proj = Explosive(self, self.gravity,self.object_list)
+        if (self.current_weapon == 'Explosive'):
+            proj = Explosive(self, self.gravity,self.object_list)
         return proj
 
     def draw_health(self):

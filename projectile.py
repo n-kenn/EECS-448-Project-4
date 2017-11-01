@@ -12,8 +12,6 @@ class Projectile(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.image.fill(color)
         self.gravity = gravity
-        self.start_pos=player.rect.center+(math.cos(self.angle),-math.sin(self.angle))
-        print self.start_pos
         self.rect.move_ip(player.rect.center)
         self.x_vel = (self.power * math.cos(self.angle))
         self.y_vel = -1 * (self.power * math.sin(self.angle))
