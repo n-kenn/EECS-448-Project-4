@@ -1,26 +1,38 @@
 import sys
+import math
 import pygame as pg
 from ground import Ground
 from player import Player
 from explosive import Explosive
 
+
 width, height = 1024, 512
 FPS = 60
+# dict for color rgb values
+colors = {
+    'black': (0, 0, 0),
+    'white': (255, 255, 255),
+    'red': (255, 0, 0),
+    'green': (40,230,40)
+}
 # dict for world constants
 world = {
-    'gravity': 2
+    'gravity': 0.0981
 }
 
 pg.init()
+pg.event.set_blocked((3,4,6))
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground((width, height / 2), (display.get_rect().left,
-                                      height / 2), pg.Color('white'))
-player = Player((height / 8, width / 8), ground.rect.topleft, pg.Color('red'))
-
+ground = Ground((width, 20), colors['white'], (0,height-20))
+wall = Ground((20,height-20),colors['white'],(width-20,0))
+target = Ground((30,30), colors['green'], (width-(0.1*width),height/2))
+player = Player((25, 25),ground.rect.top, colors['red'], world['gravity'],[ground.rect,wall.rect,target.rect])
+proj = 0
+fired = False
 # make a sprite group
-sprites = pg.sprite.Group(ground, player)
+sprites = pg.sprite.Group(ground, player, wall, target)
 
 
 def check_keys():
@@ -28,15 +40,13 @@ def check_keys():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
-        elif event.type is pg.KEYDOWN:
-            if event.key == pg.K_RIGHT:
-                player.move(5, 0)
-            elif event.key == pg.K_LEFT:
-                player.move(-5, 0)
-            elif event.key == pg.K_SPACE:
-                sprites.add(Explosive((32, 32), display.get_rect().midtop,
-                                      pg.Color('green'), [ground, player]))
-                player.health -= 50
+    # move player if key is right or left. may change this later on
+    keys = pg.key.get_pressed()
+    if keys[pg.K_a]:
+        player.player_move(-1, 0)
+    elif keys[pg.K_d]:
+        player.player_move(1, 0)
+
 
 
 while True:
@@ -46,6 +56,42 @@ while True:
     sprites.update()
     # draw will take the sprite's image as surface and it's rect as the position
     sprites.draw(display)
+    display.fill(colors['black'])
+
+
+    #This checks to see if the left mous button is pressed
+    #It then calculates the angle and power of the shot and updates player accordingly
+    #Then it creates a new projectile, and adds it to the sprites group
+
+    if (pg.mouse.get_pressed() == (True,False,False) and fired == False):
+        (m_x,m_y) = pg.mouse.get_pos()
+        x_dist = (m_x-player.rect.x)
+        y_dist = (player.rect.y-m_y)
+        player.set_angle((x_dist,y_dist))
+
+        proj = player.fire()
+        sprites.add(proj)
+        fired = True
+
+
+    #If a projectile has been fired, this checks to see if the projectile should still exist.
+    #If not, this deletes it
+    if(fired):
+        delete_proj = False
+        if (not(proj.alive())):
+            delete_proj = True
+        if (delete_proj):
+            del proj
+            fired = False
+
+
+
+
+    # get_rect will draw from the top-left corner of the rect
+    sprites.draw(display)
+    # call each sprite's update method. currently no sprites do anything with update
+    sprites.update()
+
     pg.display.update()
     # force the program to run at 60 frames per second
     pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
