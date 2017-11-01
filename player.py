@@ -1,11 +1,12 @@
 from pygame import sprite, Surface, image
 import math
 import pygame
-from projectile import Projectile
+from explosive import Explosive
+
 
 class Player(sprite.Sprite):
 
-    def __init__(self, size, start_pos, color, gravity, ground_list):
+    def __init__(self, size, start_pos, color, gravity):
         super(Player, self).__init__()
         self.image = image.load("images/snake_wizard.png")
         self.rect = self.image.get_rect(bottom=start_pos)
@@ -14,8 +15,11 @@ class Player(sprite.Sprite):
         self.angle = 0
         self.power = 10
         self.gravity = gravity
-        self.ground_list = ground_list
+        self.object_list = []
         self.health = 100
+
+    def set_collidables(self, object_list):
+        self.object_list = (object_list)
 
     def player_move(self, x, y):
         self.rect = self.rect.move(x, y)
@@ -39,11 +43,9 @@ class Player(sprite.Sprite):
         self.power = power
 
     def fire(self):
-        proj = Projectile(self, self.gravity,self.ground_list)
+        proj = Explosive(self, self.gravity,self.object_list)
         return proj
 
     def draw_health(self):
         pygame.draw.rect((self.image), pygame.Color('green'),
                          (0, 0, self.health - self.rect.x, 10))
-
-

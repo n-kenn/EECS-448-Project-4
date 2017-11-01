@@ -28,12 +28,12 @@ clock = pg.time.Clock()
 ground = Ground((width, 20), colors['white'], (0,height-20))
 wall = Ground((20,height-20),colors['white'],(width-20,0))
 target = Ground((30,30), colors['green'], (width-(0.1*width),height/2))
-player = Player((25, 25),ground.rect.top, colors['red'], world['gravity'],[ground.rect,wall.rect,target.rect])
+player = Player((25, 25),ground.rect.top, colors['red'], world['gravity'])
 proj = 0
 fired = False
 # make a sprite group
 sprites = pg.sprite.Group(ground, player, wall, target)
-
+player.set_collidables(sprites)
 
 def check_keys():
     for event in pg.event.get():
@@ -77,10 +77,7 @@ while True:
     #If a projectile has been fired, this checks to see if the projectile should still exist.
     #If not, this deletes it
     if(fired):
-        delete_proj = False
         if (not(proj.alive())):
-            delete_proj = True
-        if (delete_proj):
             del proj
             fired = False
 
