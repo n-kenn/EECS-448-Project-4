@@ -17,7 +17,11 @@ class Player(sprite.Sprite):
     #     return self.rect.colliderect(ground.rect)
 
     def update(self, gravity, ground):
-        # the player's position needs to be reset to the point where the two masks collide.
-        # the point is indexed at (0,0) however
-        if self.rect.move(0, 5).colliderect(ground.rect):
-            print sprite.collide_mask(self, ground)
+        # heights is an array of 'solid' pixels within a Rect that the player would occupy
+        if self.rect.move(0, 1).colliderect(ground.rect):
+            surf_mask = mask.from_surface(ground.image.subsurface(
+                self.image.get_rect().move(self.rect.left, 0)))
+            testmask = mask.Mask((1, self.image.get_height()))
+            testmask.fill()
+            heights = [surf_mask.overlap_area(
+                testmask, (i, 0)) for i in range(self.image.get_width())]

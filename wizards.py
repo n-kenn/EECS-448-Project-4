@@ -15,8 +15,10 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground((width, height / 2), (display.get_rect().left, height / 2), pg.Color('white'))
-player = Player((height / 16, width / 16), ground.rect.topleft, pg.Color('red'))
+ground = Ground((width, height / 2), (display.get_rect().left,
+                                      height / 2), pg.Color('white'))
+player = Player((height / 16, height / 16),
+                ground.rect.topleft, pg.Color('red'))
 
 fallables = pg.sprite.Group(player)
 statics = pg.sprite.Group(ground)
@@ -29,9 +31,9 @@ def check_keys():
             sys.exit()
         elif event.type is pg.KEYDOWN:
             if event.key == pg.K_RIGHT:
-                player.move(5, 0)
+                player.move(10, 0)
             elif event.key == pg.K_LEFT:
-                player.move(-5, 0)
+                player.move(-10, 0)
             elif event.key == pg.K_SPACE:
                 fallables.add(Explosive((32, 32), display.get_rect().midtop,
                                         pg.Color('green'), [ground, player]))
