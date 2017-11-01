@@ -36,6 +36,7 @@ def check_keys():
             elif event.key == pg.K_SPACE:
                 sprites.add(Explosive((32, 32), display.get_rect().midtop,
                                       pg.Color('green'), [ground, player]))
+                player.health -= 50
 
 
 while True:
