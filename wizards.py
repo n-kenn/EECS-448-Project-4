@@ -31,9 +31,9 @@ def check_keys():
             sys.exit()
         elif event.type is pg.KEYDOWN:
             if event.key == pg.K_RIGHT:
-                player.move(10, 0)
+                player.move(20, 0)
             elif event.key == pg.K_LEFT:
-                player.move(-10, 0)
+                player.move(-20, 0)
             elif event.key == pg.K_SPACE:
                 fallables.add(Explosive((32, 32), display.get_rect().midtop,
                                         pg.Color('green'), [ground, player]))
