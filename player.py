@@ -1,5 +1,6 @@
 from pygame import sprite, Surface, image
 import math
+import pygame
 from projectile import Projectile
 
 class Player(sprite.Sprite):
@@ -14,12 +15,13 @@ class Player(sprite.Sprite):
         self.power = 10
         self.gravity = gravity
         self.ground_list = ground_list
+        self.health = 100
 
     def player_move(self, x, y):
         self.rect = self.rect.move(x, y)
 
     def update(self):
-        pass
+       self.draw_health()
 
     def land(self):
         self.in_air = False
@@ -40,10 +42,8 @@ class Player(sprite.Sprite):
         proj = Projectile(self, self.gravity,self.ground_list)
         return proj
 
- #       self.draw_health()
-
-#    def draw_health(self):
-  #      pygame.draw.rect((self.image), pygame.Color('green'),
-   #                      (0, 0, self.health - self.rect.x, 10))
+    def draw_health(self):
+        pygame.draw.rect((self.image), pygame.Color('green'),
+                         (0, 0, self.health - self.rect.x, 10))
 
 
