@@ -10,19 +10,9 @@ class Player(sprite.Sprite):
         self.image.fill(color)
         self.rect = self.image.get_rect(bottomleft=start_pos)
 
-    def move(self, x, y):
-        self.rect.move_ip(x, y)
-
-    # def landed(self, ground):
-    #     return self.rect.colliderect(ground.rect)
-
-    def update(self, gravity, ground):
-        # heights is an array of 'solid' pixels within a Rect that the player could stand on
-        if self.rect.move(0, 1).colliderect(ground.rect):
-            surf_mask = mask.from_surface(ground.image.subsurface(
-                self.image.get_rect().move(self.rect.left, 0)))
-            test_mask = mask.Mask((1, self.image.get_height()))
-            # fill doesn't return a new mask
-            test_mask.fill()
-            heights = [surf_mask.overlap_area(
-                test_mask, (i, 0)) for i in range(self.image.get_width())]
+    def update(self, world):
+        self.rect.move_ip(0, world['gravity'])
+        if sprite.collide_mask(self, world['ground']):
+            # need to get the subsurface right below self.rect
+            self.rect.bottom = world['ground'].rect.height + self.mask.overlap(mask.from_surface(
+                world['ground'].image.subsurface(self.image.get_rect().move(0, 0)), (0, 1))[1]
