@@ -10,10 +10,7 @@ class Player(sprite.Sprite):
         self.image.fill(color)
         self.rect = self.image.get_rect(bottomleft=start_pos)
 
-    def move(self, x, y):
-        self.rect.move_ip(x, y)
-
-    def update(self, gravity, ground):
-        self.rect.move_ip(0, 1)
-        if sprite.collide_mask(self, ground):
-            self.rect.bottom = ground.rect.top + 0 # find height of the collision
+    def update(self, world):
+        self.rect.move_ip(0, world['gravity'])
+        print sprite.collide_mask(self, world['ground']) # why is this None?
+        # self.rect.bottom = world['ground'].rect.height + self.mask.overlap(world['ground'].mask, (xoff, yoff))[1]
