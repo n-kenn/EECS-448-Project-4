@@ -16,4 +16,4 @@ class Player(sprite.Sprite):
     def update(self, gravity, ground):
         self.rect.move_ip(0, 1)
         if sprite.collide_mask(self, ground):
-            self.rect.bottom = ground.rect.top + # find height of the collision
+            self.rect.bottom = ground.rect.top + 0 # find height of the collision
