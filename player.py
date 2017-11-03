@@ -13,6 +13,6 @@ class Player(sprite.Sprite):
     def update(self, world):
         self.rect.move_ip(0, world['gravity'])
         if sprite.collide_mask(self, world['ground']):
-            # need to get the subsurface right below self.rect
-            self.rect.bottom = world['ground'].rect.height + self.mask.overlap(mask.from_surface(
-                world['ground'].image.subsurface(self.image.get_rect().move(0, 0)), (0, 1))[1]
+            offset = self.rect.bottomleft, world['ground'].rect.topleft)
+            self.bottom=world['ground'].rect.height +
+                self.mask.overlap(world['ground'].mask, offset)[1]
