@@ -20,6 +20,7 @@ class Player(Animated_Sprite):
             self.rect.left = bounds.left
 
     def check_keys(self, keys):
+        self.vel.x = 0
         if keys[K_LEFT]:
             self.vel.x -= self.speed
         elif keys[K_RIGHT]:
@@ -29,11 +30,11 @@ class Player(Animated_Sprite):
             self.vel.y -= 40
 
     def update(self, world):
-        self.vel = math.Vector2(0, 0)
         self.vel.y += world['gravity']
         super(Player, self).update()
         self.rect.move_ip(self.vel)
         self.keep_in_bounds(world['ground'].rect)
         if self.rect.colliderect(world['ground'].rect):
             self.landed = True
+            self.vel.y = 0
             self.rect.bottom = world['ground'].rect.top
