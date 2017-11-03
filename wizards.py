@@ -21,37 +21,29 @@ player = Player(os.path.join('sprite_sheets', 'spiral.png'),
 fallables = pg.sprite.Group(player)
 statics = pg.sprite.Group(ground)
 
-pg.key.set_repeat(1, 1)
-
 world = {
     'gravity': 5,
     'ground': ground
 }
 
-
-def check_keys():
+def quit_check():
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
         elif event.type is pg.KEYDOWN:
-            if event.key == pg.K_RIGHT:
-                player.rect.move_ip(1, 0)
-            elif event.key == pg.K_LEFT:
-                player.rect.move_ip(-1, 0)
-            elif event.key == pg.K_SPACE:
-                fallables.add(Explosive((32, 32), display.get_rect().midtop, pg.Color('green'), [ground, player]))
-
+            player.check_keys(pg.key.get_pressed())
+        elif event.type is pg.KEYUP:
+            player.vel.x = player.vel.y = 0
+            # fallables.add(Explosive((32, 32), display.get_rect().midtop, pg.Color('green'), [ground, player]))
 
 while True:
-    check_keys()
-    display.blit(pg.image.load('world/sky.png'), (0, 0))
+    quit_check()
+    display.blit(pg.image.load(os.path.join('world', 'sky.png')), (0, 0))
     fallables.update(world)
     statics.update()
-    # draw will take the sprite's image as surface and its rect as the position
     fallables.draw(display)
     statics.draw(display)
     pg.display.update()
     pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
-    # force the program to run at 60 frames per second
     clock.tick(FPS)

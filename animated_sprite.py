@@ -1,7 +1,6 @@
 from pygame import sprite
 from sprite_sheet import Sprite_Sheet
 
-
 class Animated_Sprite(sprite.Sprite):
     def __init__(self, file_name, rect, frame_rate, colorkey=None):
         super(Animated_Sprite, self).__init__()
