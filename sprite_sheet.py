@@ -13,5 +13,5 @@ class Sprite_Sheet:
 
     def load_strip(self, rect, count, y_offset):
         # returns a list of surfaces from a strip in the sprite sheet
-        return self.get_images_at([(rect[0] + rect[2] * i, rect[1], rect[2], rect[3])
+        return self.get_images_at([(rect[0] + rect[2] * i, rect[1] + y_offset, rect[2], rect[3])
                                    for i in range(count)])
