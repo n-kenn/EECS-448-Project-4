@@ -10,7 +10,7 @@ class Player(Animated_Sprite):
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(bottomleft=start_pos)
         self.vel = math.Vector2(0, 0)
-        self.direction = None
+        self.speed = 10
         self.landed = True
 
     def keep_in_bounds(self, bounds):
@@ -20,16 +20,16 @@ class Player(Animated_Sprite):
             self.rect.left = bounds.left
 
     def check_keys(self, keys):
-        self.vel = math.Vector2(0, 0)
         if keys[K_LEFT]:
-            self.vel.x -= 10
+            self.vel.x -= self.speed
         elif keys[K_RIGHT]:
-            self.vel.x += 10
+            self.vel.x += self.speed
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= 40
 
     def update(self, world):
+        self.vel = math.Vector2(0, 0)
         self.vel.y += world['gravity']
         super(Player, self).update()
         self.rect.move_ip(self.vel)

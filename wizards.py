@@ -27,22 +27,24 @@ world = {
 }
 
 
-def quit_check():
+def check_keys():
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
         elif event.type is pg.KEYDOWN:
             player.check_keys(pg.key.get_pressed())
+            if event.key == pg.K_RETURN:
+                fallables.add(Explosive((32, 32), display.get_rect(
+                ).midtop, pg.Color('green'), [ground, player]))
         elif event.type is pg.KEYUP:
             if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
                 player.vel.x = 0
-            # fallables.add(Explosive((32, 32), display.get_rect().midtop, pg.Color('green'), [ground, player]))
 
 
 if __name__ == '__main__':
     while True:
-        quit_check()
+        check_keys()
         display.blit(pg.image.load(os.path.join('world', 'sky.png')), (0, 0))
         fallables.update(world)
         statics.update()
