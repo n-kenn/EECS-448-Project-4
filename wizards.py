@@ -1,4 +1,5 @@
 import sys
+import os
 import pygame as pg
 from ground import Ground
 from player import Player
@@ -11,10 +12,10 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground('world/ground.png', (display.get_rect().left,
+ground = Ground(os.path.join('world', 'ground.png'), (display.get_rect().left,
                                      height / 2), pg.Color('white'))
 
-player = Player('sprite_sheets/spiral.png',
+player = Player(os.path.join('sprite_sheets', 'spiral.png'),
                 (0, 0, 32, 32), 10, ground.rect.topleft)
 
 fallables = pg.sprite.Group(player)
@@ -39,8 +40,7 @@ def check_keys():
             elif event.key == pg.K_LEFT:
                 player.rect.move_ip(-1, 0)
             elif event.key == pg.K_SPACE:
-                fallables.add(Explosive((32, 32), display.get_rect(
-                ).midtop, pg.Color('green'), [ground, player]))
+                fallables.add(Explosive((32, 32), display.get_rect().midtop, pg.Color('green'), [ground, player]))
 
 
 while True:
