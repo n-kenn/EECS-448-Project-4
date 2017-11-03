@@ -14,8 +14,8 @@ clock = pg.time.Clock()
 ground = Ground((width, height / 2), (display.get_rect().left,
                                       height / 2), pg.Color('white'))
 
-player = Player((height / 16, height / 16),
-                ground.rect.midtop, pg.Color('red'))
+player = Player('sprite_sheets/spiral.png',
+                (0, 0, 32, 32), 10, ground.rect.topleft)
 
 fallables = pg.sprite.Group(player)
 statics = pg.sprite.Group(ground)

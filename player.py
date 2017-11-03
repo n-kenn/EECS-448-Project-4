@@ -1,18 +1,13 @@
-from pygame import mask, sprite, Surface
+from pygame import mask
+from animated_sprite import Animated_Sprite
 
 
-class Player(sprite.Sprite):
+class Player(Animated_Sprite):
 
-    def __init__(self, size, start_pos, color):
-        super(Player, self).__init__()
-        self.image = Surface(size).convert_alpha()
+    def __init__(self, file_name, size, frame_rate, start_pos):
+        super(Player, self).__init__(file_name, size, frame_rate)
         self.mask = mask.from_surface(self.image)
-        self.image.fill(color)
         self.rect = self.image.get_rect(bottomleft=start_pos)
 
     def update(self, world):
-        self.rect.move_ip(0, world['gravity'])
-        if sprite.collide_mask(self, world['ground']):
-            offset = self.rect.bottomleft, world['ground'].rect.topleft)
-            self.bottom=world['ground'].rect.height +
-                self.mask.overlap(world['ground'].mask, offset)[1]
+        super(Player, self).update()
