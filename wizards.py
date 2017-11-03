@@ -11,8 +11,8 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground((width, height / 2), (display.get_rect().left,
-                                      height / 2), pg.Color('white'))
+ground = Ground('world/ground.png', (display.get_rect().left,
+                                     height / 2), pg.Color('white'))
 
 player = Player('sprite_sheets/spiral.png',
                 (0, 0, 32, 32), 10, ground.rect.topleft)
@@ -45,7 +45,7 @@ def check_keys():
 
 while True:
     check_keys()
-    display.fill(pg.Color('black'))
+    display.blit(pg.image.load('world/sky.png'), (0, 0))
     fallables.update(world)
     statics.update()
     # draw will take the sprite's image as surface and its rect as the position

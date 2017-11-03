@@ -1,13 +1,12 @@
-from pygame import mask, sprite, Surface
+from pygame import image, mask, sprite
 
 
 class Ground(sprite.Sprite):
-    def __init__(self, size, pos, color):
+    def __init__(self, file_name, pos, color):
         super(Ground, self).__init__()
-        self.image = Surface(size).convert_alpha()
+        self.image = image.load(file_name)
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(topleft=pos)
-        self.image.fill(color)
 
     def update(self):
         # update mask to compensate for explosions occuring
