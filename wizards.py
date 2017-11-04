@@ -38,6 +38,7 @@ def check_keys():
             if event.key == pg.K_RETURN:
                 fallables.add(Explosive((16, 16), (randint(
                     0, display.get_width()), 0), pg.Color('green'), [ground, player]))
+                player.health -= 10
         elif event.type is pg.KEYUP:
             if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
                 player.vel.x = 0
