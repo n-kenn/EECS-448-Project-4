@@ -10,6 +10,7 @@ class Player(Animated_Sprite):
     """
     def __init__(self, file_name, rect, frame_rate, start_pos, speed):
         """ Initialize the player sprite.
+
         :param file_name: The file to be used for the picture of the sprite.
         :param size: The size of the player character.
         :param frame_rate: The frame rate for the particular player character.
@@ -62,6 +63,7 @@ class Player(Animated_Sprite):
             pygame.draw.rect(self.image, pygame.Color('red'), (0, 0, (100 - self.health) * .34, 10))
     def update(self, world):
         """ Update the Player
+
         :param world: The world the player inhabits.
         """
         super(Player, self).update()

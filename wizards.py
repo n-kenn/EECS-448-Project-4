@@ -19,8 +19,13 @@ ground = Ground(os.path.join('world', 'ground.png'), (display.get_rect().left,
 player = Player(os.path.join('sprite_sheets', 'wizard.png'),
                 (0, 0, 32, 32), 10, ground.rect.midtop, 10)
 
-fallables = pg.sprite.Group(player)
+player2 = Player(os.path.join('sprite_sheets', 'spiral.png'),
+                 (0, 0, 32, 32), 10, ground.rect.topright, 10)
+
+fallables = pg.sprite.Group(player, player2)
 statics = pg.sprite.Group(ground)
+
+turn = [True, False]
 
 world = {
     'gravity': 5,
@@ -34,8 +39,12 @@ def check_keys():
             pg.quit()
             sys.exit()
         elif event.type is pg.KEYDOWN:
-            player.check_keys(pg.key.get_pressed())
+            if (turn[1] == True):
+                player.check_keys(pg.key.get_pressed())
+            else:
+                player2.check_keys(pg.key.get_pressed())
             if event.key == pg.K_RETURN:
+                turn.reverse()
                 fallables.add(Explosive((16, 16), (randint(
                     0, display.get_width()), 0), pg.Color('green'), [ground, player]))
                 player.health -= 10
@@ -54,4 +63,9 @@ if __name__ == '__main__':
         statics.draw(display)
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
+        if (len(fallables) < 2):
+            print "WINNER!"
+            pg.time.wait(2000)
+            pg.quit()
+            sys.exit()
         clock.tick(FPS)
