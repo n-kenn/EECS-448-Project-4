@@ -15,7 +15,7 @@ clock = pg.time.Clock()
 ground = Ground(os.path.join('world', 'ground.png'), (display.get_rect().left,
                                                       height / 2), pg.Color('white'))
 
-player = Player(os.path.join('sprite_sheets', 'spiral.png'),
+player = Player(os.path.join('sprite_sheets', 'wizard.png'),
                 (0, 0, 32, 32), 10, ground.rect.topleft)
 
 fallables = pg.sprite.Group(player)

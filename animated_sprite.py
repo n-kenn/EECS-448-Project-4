@@ -1,18 +1,14 @@
 from pygame import sprite
 from sprite_sheet import Sprite_Sheet
 
+
 class Animated_Sprite(sprite.Sprite):
     def __init__(self, file_name, rect, frame_rate, colorkey=None):
         super(Animated_Sprite, self).__init__()
-        self.sprite_sheet = Sprite_Sheet(file_name, colorkey)
+        self.sprite_sheet = Sprite_Sheet(file_name, rect, colorkey)
         self.index = 0
         self.current_frame = 0
         self.frame_rate = frame_rate
-        self.animations = {
-            'running': self.sprite_sheet.load_strip(rect, 4, 0)
-        }
-        self.current_animation = self.animations['running']
-        self.image = self.current_animation[0]
 
     def update(self):
         self.current_frame += 1
