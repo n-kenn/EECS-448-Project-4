@@ -1,10 +1,10 @@
 import sys
 import os
+from random import randint
 import pygame as pg
 from ground import Ground
 from player import Player
 from explosive import Explosive
-from random import randint
 
 width, height = 1024, 512
 FPS = 60
