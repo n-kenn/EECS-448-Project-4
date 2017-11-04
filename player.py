@@ -56,9 +56,9 @@ class Player(Animated_Sprite):
     def draw_health(self):
        # print self.rect.x
         if (self.health > 0):
-            subSurf = self.image.subsurface(0, 0, self.health - 68, self.health - 68)
-            pygame.draw.rect(subSurf, pygame.Color('green'),
+            pygame.draw.rect(self.image, pygame.Color('green'),
                              (0,0, self.health , 10))
+        if (self.health < 100):    
             pygame.draw.rect(self.image, pygame.Color('red'), (0, 0, (100 - self.health) * .34, 10))
     def update(self, world):
         """ Update the Player
