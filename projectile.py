@@ -7,6 +7,8 @@ y_vel = -1 * power * math.sin(angle)
 
 
 def update_pos(xp, yp, xv, yv):
+    """Updates the position of a projectile.
+    """
     if (xp + xv > width or xp + xv < 0):
         xv = 0  # (-1)*xv
     xp = xp + xv

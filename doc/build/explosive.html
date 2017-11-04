@@ -1,12 +1,11 @@
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Index &#8212; Wizards .1 documentation</title>
+    <title>explosive module &#8212; Wizards .1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -22,7 +21,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="index" title="Index" href="#" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -39,11 +39,30 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
+  <div class="section" id="module-explosive">
+<span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="explosive.Explosive">
+<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>size</em>, <em>pos</em>, <em>color</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>A class for any weapon that has the ability to explode.</p>
+<dl class="method">
+<dt id="explosive.Explosive.collision_check">
+<code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Looks to see if the explosive projectile has collided with anything.
+If it has, then remove the projectile, and draw an elipse to represent the blast
+of the explosion.</p>
+</dd></dl>
 
-<h1 id="index">Index</h1>
+<dl class="method">
+<dt id="explosive.Explosive.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>world</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the explosive weapon.
+:param world: The world in which the explosive exists.</p>
+</dd></dl>
 
-<div class="genindex-jumpbox">
- 
+</dd></dl>
+
 </div>
 
 
@@ -73,12 +92,15 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2017, Noah Josh Thomas.
+      &copy;2017, Noah, Josh, Thomas.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
+      |
+      <a href="_sources/explosive.rst.txt"
+          rel="nofollow">Page source</a>
     </div>
 
     
