@@ -13,15 +13,10 @@ class Animated_Sprite(sprite.Sprite):
         :param colorkey: Initially set to unknown, but can be set later.
         """
         super(Animated_Sprite, self).__init__()
-        self.sprite_sheet = Sprite_Sheet(file_name, colorkey)
+        self.sprite_sheet = Sprite_Sheet(file_name, rect, colorkey)
         self.index = 0
         self.current_frame = 0
         self.frame_rate = frame_rate
-        self.animations = {
-            'running': self.sprite_sheet.load_strip(rect, 4, 0)
-        }
-        self.current_animation = self.animations['running']
-        self.image = self.current_animation[0]
 
     def update(self):
         self.current_frame += 1
