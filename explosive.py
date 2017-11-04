@@ -22,7 +22,7 @@ class Explosive(sprite.Sprite):
                     self.kill()
                     # ellipse is relative to the Surface being drawn on
                     draw.ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(
-                        self.image.get_size()).move(0, -collidable.rect.height + self.image.get_rect().centery))
+                        self.image.get_size()).move(0, self.image.get_rect().centery - collidable.rect.height))
                     break
 
     def update(self, world):

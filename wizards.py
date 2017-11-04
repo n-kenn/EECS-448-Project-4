@@ -4,6 +4,7 @@ import pygame as pg
 from ground import Ground
 from player import Player
 from explosive import Explosive
+from random import randint
 
 width, height = 1024, 512
 FPS = 60
@@ -16,7 +17,7 @@ ground = Ground(os.path.join('world', 'ground.png'), (display.get_rect().left,
                                                       height / 2), pg.Color('white'))
 
 player = Player(os.path.join('sprite_sheets', 'wizard.png'),
-                (0, 0, 32, 32), 10, ground.rect.topleft)
+                (0, 0, 32, 32), 10, ground.rect.midtop, 10)
 
 fallables = pg.sprite.Group(player)
 statics = pg.sprite.Group(ground)
@@ -35,8 +36,8 @@ def check_keys():
         elif event.type is pg.KEYDOWN:
             player.check_keys(pg.key.get_pressed())
             if event.key == pg.K_RETURN:
-                fallables.add(Explosive((32, 32), display.get_rect(
-                ).midtop, pg.Color('green'), [ground, player]))
+                fallables.add(Explosive((32, 32), (randint(
+                    0, display.get_width()), 0), pg.Color('green'), [ground, player]))
         elif event.type is pg.KEYUP:
             if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
                 player.vel.x = 0
