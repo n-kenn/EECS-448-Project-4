@@ -5,6 +5,7 @@ class Explosive(sprite.Sprite):
     """ A class for any weapon that has the ability to explode.
     """
     # collidables is an iterable of sprites that the explosive can collide with
+
     def __init__(self, size, pos, color, collidables):
         """Initialize the Explosive weapon.
        :param size: The size of the explosive weapon.
@@ -42,5 +43,5 @@ class Explosive(sprite.Sprite):
         :param world: The world in which the explosive exists.
         """
         # move_ip overwrites the rect
-        self.rect.move_ip((0, world['gravity']))
+        self.rect.move_ip((0, world.gravity))
         self.collision_check()

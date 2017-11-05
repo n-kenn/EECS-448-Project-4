@@ -10,6 +10,7 @@ class Player(Animated_Sprite):
 
     def __init__(self, file_name, rect, frame_rate, start_pos, speed):
         """ Initialize the player sprite.
+
         :param file_name: The file to be used for the picture of the sprite.
         :param size: The size of the player character.
         :param frame_rate: The frame rate for the particular player character.
@@ -28,7 +29,6 @@ class Player(Animated_Sprite):
         self.rect = self.image.get_rect(bottomleft=start_pos)
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()
-        print self.health
 
     def check_keys(self, keys):
         if keys[K_LEFT]:
@@ -52,13 +52,14 @@ class Player(Animated_Sprite):
 
     def update(self, world):
         """ Update the Player
+
         :param world: The world the player inhabits.
         """
         super(Player, self).update()
         self.draw_health()
-        self.vel.y += world['gravity']
-        self.rect.clamp_ip(world['ground'].image.get_rect())
+        self.vel.y += world.gravity
+        self.rect.clamp_ip(world.rect)
         self.rect.move_ip(self.vel)
-        self.find_ground(world['ground'])
+        self.find_ground(world.ground)
         if (self.health <= 0):
             self.kill()

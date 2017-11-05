@@ -3,6 +3,7 @@ import os
 from random import randint
 import pygame as pg
 from ground import Ground
+from world import World
 from player import Player
 from explosive import Explosive
 
@@ -13,8 +14,8 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground(os.path.join('world', 'ground.png'), (display.get_rect().left,
-                                                      height / 2), pg.Color('white'))
+ground = Ground(os.path.join('images', 'ground.png'), (display.get_rect().left,
+                                                       height / 2), pg.Color('white'))
 
 player = Player(os.path.join('sprite_sheets', 'wizard.png'),
                 (0, 0, 32, 32), 10, ground.rect.midtop, 10)
@@ -22,10 +23,7 @@ player = Player(os.path.join('sprite_sheets', 'wizard.png'),
 fallables = pg.sprite.Group(player)
 statics = pg.sprite.Group(ground)
 
-world = {
-    'gravity': 5,
-    'ground': ground
-}
+world = World(pg.image.load(os.path.join('images', 'sky.png')), ground, 5)
 
 
 def check_keys():
@@ -47,7 +45,7 @@ def check_keys():
 if __name__ == '__main__':
     while True:
         check_keys()
-        display.blit(pg.image.load(os.path.join('world', 'sky.png')), (0, 0))
+        display.blit(world.image, display.get_rect().topleft)
         fallables.update(world)
         statics.update()
         fallables.draw(display)
