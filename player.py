@@ -58,8 +58,7 @@ class Player(Animated_Sprite):
         super(Player, self).update()
         self.draw_health()
         self.vel.y += world.gravity
-        self.rect.clamp_ip(world.rect)
         self.rect.move_ip(self.vel)
         self.find_ground(world.ground)
-        if (self.health <= 0):
+        if not self.health:
             self.kill()
