@@ -5,11 +5,12 @@ from sprite_sheet import Sprite_Sheet
 class Animated_Sprite(sprite.Sprite):
     """ A sprite to be animated.
     """
+
     def __init__(self, file_name, rect, frame_rate, colorkey=None):
         """Initalizes an Animated Sprite.
         :param file_name: The file to be loaded for the image."
         :param rect: The rectangle for the animated sprite to fill.
-        :param frame_rate: How many frames this sprite sheet has.
+        :param frame_rate: How quickly the next frame of animation is displayed.
         :param colorkey: Initially set to unknown, but can be set later.
         """
         super(Animated_Sprite, self).__init__()
@@ -23,5 +24,5 @@ class Animated_Sprite(sprite.Sprite):
         if self.current_frame > self.frame_rate:
             # next line keeps the index within the range of self.images
             self.index = (self.index + 1) % len(self.current_animation)
-            self.image = self.current_animation[self.index]
+            self.image = self.current_animation[self.index].copy()
             self.current_frame = 0
