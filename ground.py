@@ -8,7 +8,7 @@ class Ground(sprite.Sprite):
 
     def __init__(self, image, pos):
         """ Initializes the Ground.
-        :param file_name: The name of the file to be loaded as the image.
+        :param image: Image to use.
         :param pos: Position of the ground.
         """
         super(Ground, self).__init__()

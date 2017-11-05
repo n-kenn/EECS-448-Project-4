@@ -15,23 +15,20 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground(pg.image.load(os.path.join('images', 'ground.png')),
-                (display.get_rect().left, height / 2))
+world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground(pg.image.load(
+    os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 5)
 
 players = [
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')),
-           (0, 0, 32, 32), 10, ground.rect.topleft, 10),
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')),
-           (0, 0, 32, 32), 10, ground.rect.midtop, 10)
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(),
+           (0, 0, 32, 32), 5, world.ground.rect.topleft, 10),
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(),
+           (0, 0, 32, 32), 5, world.ground.rect.midtop, 10)
 ]
 
-game_handler = Turn_Handler(players)
+turn_handler = Turn_Handler(players)
 
 fallables = pg.sprite.Group(players)
-statics = pg.sprite.Group(ground)
-
-world = World(pg.image.load(os.path.join(
-    'images', 'sky.png')).convert(), ground, 5)
+statics = pg.sprite.Group(world)
 
 
 def check_keys():
@@ -40,25 +37,24 @@ def check_keys():
             pg.quit()
             sys.exit()
         elif event.type is pg.KEYDOWN:
-            game_handler.active_player.check_keys(pg.key.get_pressed())
+            turn_handler.active_player.check_keys(pg.key.get_pressed())
             if event.key == pg.K_RETURN:
-                game_handler.switch_turns()
-                fallables.add(Explosive((16, 16), (randint(
-                    0, display.get_width()), 0), pg.Color('green'), [ground]))
+                turn_handler.switch_turns()
+                Explosive((16, 16), (randint(0, world.rect.width), 0),
+                          pg.Color('green'), fallables)
         elif event.type is pg.KEYUP:
             if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
-                game_handler.active_player.vel.x = 0
+                turn_handler.active_player.vel.x = 0
 
 
 if __name__ == '__main__':
     while True:
         check_keys()
-        display.blit(world.image, display.get_rect().topleft)
         fallables.update(world)
         statics.update()
-        fallables.draw(display)
-        game_handler.active_player.rect.clamp_ip(world.rect)
         statics.draw(display)
+        fallables.draw(display)
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
+        turn_handler.active_player.rect.clamp_ip(world.rect)
         clock.tick(FPS)
