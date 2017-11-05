@@ -21,7 +21,7 @@ class Player(Animated_Sprite):
         self.speed = speed
         self.landed = True
         self.animations = {
-            'idle': (self.sprite_sheet.load_strip(4, 0))
+            'idle': (self.sprite_sheet.load_strip(1, 0))
         }
         self.current_animation = self.animations['idle']
         self.image = self.current_animation[0].copy()
@@ -57,6 +57,7 @@ class Player(Animated_Sprite):
         super(Player, self).update()
         self.draw_health()
         self.vel.y += world['gravity']
+        self.rect.clamp_ip(world['ground'].image.get_rect())
         self.rect.move_ip(self.vel)
         self.find_ground(world['ground'])
         if (self.health <= 0):
