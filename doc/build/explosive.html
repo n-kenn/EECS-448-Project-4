@@ -43,15 +43,38 @@
 <span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="explosive.Explosive">
-<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>size</em>, <em>pos</em>, <em>color</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>size</em>, <em>pos</em>, <em>color</em>, <em>groups</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="projectile.html#projectile.Projectile" title="projectile.Projectile"><code class="xref py py-class docutils literal"><span class="pre">projectile.Projectile</span></code></a></p>
 <p>A class for any weapon that has the ability to explode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>size</strong> – The size of the explosive weapon.</li>
+<li><strong>pos</strong> – The position of the explosive weapon.</li>
+<li><strong>color</strong> – The color of the explosive weapon.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="explosive.Explosive.collision_check">
-<code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>Looks to see if the explosive projectile has collided with anything.
-If it has, then remove the projectile, and draw an elipse to represent the blast
-of the explosion.</p>
+<code class="descname">collision_check</code><span class="sig-paren">(</span><em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Looks to see if the explosive projectile has collided with anything.</dt>
+<dd>If it has, then remove the projectile, and draw an elipse to represent the blast
+of the explosion.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>collidables</strong> – The objects that an explosion can collide with.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">

@@ -8,9 +8,9 @@ class Explosive(Projectile):
 
     def __init__(self, size, angle, pos, color, groups):
         """Initialize the Explosive weapon.
-       :param size: The size of the explosive weapon.
-       :param pos: The position of the explosive weapon.
-       :param color: The color of the explosive weapon.
+           :param size: The size of the explosive weapon.
+           :param pos: The position of the explosive weapon.
+           :param color: The color of the explosive weapon.
         """
         super(Explosive, self).__init__(size, angle, pos, color, groups)
 
@@ -18,6 +18,8 @@ class Explosive(Projectile):
         """ Looks to see if the explosive projectile has collided with anything.
             If it has, then remove the projectile, and draw an elipse to represent the blast
             of the explosion.
+
+        :param collidables: The objects that an explosion can collide with.
         """
         # this will probably get refactored somehow.
         for collidable in collidables:

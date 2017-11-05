@@ -44,15 +44,51 @@
 <dl class="class">
 <dt id="sprite_sheet.Sprite_Sheet">
 <em class="property">class </em><code class="descclassname">sprite_sheet.</code><code class="descname">Sprite_Sheet</code><span class="sig-paren">(</span><em>sheet</em>, <em>rect</em>, <em>colorkey=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Loads the Sprite Sheet Files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sheet</strong> – The file.</li>
+<li><strong>rect</strong> – The size of the Sprite Sheet.</li>
+<li><strong>colorkey</strong> – The background of the images.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
 <dt id="sprite_sheet.Sprite_Sheet.get_images_at">
 <code class="descname">get_images_at</code><span class="sig-paren">(</span><em>rects</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet.get_images_at" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a list of surfaces from the given rects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rects</strong> – The rectangles to look at subsurfaces for.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="sprite_sheet.Sprite_Sheet.load_strip">
 <code class="descname">load_strip</code><span class="sig-paren">(</span><em>count</em>, <em>y_offset</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet.load_strip" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a list of surfaces from a strip in the sprite sheet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>count</strong> – How many images are in the sprite sheet.</li>
+<li><strong>y_offset</strong> – How far down in the sheet the images begin.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 

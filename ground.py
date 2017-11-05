@@ -3,14 +3,15 @@ from pygame import mask, sprite
 
 class Ground(sprite.Sprite):
     """ The surface on which players can stand.
+
     :param Sprite: The reference of the sprite.
+    :param image: Image to use.
+    :param pos: Position of the ground.
+
     """
 
     def __init__(self, image, pos):
-        """ Initializes the Ground.
-        :param image: Image to use.
-        :param pos: Position of the ground.
-        """
+
         super(Ground, self).__init__()
         self.image = image
         self.mask = mask.from_surface(self.image)
