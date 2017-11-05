@@ -39,8 +39,8 @@ def check_keys():
         elif event.type is pg.KEYDOWN:
             turn_handler.active_player.check_keys(pg.key.get_pressed())
             if event.key == pg.K_RETURN:
-                Explosive((16, 16), turn_handler.active_player.rect.topright, pg.Color(
-                    'green'), fallables)
+                Explosive((16, 16), turn_handler.active_player.angle, turn_handler.active_player.rect.topright if turn_handler.active_player.angle <
+                          90 else turn_handler.active_player.rect.topleft, pg.Color('green'), fallables)
                 turn_handler.switch_turns()
         elif event.type is pg.KEYUP:
             if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:

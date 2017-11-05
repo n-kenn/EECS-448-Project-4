@@ -18,6 +18,7 @@ class Player(Animated_Sprite):
         :param speed: The speed of the player.
         """
         super(Player, self).__init__(file_name, rect, frame_rate)
+        self.angle = 45
         self.vel = math.Vector2(0, 0)
         self.speed = speed
         self.landed = True
@@ -32,8 +33,10 @@ class Player(Animated_Sprite):
 
     def check_keys(self, keys):
         if keys[K_LEFT]:
+            self.angle = 135
             self.vel.x -= self.speed
         elif keys[K_RIGHT]:
+            self.angle = 45
             self.vel.x += self.speed
         if keys[K_SPACE] and self.landed:
             self.landed = False

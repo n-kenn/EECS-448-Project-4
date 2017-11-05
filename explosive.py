@@ -6,13 +6,13 @@ class Explosive(Projectile):
     """ A class for any weapon that has the ability to explode.
     """
 
-    def __init__(self, size, pos, color, groups):
+    def __init__(self, size, angle, pos, color, groups):
         """Initialize the Explosive weapon.
        :param size: The size of the explosive weapon.
        :param pos: The position of the explosive weapon.
        :param color: The color of the explosive weapon.
         """
-        super(Explosive, self).__init__(size, pos, color, groups)
+        super(Explosive, self).__init__(size, angle, pos, color, groups)
 
     def collision_check(self, collidables):
         """ Looks to see if the explosive projectile has collided with anything.
