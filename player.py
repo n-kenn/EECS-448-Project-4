@@ -55,10 +55,11 @@ class Player(Animated_Sprite):
 
         :param world: The world the player inhabits.
         """
+        if not self.health:
+            self.kill()
         super(Player, self).update()
         self.draw_health()
         self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
         self.find_ground(world.ground)
-        if not self.health:
-            self.kill()
+        self.rect.clamp_ip(world.rect)

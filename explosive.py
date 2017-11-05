@@ -36,6 +36,6 @@ class Explosive(Projectile):
         """Update the explosive weapon.
         :param world: The world in which the explosive exists.
         """
-        # move_ip overwrites the rect
+        super(Explosive, self).update(world)
         self.rect.move_ip((0, world.gravity))
         self.collision_check([world.ground])

@@ -1,6 +1,5 @@
 import sys
 import os
-from random import randint
 import pygame as pg
 from explosive import Explosive
 from turn_handler import Turn_Handler
@@ -40,9 +39,9 @@ def check_keys():
         elif event.type is pg.KEYDOWN:
             turn_handler.active_player.check_keys(pg.key.get_pressed())
             if event.key == pg.K_RETURN:
+                Explosive((16, 16), turn_handler.active_player.rect.topright, pg.Color(
+                    'green'), fallables)
                 turn_handler.switch_turns()
-                Explosive((16, 16), (randint(0, world.rect.width), 0),
-                          pg.Color('green'), fallables)
         elif event.type is pg.KEYUP:
             if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
                 turn_handler.active_player.vel.x = 0
@@ -57,5 +56,4 @@ if __name__ == '__main__':
         fallables.draw(display)
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
-        turn_handler.active_player.rect.clamp_ip(world.rect)
         clock.tick(FPS)
