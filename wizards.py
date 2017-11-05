@@ -14,16 +14,17 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
-ground = Ground(os.path.join('images', 'ground.png'), (display.get_rect().left,
-                                                       height / 2), pg.Color('white'))
+ground = Ground(pg.image.load(os.path.join('images', 'ground.png')),
+                (display.get_rect().left, height / 2), pg.Color('white'))
 
-player = Player(os.path.join('sprite_sheets', 'wizard.png'),
+player = Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')),
                 (0, 0, 32, 32), 10, ground.rect.midtop, 10)
 
 fallables = pg.sprite.Group(player)
 statics = pg.sprite.Group(ground)
 
-world = World(pg.image.load(os.path.join('images', 'sky.png')), ground, 5)
+world = World(pg.image.load(os.path.join(
+    'images', 'sky.png')).convert(), ground, 5)
 
 
 def check_keys():

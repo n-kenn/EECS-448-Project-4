@@ -1,10 +1,7 @@
-from pygame import image
-
-
 class Sprite_Sheet:
     def __init__(self, sheet, rect, colorkey=None):
         # loads the sprite sheet onto a surface
-        self.sheet = image.load(sheet)
+        self.sheet = sheet
         self.sheet.set_colorkey(colorkey)
         self.rect = rect
 

@@ -1,18 +1,19 @@
-from pygame import image, mask, sprite
+from pygame import mask, sprite
 
 
 class Ground(sprite.Sprite):
     """ The surface on which players can stand.
     :param Sprite: The reference of the sprite.
     """
-    def __init__(self, file_name, pos, color):
+
+    def __init__(self, image, pos, color):
         """ Initializes the Ground.
         :param file_name: The name of the file to be loaded as the image.
         :param pos: Position of the ground.
         :param color: The color if no image is to be used.
         """
         super(Ground, self).__init__()
-        self.image = image.load(file_name)
+        self.image = image
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(topleft=pos)
 
