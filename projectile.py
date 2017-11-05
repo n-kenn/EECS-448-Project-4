@@ -3,7 +3,12 @@ from math import cos, sin
 
 
 class Projectile(sprite.Sprite):
+    """A Projectile used for weapons.
 
+    :param size: The size of the projectile.
+    :param pos: The position to be made at.
+    :param color: The color of the projectile.
+    """
     def __init__(self, size, pos, color, groups):
         super(Projectile, self).__init__(groups)
         self.angle = 45
@@ -16,5 +21,9 @@ class Projectile(sprite.Sprite):
             self.power * cos(self.angle), -self.power * sin(self.angle))
 
     def update(self, world):
+        """Updates the projectile's position
+
+        :param world: The world the projectile exists in.
+        """
         self.vel.y += world.gravity
         self.rect.move_ip(self.vel)

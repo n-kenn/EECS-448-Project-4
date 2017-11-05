@@ -46,25 +46,54 @@
 <em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>file_name</em>, <em>rect</em>, <em>frame_rate</em>, <em>start_pos</em>, <em>speed</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="animated_sprite.html#animated_sprite.Animated_Sprite" title="animated_sprite.Animated_Sprite"><code class="xref py py-class docutils literal"><span class="pre">animated_sprite.Animated_Sprite</span></code></a></p>
 <p>Player class that the user will control.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_name</strong> – The file to be used for the sprite sheet of player.</li>
+<li><strong>size</strong> – The size of the player sprite.</li>
+<li><strong>frame_rate</strong> – The frame rate for the particular player character.</li>
+<li><strong>start_pos</strong> – Starting position for the Player.</li>
+<li><strong>speed</strong> – The speed of the player.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="player.Player.check_keys">
 <code class="descname">check_keys</code><span class="sig-paren">(</span><em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.check_keys" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Perform actions based on what keys are pressed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> – The keys that are currently being pressed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="player.Player.draw_health">
 <code class="descname">draw_health</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.draw_health" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Draws the health bar.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="player.Player.find_ground">
 <code class="descname">find_ground</code><span class="sig-paren">(</span><em>ground</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.find_ground" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="player.Player.keep_in_bounds">
-<code class="descname">keep_in_bounds</code><span class="sig-paren">(</span><em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.keep_in_bounds" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method to keep player within the bounds of the map.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ground</strong> – The ground to stay within the bounds of.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="player.Player.update">

@@ -6,17 +6,16 @@ from animated_sprite import Animated_Sprite
 class Player(Animated_Sprite):
 
     """ Player class that the user will control.
-    """
-
-    def __init__(self, file_name, rect, frame_rate, start_pos, speed):
-        """ Initialize the player sprite.
 
         :param file_name: The file to be used for the sprite sheet of player.
         :param size: The size of the player sprite.
         :param frame_rate: The frame rate for the particular player character.
         :param start_pos: Starting position for the Player.
         :param speed: The speed of the player.
-        """
+       
+    """
+
+    def __init__(self, file_name, rect, frame_rate, start_pos, speed):
         super(Player, self).__init__(file_name, rect, frame_rate)
         self.vel = math.Vector2(0, 0)
         self.speed = speed
@@ -31,6 +30,11 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
 
     def check_keys(self, keys):
+
+        """Perform actions based on what keys are pressed.
+
+        :param keys: The keys that are currently being pressed.
+        """
         if keys[K_LEFT]:
             self.vel.x -= self.speed
         elif keys[K_RIGHT]:
@@ -40,6 +44,11 @@ class Player(Animated_Sprite):
             self.vel.y -= 30
 
     def find_ground(self, ground):
+
+        """Method to keep player within the bounds of the map.
+
+        :param ground: The ground to stay within the bounds of.
+        """
         if self.rect.colliderect(ground.rect):
             if sprite.collide_mask(self, ground):
                 self.rect.move_ip(0, -self.vel.y)
@@ -47,6 +56,8 @@ class Player(Animated_Sprite):
                 self.landed = True
 
     def draw_health(self):
+        """Draws the health bar.
+        """
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
