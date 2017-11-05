@@ -8,7 +8,7 @@ class Player(Animated_Sprite):
     """ Player class that the user will control.
 
         :param file_name: The file to be used for the sprite sheet of player.
-        :param size: The size of the player sprite.
+        :param rect: The size of the player sprite.
         :param frame_rate: The frame rate for the particular player character.
         :param start_pos: Starting position for the Player.
         :param speed: The speed of the player.
