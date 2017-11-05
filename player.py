@@ -11,8 +11,8 @@ class Player(Animated_Sprite):
     def __init__(self, file_name, rect, frame_rate, start_pos, speed):
         """ Initialize the player sprite.
 
-        :param file_name: The file to be used for the picture of the sprite.
-        :param size: The size of the player character.
+        :param file_name: The file to be used for the sprite sheet of player.
+        :param size: The size of the player sprite.
         :param frame_rate: The frame rate for the particular player character.
         :param start_pos: Starting position for the Player.
         :param speed: The speed of the player.

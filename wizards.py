@@ -11,17 +11,6 @@ from world import World
 
 width, height = 1024, 512
 FPS = 60
-# dict for color rgb values
-colors = {
-    'black': (0, 0, 0),
-    'white': (255, 255, 255),
-    'red': (255, 0, 0),
-    'green': (40, 230, 40)
-}
-# dict for world constants
-world = {
-    'gravity': 0.0981
-}
 
 pg.init()
 display = pg.display.set_mode((width, height))

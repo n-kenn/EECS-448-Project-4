@@ -1,7 +1,8 @@
-from pygame import draw, mask, sprite, Surface
+from pygame import draw, sprite
+from projectile import Projectile
 
 
-class Explosive(sprite.Sprite):
+class Explosive(Projectile):
     """ A class for any weapon that has the ability to explode.
     """
 
@@ -11,11 +12,7 @@ class Explosive(sprite.Sprite):
        :param pos: The position of the explosive weapon.
        :param color: The color of the explosive weapon.
         """
-        super(Explosive, self).__init__(groups)
-        self.image = Surface(size).convert_alpha()
-        self.mask = mask.from_surface(self.image)
-        self.rect = self.image.get_rect(topleft=pos)
-        self.image.fill(color)
+        super(Explosive, self).__init__(size, pos, color, groups)
 
     def collision_check(self, collidables):
         """ Looks to see if the explosive projectile has collided with anything.
