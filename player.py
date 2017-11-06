@@ -8,16 +8,18 @@ from explosive import Explosive
 class Player(Animated_Sprite):
 
     """ Player class that the user will control.
-
-        :param file_name: The file to be used for the sprite sheet of player.
-        :param rect: The size of the player sprite.
-        :param frame_rate: The frame rate for the particular player character.
-        :param start_pos: Starting position for the Player.
-        :param speed: The speed of the player.
-
     """
 
     def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, speed, groups):
+        """Initializes the Player class
+            :param file_name: The file to be used for the sprite sheet of player.
+            :param magic_file: The file to use for the sprite_sheet for the player's Projectile.
+            :param sprite_size: The size of the player sprite.
+            :param frame_rate: The frame rate for the particular player character.
+            :param start_pos: Starting position for the Player.
+            :param speed: The speed of the player.
+            :param groups: Groups that the Player Sprite belongs to.
+        """
         super(Player, self).__init__(
             file_name, sprite_size, frame_rate, groups)
         self.magic_file = magic_file
