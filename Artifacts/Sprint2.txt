@@ -1,0 +1,16 @@
+11/2/2017
+Discord Group Chat
+7:53 pm - 10:38 pm
+
+Things completed:
+  Things to be in the prototype
+    land
+    player
+    weapon
+    target
+    Basic terrain (A box)
+
+Things discussed:
+  Creation of presentation poster
+  Creation of animated sprites
+  
