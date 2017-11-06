@@ -38,12 +38,9 @@ def check_keys():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
-        elif event.type is pg.KEYDOWN:
-            if event.key == pg.K_RETURN:
-                active_player.set_angle(pg.mouse.get_pos())
-                Explosive((16, 16), active_player.angle, active_player.rect.topright if active_player.angle <
-                          90 else active_player.rect.topleft, pg.Color('green'), fallables, active_player.power)
-                active_player = turn_handler.switch_turns()
+        elif event.type is pg.MOUSEBUTTONDOWN:
+            active_player.fire(pg.mouse.get_pos())
+            active_player = turn_handler.switch_turns()
 
 
 if __name__ == '__main__':
