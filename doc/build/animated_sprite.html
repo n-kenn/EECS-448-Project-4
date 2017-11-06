@@ -43,9 +43,23 @@
 <span id="animated-sprite-module"></span><h1>animated_sprite module<a class="headerlink" href="#module-animated_sprite" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="animated_sprite.Animated_Sprite">
-<em class="property">class </em><code class="descclassname">animated_sprite.</code><code class="descname">Animated_Sprite</code><span class="sig-paren">(</span><em>image</em>, <em>rect</em>, <em>frame_rate</em>, <em>colorkey=None</em><span class="sig-paren">)</span><a class="headerlink" href="#animated_sprite.Animated_Sprite" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">animated_sprite.</code><code class="descname">Animated_Sprite</code><span class="sig-paren">(</span><em>image_file</em>, <em>rect</em>, <em>frame_rate</em>, <em>groups</em>, <em>colorkey=None</em><span class="sig-paren">)</span><a class="headerlink" href="#animated_sprite.Animated_Sprite" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pygame.sprite.Sprite</span></code></p>
 <p>A sprite to be animated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_name</strong> – The file to be loaded for the image.”</li>
+<li><strong>rect</strong> – The rectangle for the animated sprite to fill.</li>
+<li><strong>frame_rate</strong> – How quickly the next frame of animation is displayed.</li>
+<li><strong>colorkey</strong> – Initially set to unknown, but can be set later.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="animated_sprite.Animated_Sprite.update">
 <code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#animated_sprite.Animated_Sprite.update" title="Permalink to this definition">¶</a></dt>
