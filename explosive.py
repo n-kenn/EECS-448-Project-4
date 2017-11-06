@@ -41,5 +41,4 @@ class Explosive(Projectile):
         :param world: The world in which the explosive exists.
         """
         super(Explosive, self).update(world)
-        self.rect.move_ip((0, world.gravity))
         self.collision_check([world.ground])

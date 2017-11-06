@@ -16,12 +16,12 @@ class Player(Animated_Sprite):
 
     """
 
-    def __init__(self, file_name, rect, frame_rate, start_pos, speed):
+    def __init__(self, file_name, rect, frame_rate, start_pos):
         super(Player, self).__init__(file_name, rect, frame_rate)
         self.angle = 45
         self.power = 10
         self.vel = math.Vector2(0, 0)
-        self.speed = speed
+        self.speed = 5
         self.landed = True
         self.animations = {
             'idle': (self.sprite_sheet.load_strip(1, 0))
@@ -38,13 +38,21 @@ class Player(Animated_Sprite):
 
         :param keys: The keys that are currently being pressed.
         """
-        self.vel.x = 0
         if keys[K_LEFT]:
             if self.landed:
-                self.vel.x -= self.speed
+                self.vel.x = -self.speed
+            else:
+                self.vel.x = int(-(self.speed-3))
         elif keys[K_RIGHT]:
             if self.landed:
-                self.vel.x += self.speed
+                self.vel.x = self.speed
+            else:
+                self.vel.x = int(self.speed-3)
+
+        else:
+            if self.landed:
+                self.vel.x = int(self.vel.x/2)
+
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= 5
