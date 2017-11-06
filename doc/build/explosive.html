@@ -43,7 +43,7 @@
 <span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="explosive.Explosive">
-<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>size</em>, <em>pos</em>, <em>color</em>, <em>groups</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>file_name</em>, <em>rect</em>, <em>frame_rate</em>, <em>angle</em>, <em>pos</em>, <em>groups</em>, <em>power</em>, <em>damage</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="projectile.html#projectile.Projectile" title="projectile.Projectile"><code class="xref py py-class docutils literal"><span class="pre">projectile.Projectile</span></code></a></p>
 <p>A class for any weapon that has the ability to explode.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -51,9 +51,15 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>size</strong> – The size of the explosive weapon.</li>
+<li><strong>file_name</strong> – The file to load for the surface.</li>
+<li><strong>rect</strong> – The size of the explosive weapon.</li>
+<li><strong>frame_rate</strong> – The frame rate to play the animation at.</li>
+<li><strong>angle</strong> – Will get passed to projectile.</li>
 <li><strong>pos</strong> – The position of the explosive weapon.</li>
-<li><strong>color</strong> – The color of the explosive weapon.</li>
+<li><strong>groups</strong> – A sprite.Group of all player objects.</li>
+<li><strong>power</strong> – The launch power of the explosive weapon.</li>
+<li><strong>damage</strong> – The amount of damage the explosive does to a player</li>
+<li><strong>collidables</strong> – Sprites that the Explosive can collide with</li>
 </ul>
 </td>
 </tr>
@@ -61,7 +67,7 @@
 </table>
 <dl class="method">
 <dt id="explosive.Explosive.collision_check">
-<code class="descname">collision_check</code><span class="sig-paren">(</span><em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
+<code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="docutils">
 <dt>Looks to see if the explosive projectile has collided with anything.</dt>
 <dd>If it has, then remove the projectile, and draw an elipse to represent the blast

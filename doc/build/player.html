@@ -43,7 +43,7 @@
 <span id="player-module"></span><h1>player module<a class="headerlink" href="#module-player" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="player.Player">
-<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>file_name</em>, <em>rect</em>, <em>frame_rate</em>, <em>start_pos</em>, <em>speed</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>file_name</em>, <em>magic_file</em>, <em>sprite_size</em>, <em>frame_rate</em>, <em>start_pos</em>, <em>speed</em>, <em>groups</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="animated_sprite.html#animated_sprite.Animated_Sprite" title="animated_sprite.Animated_Sprite"><code class="xref py py-class docutils literal"><span class="pre">animated_sprite.Animated_Sprite</span></code></a></p>
 <p>Player class that the user will control.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -52,10 +52,12 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>file_name</strong> – The file to be used for the sprite sheet of player.</li>
-<li><strong>size</strong> – The size of the player sprite.</li>
+<li><strong>magic_file</strong> – The file to use for the sprite_sheet for the player’s Projectile.</li>
+<li><strong>sprite_size</strong> – The size of the player sprite.</li>
 <li><strong>frame_rate</strong> – The frame rate for the particular player character.</li>
 <li><strong>start_pos</strong> – Starting position for the Player.</li>
 <li><strong>speed</strong> – The speed of the player.</li>
+<li><strong>groups</strong> – Groups that the Player Sprite belongs to.</li>
 </ul>
 </td>
 </tr>
@@ -90,6 +92,45 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ground</strong> – The ground to stay within the bounds of.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.fire">
+<code class="descname">fire</code><span class="sig-paren">(</span><em>pos</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.fire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires A Projectile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pos</strong> – The angle to fire the projectile</li>
+<li><strong>collidables</strong> – The objects a projectile can collide with.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.set_angle">
+<code class="descname">set_angle</code><span class="sig-paren">(</span><em>(mouse_x</em>, <em>mouse_y)</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.set_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the angle of the player based on mouse position
+:param (mouse_x,mouse_y): A tuple containing the x and y coordinates of the mouse</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.take_damage">
+<code class="descname">take_damage</code><span class="sig-paren">(</span><em>damage</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.take_damage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Has a player take damage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>damage</strong> – How much damage to take.</td>
 </tr>
 </tbody>
 </table>
