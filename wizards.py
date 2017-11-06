@@ -34,19 +34,16 @@ statics = pg.sprite.Group(world)
 def check_keys():
     active_player = turn_handler.active_player
     for event in pg.event.get():
+        active_player.check_keys(pg.key.get_pressed())
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
         elif event.type is pg.KEYDOWN:
-            active_player.check_keys(pg.key.get_pressed())
             if event.key == pg.K_RETURN:
                 active_player.set_angle(pg.mouse.get_pos())
                 Explosive((16, 16), active_player.angle, active_player.rect.topright if active_player.angle <
                           90 else active_player.rect.topleft, pg.Color('green'), fallables, active_player.power)
                 active_player = turn_handler.switch_turns()
-        elif event.type is pg.KEYUP:
-            if event.key == pg.K_LEFT or event.key == pg.K_RIGHT:
-                active_player.vel.x = 0
 
 
 if __name__ == '__main__':

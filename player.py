@@ -31,12 +31,14 @@ class Player(Animated_Sprite):
         self.rect = self.image.get_rect(bottomleft=start_pos)
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()
+        self.projectile = None
 
     def check_keys(self, keys):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
         """
+        self.vel.x = 0
         if keys[K_LEFT]:
             if self.landed:
                 self.vel.x -= self.speed
@@ -46,6 +48,8 @@ class Player(Animated_Sprite):
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= 5
+        if keys[K_RETURN]:
+            pass
 
     def find_ground(self, ground):
         """Method to keep player within the bounds of the map.
@@ -64,12 +68,11 @@ class Player(Animated_Sprite):
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
-
-    def set_angle(self,(mouse_x, mouse_y)):
+    def set_angle(self, (mouse_x, mouse_y)):
         """Sets the angle of the player based on mouse position
             :param (mouse_x,mouse_y): A tuple containing the x and y coordinates of the mouse
         """
-        self.angle = MATH.atan2(self.rect.y - mouse_y,mouse_x - self.rect.x)
+        self.angle = MATH.atan2(self.rect.y - mouse_y, mouse_x - self.rect.x)
 
     def update(self, world):
         """ Update the Player
