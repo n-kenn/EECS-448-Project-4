@@ -49,9 +49,9 @@ def check_keys():
 def check_players():
     for i in range(len(players)):
         if not players[i].alive():
-            font = pg.font.SysFont('comicsansms', 48)
+            font = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 48)
             text = font.render(
-                'Winner: Player ' + '1' if i == 1 else '2', False, pg.Color('black'))
+                'Winner: Player ' + ('1' if i == 1 else '2'), False, pg.Color('black'))
             display.blit(text, text.get_rect(center=(width / 2, height / 2)))
 
 
