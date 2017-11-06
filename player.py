@@ -18,7 +18,7 @@ class Player(Animated_Sprite):
     :param groups: Groups that the Player Sprite belongs to.
     """
 
-    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, speed, groups):
+    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, groups):
         super(Player, self).__init__(
             file_name, sprite_size, frame_rate, groups)
         self.magic_file = magic_file
@@ -65,7 +65,7 @@ class Player(Animated_Sprite):
 
     def fire(self, pos, collidables):
         """Fires A Projectile
-        
+
         :param pos: The angle to fire the projectile
         :param collidables: The objects a projectile can collide with.
         """
