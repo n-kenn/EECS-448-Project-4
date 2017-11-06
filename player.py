@@ -10,7 +10,7 @@ class Player(Animated_Sprite):
     """ Player class that the user will control.
     """
 
-    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, speed, groups):
+    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, groups):
         """Initializes the Player class
             :param file_name: The file to be used for the sprite sheet of player.
             :param magic_file: The file to use for the sprite_sheet for the player's Projectile.

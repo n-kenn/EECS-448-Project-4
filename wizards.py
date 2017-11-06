@@ -19,10 +19,12 @@ world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground
     os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
 
 players = [
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(),
-           (0, 0, 32, 32), 5, world.ground.rect.topleft),
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(),
-           (0, 0, 32, 32), 5, world.ground.rect.topright)
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
+        'sprite_sheets', 'spiral.png')).convert_alpha(),
+           (0, 0, 32, 32), 5, world.ground.rect.topleft,()),
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
+        'sprite_sheets', 'spiral.png')).convert_alpha(),
+           (0, 0, 32, 32), 5, world.ground.rect.topright,())
 ]
 
 turn_handler = Turn_Handler(players)
@@ -46,11 +48,9 @@ def check_keys():
 def check_players():
     for i in range(0,2):
         if (not players[i].alive()):
-            fon = pg.font.SysFont("comicsansms",40)
             victor = "Player 1 wins" if i == 1 else "Player 2 wins"
-            display.blit(fon.render(victor, 0, pg.Color('black')),(10,10))
-            return True
-    return False
+            return (True,victor)
+    return (False,"")
 
 
 if __name__ == '__main__':
@@ -62,7 +62,10 @@ if __name__ == '__main__':
         statics.draw(display)
         fallables.draw(display)
         if not game_over:
-            game_over = check_players()
+            game_over,victory_message = check_players()
+        else:
+            font = pg.font.SysFont("comicsansms",40)
+            display.blit(font.render(victory_message, 0, pg.Color('black')),(10,10))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(FPS)
