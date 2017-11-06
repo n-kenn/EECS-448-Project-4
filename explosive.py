@@ -7,7 +7,7 @@ class Explosive(Projectile):
     """
 
     def __init__(self, file_name, rect, frame_rate, angle, pos, groups, power, damage, collidables):
-        """Initialize the Explosive weapon.
+        """Initializes the Explosive weapon.
             :param file_name: The file to load for the surface.
             :param rect: The size of the explosive weapon.
             :param frame_rate: The frame rate to play the animation at.
@@ -15,8 +15,8 @@ class Explosive(Projectile):
             :param pos: The position of the explosive weapon.
             :param groups: A sprite.Group of all player objects.
             :param power: The launch power of the explosive weapon.
-            :param damage: The amount of damage the explosive does to a player
-            :collidables: Sprites that the Explosive can collide with
+            :param damage: The amount of damage the explosive does to a player.
+            :collidables: Sprites that the Explosive can collide with.
         """
         super(Explosive, self).__init__(file_name, rect,
                                         frame_rate, angle, pos, power, groups)
