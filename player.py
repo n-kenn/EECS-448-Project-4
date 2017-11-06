@@ -53,7 +53,12 @@ class Player(Animated_Sprite):
     def fire(self, pos, collidables):
         self.set_angle(pos)
         self.explosive = Explosive(map(lambda x: x / 2, self.image.get_size(
-        )), self.angle, self.rect.midtop, Color('green'), self.groups(), self.power, collidables)
+        )), self.angle, self.rect.midtop, Color('green'), self.groups(), self.power, self.rect.width / 4, collidables)
+
+    def take_damage(self, damage):
+        self.health -= damage
+        if not self.health:
+            self.kill()
 
     def find_ground(self, ground):
         """Method to keep player within the bounds of the map.
@@ -83,8 +88,6 @@ class Player(Animated_Sprite):
 
         :param world: The world the player inhabits.
         """
-        if not self.health:
-            self.kill()
         super(Player, self).update()
         self.draw_health()
         self.vel.y += world.gravity
