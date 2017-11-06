@@ -6,7 +6,7 @@ Runs with python 2.7 and pygame 1.9.3
 
 To play, clone the repository and run the wizards script using
 
-<b>python wizards.py</b>
+<code>python wizards.py</code>
 
 Authors:
 
