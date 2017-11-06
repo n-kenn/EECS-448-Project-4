@@ -50,10 +50,10 @@ class Player(Animated_Sprite):
             self.landed = False
             self.vel.y -= 5
 
-    def fire(self, pos):
+    def fire(self, pos, collidables):
         self.set_angle(pos)
         self.explosive = Explosive(map(lambda x: x / 2, self.image.get_size(
-        )), self.angle, self.rect.midtop, Color('green'), self.groups(), self.power)
+        )), self.angle, self.rect.midtop, Color('green'), self.groups(), self.power, collidables)
 
     def find_ground(self, ground):
         """Method to keep player within the bounds of the map.
