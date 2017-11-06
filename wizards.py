@@ -21,10 +21,10 @@ world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground
 players = [
     Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
         'sprite_sheets', 'spiral.png')).convert_alpha(),
-           (0, 0, 32, 32), 5, world.ground.rect.topleft,()),
+        (0, 0, 32, 32), 5, world.ground.rect.topleft, ()),
     Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
         'sprite_sheets', 'spiral.png')).convert_alpha(),
-           (0, 0, 32, 32), 5, world.ground.rect.topright,())
+        (0, 0, 32, 32), 5, world.ground.rect.topright, ())
 ]
 
 turn_handler = Turn_Handler(players)
@@ -45,27 +45,28 @@ def check_keys():
                                world.ground, turn_handler.inactive_player])
             active_player = turn_handler.switch_turns()
 
+
 def check_players():
-    for i in range(0,2):
+    for i in range(0, 2):
         if (not players[i].alive()):
             victor = "Player 1 wins" if i == 1 else "Player 2 wins"
-            return (True,victor)
-    return (False,"")
+            return (True, victor)
+    return (False, "")
 
 
 if __name__ == '__main__':
     while True:
-        if not game_over:
-            check_keys()
+        check_keys()
         fallables.update(world)
         statics.update()
         statics.draw(display)
         fallables.draw(display)
         if not game_over:
-            game_over,victory_message = check_players()
+            game_over, victory_message = check_players()
         else:
-            font = pg.font.SysFont("comicsansms",40)
-            display.blit(font.render(victory_message, 0, pg.Color('black')),(10,10))
+            font = pg.font.SysFont("comicsansms", 40)
+            display.blit(font.render(victory_message, 0,
+                                     pg.Color('black')), (10, 10))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(FPS)
