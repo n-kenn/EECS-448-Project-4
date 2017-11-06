@@ -1,13 +1,19 @@
-from pygame import sprite, Surface, math, mask
+from pygame import math, mask
 from math import cos, sin
+from animated_sprite import Animated_Sprite
 
 
-class Projectile(sprite.Sprite):
-    def __init__(self, size, angle, pos, color, groups, power):
-        super(Projectile, self).__init__(groups)
+class Projectile(Animated_Sprite):
+    def __init__(self, file_name, rect, frame_rate, angle, pos, power, groups):
+        super(Projectile, self).__init__(
+            file_name, rect, frame_rate, groups)
+
+        self.animations = {
+            'flying': self.sprite_sheet.load_strip(4, 0)
+        }
+        self.current_animation = self.animations['flying']
+        self.image = self.current_animation[0]
         self.power = power
-        self.image = Surface(size).convert_alpha()
-        self.image.fill(color)
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=pos)
         self.vel = math.Vector2(
@@ -18,5 +24,6 @@ class Projectile(sprite.Sprite):
 
         :param world: The world the projectile exists in.
         """
+        super(Projectile, self).update()
         self.vel.y += world.gravity
         self.rect.move_ip(self.vel)

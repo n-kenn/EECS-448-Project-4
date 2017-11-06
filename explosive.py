@@ -6,15 +6,18 @@ class Explosive(Projectile):
     """ A class for any weapon that has the ability to explode.
     """
 
-    def __init__(self, size, angle, pos, color, groups, power, damage, collidables):
+    def __init__(self, file_name, rect, frame_rate, angle, pos, groups, power, damage, collidables):
         """Initialize the Explosive weapon.
            :param size: The size of the explosive weapon.
+           "param" angle: Will get passed to projectile.
            :param pos: The position of the explosive weapon.
-           :param color: The color of the explosive weapon.
            :param groups: A sprite.Group of all player objects.
            :param power: The launch power of the explosive weapon.
+           :param damage: The amount of damage the explosive does to a player
+           :collidables: Sprites that the Explosive can collide with
         """
-        super(Explosive, self).__init__(size, angle, pos, color, groups, power)
+        super(Explosive, self).__init__(file_name, rect,
+                                        frame_rate, angle, pos, power, groups)
         self.collidables = collidables
         self.damage = damage
 

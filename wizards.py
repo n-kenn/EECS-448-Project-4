@@ -19,10 +19,10 @@ world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground
     os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
 
 players = [
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(),
-           (0, 0, 32, 32), 5, world.ground.rect.topleft, 5),
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(),
-           (0, 0, 32, 32), 5, world.ground.rect.midtop, 5)
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
+        'sprite_sheets', 'spiral.png')).convert_alpha(), (0, 0, 32, 32), 5, world.ground.rect.topleft, 5, ()),
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
+        'sprite_sheets', 'spiral.png')).convert_alpha(), (0, 0, 32, 32), 5, world.ground.rect.midtop, 5, ())
 ]
 
 turn_handler = Turn_Handler(players)

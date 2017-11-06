@@ -17,8 +17,12 @@ class Player(Animated_Sprite):
 
     """
 
-    def __init__(self, file_name, rect, frame_rate, start_pos, speed):
-        super(Player, self).__init__(file_name, rect, frame_rate)
+    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, speed, groups):
+        super(Player, self).__init__(
+            file_name, sprite_size, frame_rate, groups)
+        self.magic_file = magic_file
+        self.sprite_size = sprite_size
+        self.frame_rate = frame_rate
         self.angle = 45
         self.power = 10
         self.vel = math.Vector2(0, 0)
@@ -41,19 +45,17 @@ class Player(Animated_Sprite):
         """
         self.vel.x = 0
         if keys[K_LEFT]:
-            if self.landed:
-                self.vel.x -= self.speed
+            self.vel.x -= self.speed
         elif keys[K_RIGHT]:
-            if self.landed:
-                self.vel.x += self.speed
+            self.vel.x += self.speed
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= 5
 
     def fire(self, pos, collidables):
         self.set_angle(pos)
-        self.explosive = Explosive(map(lambda x: x / 2, self.image.get_size(
-        )), self.angle, self.rect.midtop, Color('green'), self.groups(), self.power, self.rect.width / 4, collidables)
+        self.explosive = Explosive(self.magic_file, self.sprite_size, self.frame_rate, self.angle, self.rect.midtop, self.groups(
+        ), self.power, self.rect.width / 4, collidables)
 
     def take_damage(self, damage):
         self.health -= damage
