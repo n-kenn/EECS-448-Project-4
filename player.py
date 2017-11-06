@@ -10,7 +10,7 @@ class Player(Animated_Sprite):
     """ Player class that the user will control.
     """
 
-    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, speed, groups):
+    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, groups):
         """Initializes the Player class
             :param file_name: The file to be used for the sprite sheet of player.
             :param magic_file: The file to use for the sprite_sheet for the player's Projectile.
@@ -28,7 +28,7 @@ class Player(Animated_Sprite):
         self.angle = 45
         self.power = 10
         self.vel = math.Vector2(0, 0)
-        self.speed = speed
+        self.speed = 5
         self.landed = True
         self.animations = {
             'idle': (self.sprite_sheet.load_strip(1, 0))
@@ -45,11 +45,21 @@ class Player(Animated_Sprite):
 
         :param keys: The keys that are currently being pressed.
         """
-        self.vel.x = 0
         if keys[K_LEFT]:
-            self.vel.x -= self.speed
+            if self.landed:
+                self.vel.x = -self.speed
+            else:
+                self.vel.x = int(-(self.speed-3))
         elif keys[K_RIGHT]:
-            self.vel.x += self.speed
+            if self.landed:
+                self.vel.x = self.speed
+            else:
+                self.vel.x = int(self.speed-3)
+
+        else:
+            if self.landed:
+                self.vel.x = int(self.vel.x/2)
+
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= 5
