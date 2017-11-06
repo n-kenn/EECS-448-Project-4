@@ -47,11 +47,12 @@ def check_keys():
 
 
 def check_players():
-    for i in range(0, 2):
-        if (not players[i].alive()):
-            victor = "Player 1 wins" if i == 1 else "Player 2 wins"
-            return (True, victor)
-    return (False, "")
+    for i in range(len(players)):
+        if not players[i].alive():
+            font = pg.font.SysFont('comicsansms', 48)
+            text = font.render(
+                'Winner: Player ' + '1' if i == 1 else '2', False, pg.Color('black'))
+            display.blit(text, text.get_rect(center=(width / 2, height / 2)))
 
 
 if __name__ == '__main__':
@@ -61,12 +62,7 @@ if __name__ == '__main__':
         statics.update()
         statics.draw(display)
         fallables.draw(display)
-        if not game_over:
-            game_over, victory_message = check_players()
-        else:
-            font = pg.font.SysFont("comicsansms", 40)
-            display.blit(font.render(victory_message, 0,
-                                     pg.Color('black')), (10, 10))
+        check_players()
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(FPS)
