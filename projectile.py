@@ -3,9 +3,9 @@ from math import cos, sin
 
 
 class Projectile(sprite.Sprite):
-    def __init__(self, size, angle, pos, color, groups):
+    def __init__(self, size, angle, pos, color, groups, power):
         super(Projectile, self).__init__(groups)
-        self.power = 30
+        self.power = power
         self.image = Surface(size).convert_alpha()
         self.image.fill(color)
         self.mask = mask.from_surface(self.image)

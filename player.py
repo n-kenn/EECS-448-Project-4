@@ -1,4 +1,5 @@
-from pygame import Color, mask, math, sprite
+import math as MATH
+from pygame import Color, mask, sprite, math
 from pygame.locals import *
 from animated_sprite import Animated_Sprite
 
@@ -18,6 +19,7 @@ class Player(Animated_Sprite):
     def __init__(self, file_name, rect, frame_rate, start_pos, speed):
         super(Player, self).__init__(file_name, rect, frame_rate)
         self.angle = 45
+        self.power = 10
         self.vel = math.Vector2(0, 0)
         self.speed = speed
         self.landed = True
@@ -36,14 +38,14 @@ class Player(Animated_Sprite):
         :param keys: The keys that are currently being pressed.
         """
         if keys[K_LEFT]:
-            self.angle += 90
-            self.vel.x -= self.speed
+            if self.landed:
+                self.vel.x -= self.speed
         elif keys[K_RIGHT]:
-            self.angle -= 90
-            self.vel.x += self.speed
+            if self.landed:
+                self.vel.x += self.speed
         if keys[K_SPACE] and self.landed:
             self.landed = False
-            self.vel.y -= 30
+            self.vel.y -= 5
 
     def find_ground(self, ground):
         """Method to keep player within the bounds of the map.
@@ -61,6 +63,13 @@ class Player(Animated_Sprite):
         """
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
+
+
+    def set_angle(self,(mouse_x, mouse_y)):
+        """Sets the angle of the player based on mouse position
+            :param (mouse_x,mouse_y): A tuple containing the x and y coordinates of the mouse
+        """
+        self.angle = MATH.atan2(self.rect.y - mouse_y,mouse_x - self.rect.x)
 
     def update(self, world):
         """ Update the Player
