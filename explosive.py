@@ -29,7 +29,7 @@ class Explosive(Projectile):
             if (self.rect.colliderect(collidable.rect) and collidable is not self):
                 # then check for per pixel collision to make algorithm more efficient
 
-                if (sprite.collide_mask(self, collidable) is not None):
+                if (sprite.collide_mask(self, collidable)):
                     self.kill()
                     # ellipse is relative to the Surface being drawn on
                     draw.ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
