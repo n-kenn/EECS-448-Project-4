@@ -1,7 +1,8 @@
-import math as MATH
+from math import atan2
 from pygame import Color, mask, sprite, math
 from pygame.locals import *
 from animated_sprite import Animated_Sprite
+from explosive import Explosive
 
 
 class Player(Animated_Sprite):
@@ -56,8 +57,16 @@ class Player(Animated_Sprite):
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= 5
-        if keys[K_RETURN]:
-            pass
+
+    def fire(self, pos, collidables):
+        self.set_angle(pos)
+        self.explosive = Explosive(map(lambda x: x / 2, self.image.get_size(
+        )), self.angle, self.rect.midtop, Color('red'), self.groups(), self.power, self.rect.width / 4, collidables)
+
+    def take_damage(self, damage):
+        self.health -= damage
+        if not self.health:
+            self.kill()
 
     def find_ground(self, ground):
         """Method to keep player within the bounds of the map.
@@ -80,15 +89,13 @@ class Player(Animated_Sprite):
         """Sets the angle of the player based on mouse position
             :param (mouse_x,mouse_y): A tuple containing the x and y coordinates of the mouse
         """
-        self.angle = MATH.atan2(self.rect.y - mouse_y, mouse_x - self.rect.x)
+        self.angle = atan2(self.rect.y - mouse_y, mouse_x - self.rect.x)
 
     def update(self, world):
         """ Update the Player
 
         :param world: The world the player inhabits.
         """
-        if not self.health:
-            self.kill()
         super(Player, self).update()
         self.draw_health()
         self.vel.y += world.gravity

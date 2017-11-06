@@ -9,8 +9,7 @@ class Projectile(sprite.Sprite):
         self.image = Surface(size).convert_alpha()
         self.image.fill(color)
         self.mask = mask.from_surface(self.image)
-        self.rect = self.image.get_rect(
-            bottomleft=pos) if angle < 90 else self.image.get_rect(bottomright=pos)
+        self.rect = self.image.get_rect(midbottom=pos)
         self.vel = math.Vector2(
             self.power * cos(angle), -self.power * sin(angle))
 
