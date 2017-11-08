@@ -3,7 +3,7 @@ from projectile import Projectile
 
 
 class Explosive(Projectile):
-    """ A class for any weapon that has the ability to explode.
+    """A class for any weapon that has the ability to explode.
 
     :param file_name: The file to load for the surface.
     :param rect: The size of the explosive weapon.
@@ -24,7 +24,7 @@ class Explosive(Projectile):
         self.damage = damage
 
     def collision_check(self):
-        """ Looks to see if the explosive projectile has collided with anything.
+        """Looks to see if the explosive projectile has collided with anything.
             If it has, then remove the projectile, and draw an elipse to represent the blast
             of the explosion.
 

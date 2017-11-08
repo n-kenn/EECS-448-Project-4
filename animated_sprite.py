@@ -3,7 +3,7 @@ from sprite_sheet import Sprite_Sheet
 
 
 class Animated_Sprite(sprite.Sprite):
-    """ A sprite to be animated.
+    """A sprite to be animated.
 
     :param file_name: The file to be loaded for the image."
     :param rect: The rectangle for the animated sprite to fill.

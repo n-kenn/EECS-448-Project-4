@@ -2,7 +2,7 @@ import sys
 import os
 import pygame as pg
 from explosive import Explosive
-from turn_handler import Turn_Handler
+from game_handler import Game_Handler
 from ground import Ground
 from player import Player
 from world import World
@@ -14,7 +14,7 @@ FPS = 60
 pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
-game_over = False
+# game_over = False
 world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground(pg.image.load(
     os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
 
@@ -27,14 +27,14 @@ players = [
         (0, 0, 32, 32), 5, world.ground.rect.topright, ())
 ]
 
-turn_handler = Turn_Handler(players)
+game_handler = Game_Handler(players)
 
 fallables = pg.sprite.Group(players)
 statics = pg.sprite.Group(world)
 
 
 def check_keys():
-    active_player = turn_handler.active_player
+    active_player = game_handler.active_player
     active_player.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
         if event.type is pg.QUIT:
@@ -42,17 +42,8 @@ def check_keys():
             sys.exit()
         elif event.type is pg.MOUSEBUTTONDOWN:
             active_player.fire(pg.mouse.get_pos(), [
-                               world.ground, turn_handler.inactive_player])
-            active_player = turn_handler.switch_turns()
-
-
-def check_players():
-    for i in range(len(players)):
-        if not players[i].alive():
-            font = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 48)
-            text = font.render(
-                'Winner: Player ' + ('1' if i == 1 else '2'), False, pg.Color('black'))
-            display.blit(text, text.get_rect(center=(width / 2, height / 2)))
+                               world.ground, game_handler.inactive_player])
+            active_player = game_handler.switch_turns()
 
 
 if __name__ == '__main__':
@@ -62,7 +53,10 @@ if __name__ == '__main__':
         statics.update()
         statics.draw(display)
         fallables.draw(display)
-        check_players()
+        if game_handler.game_over():
+            font = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 64)
+            text = font.render(game_handler.winner, False, pg.Color('yellow'))
+            display.blit(text, text.get_rect(center=(width / 2, height / 2)))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(FPS)

@@ -2,7 +2,7 @@ from pygame import mask, sprite
 
 
 class Ground(sprite.Sprite):
-    """ The surface on which players can stand.
+    """The surface on which players can stand.
 
     :param Sprite: The reference of the sprite.
     :param image: Image to use.
@@ -18,6 +18,6 @@ class Ground(sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def update(self):
-        """ Update mask to compensate for explosions occuring.
+        """Update mask to compensate for explosions occuring.
         """
         self.mask = mask.from_surface(self.image)

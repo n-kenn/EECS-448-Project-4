@@ -7,7 +7,7 @@ from explosive import Explosive
 
 class Player(Animated_Sprite):
 
-    """ Player class that the user will control.
+    """Player class that the user will control.
 
     :param file_name: The file to be used for the sprite sheet of player.
     :param magic_file: The file to use for the sprite_sheet for the player's Projectile.
@@ -74,7 +74,7 @@ class Player(Animated_Sprite):
         ), self.power, self.rect.width / 4, collidables)
 
     def take_damage(self, damage):
-        """ Has a player take damage.
+        """Has a player take damage.
 
         :param damage: How much damage to take.
         """
@@ -106,7 +106,7 @@ class Player(Animated_Sprite):
         self.angle = atan2(self.rect.y - mouse_y, mouse_x - self.rect.x)
 
     def update(self, world):
-        """ Update the Player
+        """Update the Player
 
         :param world: The world the player inhabits.
         """
