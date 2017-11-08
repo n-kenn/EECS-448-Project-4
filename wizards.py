@@ -22,9 +22,9 @@ players = [
     Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
         'sprite_sheets', 'spiral.png')).convert_alpha(),
         (0, 0, 32, 32), 5, world.ground.rect.topleft, ()),
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
-        'sprite_sheets', 'spiral.png')).convert_alpha(),
-        (0, 0, 32, 32), 5, world.ground.rect.topright, ())
+Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
+    'sprite_sheets', 'spiral.png')).convert_alpha(),
+    (0, 0, 32, 32), 5, world.ground.rect.topright, ())
 ]
 
 game_handler = Game_Handler(players)
@@ -54,8 +54,7 @@ if __name__ == '__main__':
         statics.draw(display)
         fallables.draw(display)
         if game_handler.game_over():
-            font = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 64)
-            text = font.render(game_handler.winner, False, pg.Color('yellow'))
+            text = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 64).render(game_handler.winner, False, pg.Color('yellow'))
             display.blit(text, text.get_rect(center=(width / 2, height / 2)))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
