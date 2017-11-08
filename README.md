@@ -11,8 +11,13 @@ To play, clone the repository and run the wizards script using
 Authors:
 
 Josh Oertel
+
 oertelj@yahoo.com
+
 Tom Brooks
+
 t090b057@ku.edu
+
 Noah Kenn
+
 nkenn@ku.edu
