@@ -10,9 +10,9 @@ To play, clone the repository and run the wizards script using
 
 Authors:
 
-Josh Oertel
+Josh Oertel<br>
 oertelj@yahoo.com
-Tom Brooks
+Tom Brooks<br>
 t090b057@ku.edu
-Noah Kenn
+Noah Kenn<br>
 nkenn@ku.edu
