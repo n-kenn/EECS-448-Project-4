@@ -7,7 +7,6 @@ from explosive import Explosive
 from game_handler import Game_Handler
 from ground import Ground
 from player import Player
-from turn_handler import Turn_Handler
 from world import World
 
 width, height = 1024, 512

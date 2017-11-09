@@ -12,20 +12,20 @@ class Player(Animated_Sprite):
 
     """Player class that the user will control.
 
-    :param sprite_sheet: The image used for the sprite sheet of player.
     :param start_pos: Starting position for the Player.
     :param groups: Groups that the Player Sprite belongs to.
+    :param sheet: The image used for the sprite sheet of player.
     """
 
-    def __init__(self, sprite_sheet, start_pos, groups):
-        super(Player, self).__init__(sprite_sheet, 10, groups)
+    def __init__(self, sheet, start_pos, groups):
+        super(Player, self).__init__(10, groups, sheet)
         self.angle = None
-        self.power = 10
+        self.power, self.speed = 10, 4
         self.vel = math.Vector2(0, 0)
-        self.speed = 4
         self.landed = True
         self.animations = {
-            'idle': (self.sprite_sheet.load_strip(1, 0))
+            'idle': self.sprite_sheet.load_strip(1, 0),
+            'magic': self.sprite_sheet.load_strip(4, 1)
         }
         self.current_animation = cycle(self.animations['idle'])
         self.image = self.current_animation.next()
@@ -58,12 +58,12 @@ class Player(Animated_Sprite):
     def fire(self, pos, collidables):
         """Fires A Projectile
 
-        :param pos: The angle to fire the projectile
+        :param pos: The angle to fire the projectile.
         :param collidables: The objects a projectile can collide with.
         """
         self.set_angle(pos)
-        self.explosive = Explosive(self.magic_file, self.sprite_size, self.frame_rate, self.angle, self.rect.midtop, self.groups(
-        ), self.power, self.rect.width / 4, collidables)
+        self.explosive = Explosive(self.animations['magic'], self.rect.midtop,
+                                   self.angle, self.power, self.health / 4, collidables, self.groups())
 
     def take_damage(self, damage):
         """Has a player take damage.
@@ -91,11 +91,11 @@ class Player(Animated_Sprite):
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
-    def set_angle(self, (mouse_x, mouse_y)):
+    def set_angle(self, pos):
         """Sets the angle of the player based on mouse position
-            :param (mouse_x,mouse_y): A tuple containing the x and y coordinates of the mouse
+            :param pos: A tuple containing the x and y coordinates.
         """
-        self.angle = atan2(self.rect.y - mouse_y, mouse_x - self.rect.x)
+        self.angle = atan2(self.rect.y - pos[1], pos[0] - self.rect.x)
 
     def update(self, world):
         """Update the Player

@@ -13,9 +13,10 @@ class Animated_Sprite(sprite.Sprite):
     :param groups: Any groups that the sprite should be added to.
     """
 
-    def __init__(self, sheet, frame_rate, groups):
+    def __init__(self, frame_rate, groups, sheet=None):
         super(Animated_Sprite, self).__init__(groups)
-        self.sprite_sheet = Sprite_Sheet(sheet, (0, 0, 32, 32))
+        if sheet:
+            self.sprite_sheet = Sprite_Sheet(sheet, (0, 0, 32, 32))
         self.frame_rate = frame_rate
         self.frame_cycler = cycle(range(self.frame_rate))
 

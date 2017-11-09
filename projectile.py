@@ -1,3 +1,4 @@
+from itertools import cycle
 from math import cos, sin
 
 from pygame import mask, math
@@ -8,25 +9,20 @@ from animated_sprite import Animated_Sprite
 class Projectile(Animated_Sprite):
     """A Projectile used for weapons.
 
-    :param size: The size of the projectile.
-    :param pos: The position to be made at.
-    :param color: The color of the projectile.
+    :param strip: A list of surface images.
+    :param start_pos: The starting position for the projectile.
+    :param angle: Used to set the initial velocity.
+    :param power: Used to set the initial velocity.
+    :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, file_name, rect, frame_rate, angle, pos, power, groups):
-        super(Projectile, self).__init__(
-            file_name, rect, frame_rate, groups)
-
-        self.animations = {
-            'flying': self.sprite_sheet.load_strip(4, 0)
-        }
-        self.current_animation = self.animations['flying']
-        self.image = self.current_animation[0]
-        self.power = power
+    def __init__(self, strip, start_pos, angle, power, groups):
+        super(Projectile, self).__init__(10, groups)
+        self.current_animation = cycle(strip)
+        self.image = self.current_animation.next()
         self.mask = mask.from_surface(self.image)
-        self.rect = self.image.get_rect(midbottom=pos)
-        self.vel = math.Vector2(
-            self.power * cos(angle), -self.power * sin(angle))
+        self.rect = self.image.get_rect(midbottom=start_pos)
+        self.vel = math.Vector2(power * cos(angle), -power * sin(angle))
 
     def update(self, world):
         """Updates the projectile's position

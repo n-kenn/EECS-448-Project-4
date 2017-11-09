@@ -6,21 +6,18 @@ from projectile import Projectile
 class Explosive(Projectile):
     """A class for any weapon that has the ability to explode.
 
-    :param file_name: The file to load for the surface.
-    :param rect: The size of the explosive weapon.
-    :param frame_rate: The frame rate to play the animation at.
+    :param sheet: The file to load for the surface.
+    :param start_pos: Will get passed to projectile.
     :param angle: Will get passed to projectile.
-    :param pos: The position of the explosive weapon.
-    :param groups: A sprite.Group of all player objects.
     :param power: The launch power of the explosive weapon.
-    :param damage: The amount of damage the explosive does to a player
-    :param collidables: Sprites that the Explosive can collide with
+    :param damage: The amount of damage the explosive does to a player.
+    :param collidables: Sprites that the Explosive can collide with.
+    :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, file_name, rect, frame_rate, angle, pos, groups, power, damage, collidables):
+    def __init__(self, strip, start_pos, angle, power, damage, collidables, groups):
 
-        super(Explosive, self).__init__(file_name, rect,
-                                        frame_rate, angle, pos, power, groups)
+        super(Explosive, self).__init__(strip, start_pos, angle, power, groups)
         self.collidables = collidables
         self.damage = damage
 
@@ -28,24 +25,21 @@ class Explosive(Projectile):
         """Looks to see if the explosive projectile has collided with anything.
             If it has, then remove the projectile, and draw an elipse to represent the blast
             of the explosion.
-
-        :param collidables: The objects that an explosion can collide with.
         """
         # this will probably get refactored somehow.
         for collidable in self.collidables:
             # check for rectangular collision
-            if (self.rect.colliderect(collidable.rect) and collidable):
+            if self.rect.colliderect(collidable.rect):
                 # then check for per pixel collision to make algorithm more efficient
-
                 if (sprite.collide_mask(self, collidable)):
                     self.kill()
                     if collidable.__class__.__name__ is 'Ground':
                         # ellipse is relative to the Surface being drawn on
                         draw.ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
                             lambda x: x * 4, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
-                        break
                     elif collidable.__class__.__name__ is 'Player':
                         collidable.take_damage(self.damage)
+                    break
 
     def update(self, world):
         """Update the explosive weapon.
