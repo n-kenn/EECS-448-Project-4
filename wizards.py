@@ -31,7 +31,6 @@ game_handler = Game_Handler(players)
 fallables = pg.sprite.Group(players)
 statics = pg.sprite.Group(world)
 
-
 def check_keys():
     active_player = game_handler.active_player
     active_player.check_keys(pg.key.get_pressed())

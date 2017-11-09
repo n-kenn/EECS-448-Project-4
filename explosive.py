@@ -14,9 +14,9 @@ class Explosive(Projectile):
     :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, strip, start_pos, angle, power, collidables, groups):
+    def __init__(self, strip, start_pos, angle, collidables, groups):
 
-        super(Explosive, self).__init__(strip, start_pos, angle, power, groups)
+        super(Explosive, self).__init__(strip, start_pos, angle, 8, groups)
         self.collidables = collidables
         self.damage = 8
 

@@ -15,6 +15,8 @@ class Game_Handler:
         self.active_player, self.inactive_player = self.inactive_player, self.active_player
         return self.active_player
     def game_over(self):
+        """Checks to see if a player is no longer alive.
+        """
         for num, player in enumerate(self.players, 1):
             if not player.alive():
                 self.winner = 'Winner: Player ' + str(num)
