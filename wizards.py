@@ -1,12 +1,13 @@
-import sys
 import os
+import sys
+
 import pygame as pg
+
 from explosive import Explosive
-from turn_handler import Turn_Handler
 from ground import Ground
 from player import Player
+from turn_handler import Turn_Handler
 from world import World
-
 
 width, height = 1024, 512
 FPS = 60
@@ -14,17 +15,15 @@ FPS = 60
 pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
-game_over = False
+
 world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground(pg.image.load(
     os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
 
 players = [
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
-        'sprite_sheets', 'spiral.png')).convert_alpha(),
-        (0, 0, 32, 32), 5, world.ground.rect.topleft, ()),
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), pg.image.load(os.path.join(
-        'sprite_sheets', 'spiral.png')).convert_alpha(),
-        (0, 0, 32, 32), 5, world.ground.rect.topright, ())
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')
+                         ).convert_alpha(), world.ground.rect.topleft, ()),
+    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')
+                         ).convert_alpha(), world.ground.rect.topright, ())
 ]
 
 turn_handler = Turn_Handler(players)

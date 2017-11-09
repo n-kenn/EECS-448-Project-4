@@ -11,7 +11,6 @@ class Ground(sprite.Sprite):
     """
 
     def __init__(self, image, pos):
-
         super(Ground, self).__init__()
         self.image = image
         self.mask = mask.from_surface(self.image)

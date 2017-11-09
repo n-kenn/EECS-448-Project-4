@@ -1,6 +1,9 @@
+from itertools import cycle
 from math import atan2
-from pygame import Color, mask, sprite, math
+
+from pygame import Color, mask, math, sprite
 from pygame.locals import *
+
 from animated_sprite import Animated_Sprite
 from explosive import Explosive
 
@@ -9,31 +12,23 @@ class Player(Animated_Sprite):
 
     """ Player class that the user will control.
 
-    :param file_name: The file to be used for the sprite sheet of player.
-    :param magic_file: The file to use for the sprite_sheet for the player's Projectile.
-    :param sprite_size: The size of the player sprite.
-    :param frame_rate: The frame rate for the particular player character.
+    :param sprite_sheet: The image used for the sprite sheet of player.
     :param start_pos: Starting position for the Player.
-    :param speed: The speed of the player.
     :param groups: Groups that the Player Sprite belongs to.
     """
 
-    def __init__(self, file_name, magic_file, sprite_size, frame_rate, start_pos, groups):
-        super(Player, self).__init__(
-            file_name, sprite_size, frame_rate, groups)
-        self.magic_file = magic_file
-        self.sprite_size = sprite_size
-        self.frame_rate = frame_rate
-        self.angle = 45
+    def __init__(self, sprite_sheet, start_pos, groups):
+        super(Player, self).__init__(sprite_sheet, 10, groups)
+        self.angle = None
         self.power = 10
         self.vel = math.Vector2(0, 0)
-        self.speed = 5
+        self.speed = 4
         self.landed = True
         self.animations = {
             'idle': (self.sprite_sheet.load_strip(1, 0))
         }
-        self.current_animation = self.animations['idle']
-        self.image = self.current_animation[0].copy()
+        self.current_animation = cycle(self.animations['idle'])
+        self.image = self.current_animation.next()
         self.rect = self.image.get_rect(bottomleft=start_pos)
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()
@@ -44,24 +39,21 @@ class Player(Animated_Sprite):
 
         :param keys: The keys that are currently being pressed.
         """
+        self.vel.x = 0
         if keys[K_LEFT]:
             if self.landed:
                 self.vel.x = -self.speed
             else:
-                self.vel.x = int(-(self.speed-3))
+                self.vel.x = -self.speed // 2
         elif keys[K_RIGHT]:
             if self.landed:
                 self.vel.x = self.speed
             else:
-                self.vel.x = int(self.speed-3)
-
-        else:
-            if self.landed:
-                self.vel.x = int(self.vel.x/2)
+                self.vel.x = self.speed // 2
 
         if keys[K_SPACE] and self.landed:
             self.landed = False
-            self.vel.y -= 5
+            self.vel.y -= self.speed
 
     def fire(self, pos, collidables):
         """Fires A Projectile

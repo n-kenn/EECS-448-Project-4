@@ -1,5 +1,7 @@
-from pygame import math, mask
 from math import cos, sin
+
+from pygame import mask, math
+
 from animated_sprite import Animated_Sprite
 
 
@@ -10,6 +12,7 @@ class Projectile(Animated_Sprite):
     :param pos: The position to be made at.
     :param color: The color of the projectile.
     """
+
     def __init__(self, file_name, rect, frame_rate, angle, pos, power, groups):
         super(Projectile, self).__init__(
             file_name, rect, frame_rate, groups)
