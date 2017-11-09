@@ -1,27 +1,24 @@
+from itertools import cycle
+
 from pygame import sprite
+
 from sprite_sheet import Sprite_Sheet
 
 
 class Animated_Sprite(sprite.Sprite):
     """A sprite to be animated.
 
-    :param file_name: The file to be loaded for the image."
-    :param rect: The rectangle for the animated sprite to fill.
-    :param frame_rate: How quickly the next frame of animation is displayed.
-    :param colorkey: Initially set to unknown, but can be set later.
+    :param sheet: The file to be loaded for the spritesheet.
+    :frame_rate: The time to sycle to the next image in the sprite sheet.
+    :param groups: Any groups that the sprite should be added to.
     """
 
-    def __init__(self, image_file, rect, frame_rate, groups, colorkey=None):
+    def __init__(self, sheet, frame_rate, groups):
         super(Animated_Sprite, self).__init__(groups)
-        self.sprite_sheet = Sprite_Sheet(image_file, rect, colorkey)
-        self.index = 0
-        self.current_frame = 0
+        self.sprite_sheet = Sprite_Sheet(sheet, (0, 0, 32, 32))
         self.frame_rate = frame_rate
+        self.frame_cycler = cycle(range(self.frame_rate))
 
     def update(self):
-        self.current_frame += 1
-        if self.current_frame > self.frame_rate:
-            # next line keeps the index within the range of self.images
-            self.index = (self.index + 1) % len(self.current_animation)
-            self.image = self.current_animation[self.index].copy()
-            self.current_frame = 0
+        if self.frame_cycler.next() is self.frame_rate - 1:
+            self.image = self.current_animation.next()

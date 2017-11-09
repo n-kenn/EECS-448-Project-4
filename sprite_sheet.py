@@ -1,15 +1,13 @@
 class Sprite_Sheet:
     """Loads the Sprite Sheet Files.
-    
-    :param sheet: The file.
+
+    :param sheet: The image to use.
     :param rect: The size of the Sprite Sheet.
-    :param colorkey: The background of the images.
     """
-    
-    def __init__(self, sheet, rect, colorkey=None):
+
+    def __init__(self, sheet, rect):
         # loads the sprite sheet onto a surface
         self.sheet = sheet
-        self.sheet.set_colorkey(colorkey)
         self.rect = rect
 
     def get_images_at(self, rects):
@@ -23,7 +21,7 @@ class Sprite_Sheet:
     def load_strip(self, count, y_offset):
         """Returns a list of surfaces from a strip in the sprite sheet.
 
-        :param count: How many images are in the sprite sheet.
+        :param count: How many images are in the animation.
         :param y_offset: How far down in the sheet the images begin.
         """
         # returns a list of surfaces from a strip in the sprite sheet
