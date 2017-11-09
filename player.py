@@ -28,7 +28,7 @@ class Player(Animated_Sprite):
             'magic': self.sprite_sheet.load_strip(4, 1)
         }
         self.current_animation = cycle(self.animations['idle'])
-        self.image = self.current_animation.next()
+        self.image = self.current_animation.next().copy()
         self.rect = self.image.get_rect(bottomleft=start_pos)
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()

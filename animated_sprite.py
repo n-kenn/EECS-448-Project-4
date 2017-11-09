@@ -22,4 +22,4 @@ class Animated_Sprite(sprite.Sprite):
 
     def update(self):
         if self.frame_cycler.next() is self.frame_rate - 1:
-            self.image = self.current_animation.next()
+            self.image = self.current_animation.next().copy()
