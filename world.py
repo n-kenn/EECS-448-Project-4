@@ -5,7 +5,7 @@ class World(sprite.Sprite):
     """The world in the game.
 
     :param background: The background of the level.
-    :param ground: The ground in the game.
+    :param ground: The ground sprite in the game.
     :param gravity: The gravity in the world.
     """
 
