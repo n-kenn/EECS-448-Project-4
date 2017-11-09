@@ -16,20 +16,17 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
+
 world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground(pg.image.load(
     os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
 
-players = [
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')
-                         ).convert_alpha(), world.ground.rect.topleft, ()),
-    Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')
-                         ).convert_alpha(), world.ground.rect.topright, ())
-]
+statics = pg.sprite.LayeredUpdates(world)
+fallables = pg.sprite.LayeredUpdates()
+
+players = [Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), start_pos, fallables)
+    for start_pos in world.start_positions]
 
 game_handler = Game_Handler(players)
-
-fallables = pg.sprite.Group(players)
-statics = pg.sprite.Group(world)
 
 def check_keys():
     active_player = game_handler.active_player
