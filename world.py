@@ -5,7 +5,7 @@ class World(sprite.Sprite):
     """The world in the game.
 
     :param background: The background of the level.
-    :param ground: The ground in the game.
+    :param ground: The ground sprite in the game.
     :param gravity: The gravity in the world.
     """
 
@@ -16,6 +16,7 @@ class World(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.ground = ground
         self.gravity = gravity
+        self.start_positions = [self.ground.rect.topleft, self.ground.rect.topright]
 
     def update(self):
         """Updates the World
