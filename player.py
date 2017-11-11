@@ -49,7 +49,6 @@ class Player(Animated_Sprite):
                 self.vel.x = self.speed
             else:
                 self.vel.x = self.speed // 2
-
         if keys[K_SPACE] and self.landed:
             self.landed = False
             self.vel.y -= self.speed
@@ -71,7 +70,7 @@ class Player(Animated_Sprite):
         :param damage: How much damage to take.
         """
         self.health -= damage
-        if not self.health:
+        if self.health <= 0:
             self.kill()
 
     def find_ground(self, ground):
@@ -79,11 +78,8 @@ class Player(Animated_Sprite):
 
         :param ground: The ground to stay within the bounds of.
         """
-        if self.rect.colliderect(ground.rect):
-            if sprite.collide_mask(self, ground):
-                self.rect.move_ip(0, -self.vel.y)
-                self.vel.y = 0
-                self.landed = True
+        if self.mask.overlap(ground.mask, (ground.rect.left - self.rect.left, ground.rect.top - self.rect.top)):
+            self.vel.y = 0
 
     def draw_health(self):
         """Draws the health bar.
@@ -96,7 +92,6 @@ class Player(Animated_Sprite):
             :param pos: A tuple containing the x and y coordinates.
         """
         self.angle = atan2(self.rect.y - pos[1], pos[0] - self.rect.x)
-        print self.angle
 
     def update(self, world):
         """Update the Player
@@ -106,7 +101,7 @@ class Player(Animated_Sprite):
         super(Player, self).update()
         self.draw_health()
         self.vel.y += world.gravity
+        self.find_ground(world.ground)
         self.rect.move_ip(self.vel)
         self.vel.x = 0
-        self.find_ground(world.ground)
         self.rect.clamp_ip(world.rect)

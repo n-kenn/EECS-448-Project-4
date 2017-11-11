@@ -16,29 +16,26 @@ pg.init()
 display = pg.display.set_mode((width, height))
 clock = pg.time.Clock()
 
+world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(),
+              pg.image.load(os.path.join('images', 'ground.png')).convert_alpha(), 0.1)
 
-world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground(pg.image.load(
-    os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
+statics = pg.sprite.Group(world)
+fallables = pg.sprite.Group()
 
-statics = pg.sprite.LayeredUpdates(world)
-fallables = pg.sprite.LayeredUpdates()
+handler = Game_Handler([Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), start_pos, fallables)
+                        for start_pos in world.start_positions])
 
-players = [Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), start_pos, fallables)
-    for start_pos in world.start_positions]
-
-game_handler = Game_Handler(players)
 
 def check_keys():
-    active = game_handler.active
-    active.check_keys(pg.key.get_pressed())
+    handler.active.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
         elif event.type is pg.MOUSEBUTTONDOWN:
-            active.fire(pg.mouse.get_pos(), [
-                world.ground, game_handler.inactive])
-            game_handler.switch_turns()
+            handler.active.fire(pg.mouse.get_pos(), [
+                world.ground, handler.inactive])
+            handler.switch_turns()
 
 
 if __name__ == '__main__':
@@ -48,9 +45,9 @@ if __name__ == '__main__':
         statics.update()
         statics.draw(display)
         fallables.draw(display)
-        if game_handler.game_over():
+        if handler.game_over():
             text = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 64).render(
-                game_handler.winner, False, pg.Color('yellow'))
+                handler.winner, False, pg.Color('yellow'))
             display.blit(text, text.get_rect(center=(width / 2, height / 2)))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))

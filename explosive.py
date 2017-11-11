@@ -30,12 +30,13 @@ class Explosive(Projectile):
             # check for rectangular collision
             if self.rect.colliderect(collidable.rect):
                 # then check for per pixel collision to make algorithm more efficient
-                if (sprite.collide_mask(self, collidable)):
+                if (self.mask.overlap(collidable.mask, (collidable.rect.left - self.rect.left, collidable.rect.top - self.rect.top))):
                     self.kill()
                     if type(collidable).__name__ is 'Ground':
                         # ellipse is relative to the Surface being drawn on
                         draw.ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
                             lambda x: x * 4, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
+                        collidable.update()
                     elif type(collidable).__name__ is 'Player':
                         collidable.take_damage(self.damage)
                     break
@@ -45,7 +46,7 @@ class Explosive(Projectile):
         :param world: The world in which the explosive exists.
         """
         super(Explosive, self).update(world)
+        self.rect.move_ip((0, world.gravity))
         self.collision_check()
         if self.rect.left < world.rect.left or self.rect.right > world.rect.right:
             self.kill()
-        self.rect.move_ip((0, world.gravity))
