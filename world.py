@@ -7,7 +7,7 @@ class World(sprite.Sprite):
     """The world in the game.
 
     :param background_image: Surface image used for the background.
-    :param ground_images: Surface image used for the ground.
+    :param ground_image: Surface image used for the ground.
     :param gravity: The gravity in the world.
     """
 

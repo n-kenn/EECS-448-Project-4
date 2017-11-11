@@ -19,7 +19,6 @@ class Player(Animated_Sprite):
 
     def __init__(self, sheet, start_pos, groups):
         super(Player, self).__init__(10, groups, sheet)
-        self.angle = None
         self.speed = 4
         self.vel = math.Vector2(0, 0)
         self.landed = True
@@ -60,9 +59,8 @@ class Player(Animated_Sprite):
         :param collidables: The objects a projectile can collide with.
         """
         collidables.append(self)
-        self.set_angle(pos)
         self.explosive = Explosive(self.animations['magic'], self.rect.midtop,
-                                   self.angle, collidables, self.groups())
+                                   self.get_angle(pos), collidables, self.groups())
 
     def take_damage(self, damage):
         """Has a player take damage.
@@ -87,11 +85,11 @@ class Player(Animated_Sprite):
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
-    def set_angle(self, pos):
+    def get_angle(self, pos):
         """Sets the angle of the player based on mouse position
             :param pos: A tuple containing the x and y coordinates.
         """
-        self.angle = atan2(self.rect.y - pos[1], pos[0] - self.rect.x)
+        return atan2(self.rect.y - pos[1], pos[0] - self.rect.x)
 
     def update(self, world):
         """Update the Player
