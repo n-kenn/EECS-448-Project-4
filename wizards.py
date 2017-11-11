@@ -33,16 +33,16 @@ statics = pg.sprite.Group(world)
 
 
 def check_keys():
-    active_player = game_handler.active_player
-    active_player.check_keys(pg.key.get_pressed())
+    active = game_handler.active
+    active.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
             sys.exit()
         elif event.type is pg.MOUSEBUTTONDOWN:
-            active_player.fire(pg.mouse.get_pos(), [
-                               world.ground, game_handler.inactive_player])
-            active_player = game_handler.switch_turns()
+            active.fire(pg.mouse.get_pos(), [
+                world.ground, game_handler.inactive])
+            game_handler.switch_turns()
 
 
 if __name__ == '__main__':

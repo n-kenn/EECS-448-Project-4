@@ -15,11 +15,11 @@ class Explosive(Projectile):
     :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, strip, start_pos, angle, power, damage, collidables, groups):
+    def __init__(self, strip, start_pos, angle, power, collidables, groups):
 
         super(Explosive, self).__init__(strip, start_pos, angle, power, groups)
         self.collidables = collidables
-        self.damage = damage
+        self.damage = 8
 
     def collision_check(self):
         """Looks to see if the explosive projectile has collided with anything.

@@ -39,7 +39,6 @@ class Player(Animated_Sprite):
 
         :param keys: The keys that are currently being pressed.
         """
-        self.vel.x = 0
         if keys[K_LEFT]:
             if self.landed:
                 self.vel.x = -self.speed
@@ -63,7 +62,7 @@ class Player(Animated_Sprite):
         """
         self.set_angle(pos)
         self.explosive = Explosive(self.animations['magic'], self.rect.midtop,
-                                   self.angle, self.power, self.health / 4, collidables, self.groups())
+                                   self.angle, self.power, collidables, self.groups())
 
     def take_damage(self, damage):
         """Has a player take damage.
@@ -106,5 +105,6 @@ class Player(Animated_Sprite):
         self.draw_health()
         self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
+        self.vel.x = 0
         self.find_ground(world.ground)
         self.rect.clamp_ip(world.rect)
