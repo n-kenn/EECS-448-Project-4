@@ -1,5 +1,6 @@
 from itertools import cycle
 from math import atan2
+from operator import sub
 
 from pygame import Color, mask, math, sprite
 from pygame.locals import *
@@ -12,9 +13,9 @@ class Player(Animated_Sprite):
 
     """Player class that the user will control.
 
+    :param sheet: The image used for the sprite sheet of player.
     :param start_pos: Starting position for the Player.
     :param groups: Groups that the Player Sprite belongs to.
-    :param sheet: The image used for the sprite sheet of player.
     """
 
     def __init__(self, sheet, start_pos, groups):
@@ -50,8 +51,15 @@ class Player(Animated_Sprite):
             self.vel.x = -self.speed / 2 if self.vel.y else -self.speed
         elif keys[K_RIGHT]:
             self.vel.x = self.speed / 2 if self.vel.y else self.speed
+        else:
+            self.vel.x = 0
         if keys[K_SPACE] and not self.vel.y:
             self.vel.y -= self.speed
+
+    def check_slope(self, ground):
+        """Checks if the player can go up a slope or not by checking with masks.
+        """
+        pass
 
     def draw_health(self):
         """Draws the health bar.
@@ -66,8 +74,8 @@ class Player(Animated_Sprite):
         :param collidables: The objects a projectile can collide with.
         """
         collidables.append(self)
-        self.explosive = Explosive(self.animations['magic'], self.rect.midtop,
-                                   self.get_angle(pos), collidables, self.groups())
+        self.projectile = Explosive(self.animations['magic'], self.rect.midtop, self.get_angle(
+            pos), collidables, self.groups())
 
     def find_ground(self, ground):
         """Method to detect collision with the ground.
@@ -75,7 +83,7 @@ class Player(Animated_Sprite):
         :param ground: Ground surface to check collision with.
         """
 
-        if self.mask.overlap(ground.mask, (ground.rect.left - self.rect.left, ground.rect.top - self.rect.top)):
+        if self.mask.overlap(ground.mask, tuple(map(sub, ground.rect.topleft, self.rect.topleft))):
             self.vel.y = 0
 
     def get_angle(self, pos):
@@ -92,8 +100,13 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
-        self.rect.move_ip(self.vel)
-        self.vel.x = 0
+        self.check_slope(world.ground)
         self.vel.y += world.gravity
         self.find_ground(world.ground)
+        self.rect.move_ip(self.vel)
+        # self.vel.y += world.gravity
+        # self.check_slope(world.ground)
+        # self.find_ground(world.ground)
+        # self.rect.move_ip(self.vel)
+        # self.vel.x = 0
         self.rect.clamp_ip(world.rect)

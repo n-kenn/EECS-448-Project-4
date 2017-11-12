@@ -30,7 +30,7 @@ class Explosive(Projectile):
             # check for rectangular collision
             if self.rect.colliderect(collidable.rect):
                 # then check for per pixel collision to make algorithm more efficient
-                if (self.mask.overlap(collidable.mask, (collidable.rect.left - self.rect.left, collidable.rect.top - self.rect.top))):
+                if self.mask.overlap(collidable.mask, (collidable.rect.left - self.rect.left, collidable.rect.top - self.rect.top)):
                     self.kill()
                     if type(collidable).__name__ is 'Ground':
                         # ellipse is relative to the Surface being drawn on
@@ -48,5 +48,5 @@ class Explosive(Projectile):
         super(Explosive, self).update(world)
         self.rect.move_ip((0, world.gravity))
         self.collision_check()
-        if self.rect.left < world.rect.left or self.rect.right > world.rect.right:
+        if not world.rect.contains(self.rect):
             self.kill()

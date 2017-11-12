@@ -35,11 +35,11 @@ def check_keys():
         elif event.type is pg.MOUSEBUTTONDOWN:
             handler.active.fire(pg.mouse.get_pos(), [
                 world.ground, handler.inactive])
-            handler.switch_turns()
 
 
 if __name__ == '__main__':
     while True:
+        print len(fallables)
         check_keys()
         fallables.update(world)
         statics.update()
