@@ -38,7 +38,7 @@ class Explosive(Projectile):
                             lambda x: x * 4, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
                         collidable.update()
                     elif type(collidable).__name__ is 'Player':
-                        collidable.take_damage(self.damage)
+                        collidable.apply_damage(self.damage)
                     break
 
     def update(self, world):

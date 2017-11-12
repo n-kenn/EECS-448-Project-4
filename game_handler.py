@@ -9,11 +9,6 @@ class Game_Handler:
         self.active, self.inactive = self.players
         self.winner = None
 
-    def switch_turns(self):
-        """When a player's actions are done, switch active player.
-        """
-        self.active, self.inactive = self.inactive, self.active
-
     def game_over(self):
         """Returns true when one of the players has died.
         """
@@ -21,3 +16,8 @@ class Game_Handler:
             if not player.alive():
                 self.winner = 'Winner: Player {:d}'.format(num)
                 return True
+
+    def switch_turns(self):
+        """When a player's actions are done, switch active player.
+        """
+        self.active, self.inactive = self.inactive, self.active
