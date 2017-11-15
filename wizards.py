@@ -23,8 +23,8 @@ world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground
 statics = pg.sprite.LayeredUpdates(world)
 fallables = pg.sprite.LayeredUpdates()
 
-players = [Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), start_pos, fallables)
-    for start_pos in world.start_positions]
+players = [Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), (10,(height/2)-30), fallables),
+    Player(pg.image.load(os.path.join('sprite_sheets', 'clown.png')).convert_alpha(), (width - 50,(height/2)-30), fallables)]
 
 game_handler = Game_Handler(players)
 
