@@ -2,7 +2,7 @@ from itertools import cycle
 from math import atan2
 from operator import sub
 
-from pygame import Color, mask, math, sprite
+from pygame import Color, mask, math
 from pygame.locals import *
 
 from animated_sprite import Animated_Sprite
@@ -32,6 +32,7 @@ class Player(Animated_Sprite):
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()
         self.projectile = None
+        self.grounded = True
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -42,24 +43,31 @@ class Player(Animated_Sprite):
         if self.health <= 0:
             self.kill()
 
-    def check_keys(self, keys):
+    # def check_slope(self, ground, offset):
+    #     for i in range(self.speed):
+    #         if not self.mask.overlap(ground.mask, (ground.rect.left - self.rect.left + offset, ground.rect.top - self.rect.top - i)):
+    #             self.vel.y -= i
+    #             break
+    #     else:
+    #         self.vel.x = 0
+
+    def check_keys(self, keys, ground):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
         """
+        self.vel.x = 0
         if keys[K_LEFT]:
-            self.vel.x = -self.speed / 2 if self.vel.y else -self.speed
+            self.vel.x -= self.speed if self.grounded else self.speed / 2
+            # if self.grounded:
+            #     self.check_slope(ground, -self.speed)
         elif keys[K_RIGHT]:
-            self.vel.x = self.speed / 2 if self.vel.y else self.speed
-        else:
-            self.vel.x = 0
-        if keys[K_SPACE] and not self.vel.y:
-            self.vel.y -= self.speed
-
-    def check_slope(self, ground):
-        """Checks if the player can go up a slope or not by checking with masks.
-        """
-        pass
+            self.vel.x += self.speed if self.grounded else self.speed / 2
+            # if self.grounded:
+            #     self.check_slope(ground, self.speed)
+        if keys[K_SPACE] and self.grounded:
+            self.vel.y -= 2 * self.speed
+            self.grounded = False
 
     def draw_health(self):
         """Draws the health bar.
@@ -67,31 +75,22 @@ class Player(Animated_Sprite):
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
+    def fall(self, gravity, ground):
+        if self.mask.overlap(ground.mask, (ground.rect.left - self.rect.left, ground.rect.top - self.rect.top + gravity)):
+            self.vel.y = 0
+            self.grounded = True
+        else:
+            self.vel.y += gravity
+
     def fire(self, pos, collidables):
         """Fires A Projectile
 
-        :param pos: The angle to fire the projectile.
+        :param pos: The mouse position used to calculate the angle to fire the projectile.
         :param collidables: The objects a projectile can collide with.
         """
         collidables.append(self)
-        self.projectile = Explosive(self.animations['magic'], self.rect.midtop, self.get_angle(
-            pos), collidables, self.groups())
-
-    def find_ground(self, ground):
-        """Method to detect collision with the ground.
-
-        :param ground: Ground surface to check collision with.
-        """
-
-        if self.mask.overlap(ground.mask, tuple(map(sub, ground.rect.topleft, self.rect.topleft))):
-            self.vel.y = 0
-
-    def get_angle(self, pos):
-        """Sets the angle of the player based on mouse position
-
-        :param pos: A tuple containing the x and y coordinates.
-        """
-        return atan2(self.rect.y - pos[1], pos[0] - self.rect.x)
+        self.projectile = Explosive(self.animations['magic'], self.rect.midtop, atan2(
+            self.rect.y - pos[1], self.rect.x - pos[0]), collidables, self.groups())
 
     def update(self, world):
         """Update the Player
@@ -100,13 +99,6 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
-        self.check_slope(world.ground)
-        self.vel.y += world.gravity
-        self.find_ground(world.ground)
+        self.fall(world.gravity, world.ground)
         self.rect.move_ip(self.vel)
-        # self.vel.y += world.gravity
-        # self.check_slope(world.ground)
-        # self.find_ground(world.ground)
-        # self.rect.move_ip(self.vel)
-        # self.vel.x = 0
         self.rect.clamp_ip(world.rect)
