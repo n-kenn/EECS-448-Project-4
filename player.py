@@ -43,30 +43,20 @@ class Player(Animated_Sprite):
         if self.health <= 0:
             self.kill()
 
-    # def check_slope(self, ground, offset):
-    #     for i in range(self.speed):
-    #         if not self.mask.overlap(ground.mask, (ground.rect.left - self.rect.left + offset, ground.rect.top - self.rect.top - i)):
-    #             self.vel.y -= i
-    #             break
-    #     else:
-    #         self.vel.x = 0
+    def check_slope(self, ground, offset):
+        pass
 
-    def check_keys(self, keys, ground):
+    def check_keys(self, keys):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
         """
-        self.vel.x = 0
         if keys[K_LEFT]:
-            self.vel.x -= self.speed if self.grounded else self.speed / 2
-            # if self.grounded:
-            #     self.check_slope(ground, -self.speed)
+            self.vel.x -= self.speed
         elif keys[K_RIGHT]:
-            self.vel.x += self.speed if self.grounded else self.speed / 2
-            # if self.grounded:
-            #     self.check_slope(ground, self.speed)
+            self.vel.x += self.speed
         if keys[K_SPACE] and self.grounded:
-            self.vel.y -= 2 * self.speed
+            self.vel.y -= 4 * self.speed
             self.grounded = False
 
     def draw_health(self):
@@ -76,11 +66,7 @@ class Player(Animated_Sprite):
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
     def fall(self, gravity, ground):
-        if self.mask.overlap(ground.mask, (ground.rect.left - self.rect.left, ground.rect.top - self.rect.top + gravity)):
-            self.vel.y = 0
-            self.grounded = True
-        else:
-            self.vel.y += gravity
+        pass
 
     def fire(self, pos, collidables):
         """Fires A Projectile
@@ -88,7 +74,6 @@ class Player(Animated_Sprite):
         :param pos: The mouse position used to calculate the angle to fire the projectile.
         :param collidables: The objects a projectile can collide with.
         """
-        collidables.append(self)
         self.projectile = Explosive(self.animations['magic'], self.rect.midtop, atan2(
             self.rect.y - pos[1], self.rect.x - pos[0]), collidables, self.groups())
 
@@ -99,6 +84,4 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
-        self.fall(world.gravity, world.ground)
-        self.rect.move_ip(self.vel)
         self.rect.clamp_ip(world.rect)

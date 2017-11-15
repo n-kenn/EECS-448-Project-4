@@ -18,18 +18,18 @@ statics = pg.sprite.GroupSingle(world)
 fallables = pg.sprite.Group()
 
 handler = Game_Handler([Player(pg.image.load(path.join('sprite_sheets', 'wizard.png')).convert_alpha(), start_loc, fallables)
-                        for start_loc in world.start_locs])
+    for start_loc in world.start_locs], world)
 
 
 def check_keys():
-    handler.active.check_keys(pg.key.get_pressed(), world.ground)
+    handler.active.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
             exit()
         elif event.type is pg.MOUSEBUTTONDOWN:
-            handler.active.fire(pg.mouse.get_pos(), [
-                                world.ground, handler.inactive])
+            handler.active.fire(pg.mouse.get_pos(), handler.collidables)
+            handler.switch_turns()
 
 
 if __name__ == '__main__':

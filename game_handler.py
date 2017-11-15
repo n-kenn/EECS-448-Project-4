@@ -1,12 +1,19 @@
+from copy import copy
+from itertools import cycle
+
 class Game_Handler:
     """Handles Turns in the game.
 
     :param players: The players in the game.
+    :param world: A reference to the world.
     """
 
-    def __init__(self, players):
+    def __init__(self, players, world):
         self.players = players
-        self.active, self.inactive = self.players
+        self.collidables = copy(self.players)
+        self.collidables.append(world.ground)
+        self.player_cycler = cycle(self.players)
+        self.active = self.player_cycler.next()
         self.winner = None
 
     def game_over(self):
@@ -20,4 +27,4 @@ class Game_Handler:
     def switch_turns(self):
         """When a player's actions are done, switch active player.
         """
-        self.active, self.inactive = self.inactive, self.active
+        self.active = self.player_cycler.next()

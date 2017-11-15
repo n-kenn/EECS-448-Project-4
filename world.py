@@ -18,7 +18,7 @@ class World(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.ground = Ground(ground, self.rect.midleft)
         self.gravity = gravity
-        self.start_locs = [self.ground.rect.topleft, self.ground.rect.topright]
+        self.start_locs = [self.ground.rect.topleft, self.ground.rect.midtop, self.ground.rect.topright]
 
     def update(self):
         """Updates the World
