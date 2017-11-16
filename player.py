@@ -44,34 +44,47 @@ class Player(Animated_Sprite):
             self.kill()
 
     def adjust_height(self, ground, xoffset):
+        """Adjusts the height of the player to climb slopes.
+
+        :param ground: Reference to the ground.
+        :param xoffset: How many pixels the player wants to move left or right.
+        """
         for i in range(1, self.speed + 1):
             if not self.collide_ground(ground, (xoffset, -i)):
                 self.vel.y -= i
+                break
 
     def check_keys(self, keys, ground):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
+        :param ground: Reference to the ground to check collision.
         """
 
         if keys[K_LEFT]:
-            if not self.collide_ground(ground, (-self.speed, 0)):
-                self.vel.x -= self.speed
-            else:
+            if self.collide_ground(ground, (-self.speed, 0)):
                 self.adjust_height(ground, -self.speed)
-        elif keys[K_RIGHT]:
-            if not self.collide_ground(ground, (self.speed, 0)):
-                self.vel.x += self.speed
             else:
+                self.vel.x -= self.speed
+        elif keys[K_RIGHT]:
+            if self.collide_ground(ground, (self.speed, 0)):
                 self.adjust_height(ground, self.speed)
+            else:
+                self.vel.x += self.speed
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
     def collide_ground(self, ground, offset):
+        """Returns the point of collision between player and ground with the given offset.
+
+        :param ground: Ground reference.
+        :param offset: Tuple that offsets the player's mask.
+        """
         return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left + offset[0], self.rect.top - ground.rect.top + offset[1]))
 
     def draw_health(self):
         """Draws the health bar.
+
         """
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
@@ -85,9 +98,6 @@ class Player(Animated_Sprite):
         self.projectile = Explosive(self.animations['magic'], self.rect.midtop, atan2(
             self.rect.y - pos[1], self.rect.x - pos[0]), collidables, self.groups())
 
-    def grounded(self, ground, gravity):
-        return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left, self.rect.top - ground.rect.top + gravity))
-
     def update(self, world):
         """Update the Player
 
@@ -95,7 +105,7 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
-        if not self.grounded(world.ground, world.gravity):
+        if not self.collide_ground(world.ground, (0, world.gravity)):
             self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
         self.vel = math.Vector2(0, 0)
