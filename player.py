@@ -53,6 +53,8 @@ class Player(Animated_Sprite):
             if not self.collide_ground(ground, (xoffset, -i)):
                 self.vel.y -= i
                 break
+        else:
+            self.vel.x = 0
 
     def check_keys(self, keys, ground):
         """Perform actions based on what keys are pressed.
@@ -62,15 +64,13 @@ class Player(Animated_Sprite):
         """
 
         if keys[K_LEFT]:
+            self.vel.x -= self.speed
             if self.collide_ground(ground, (-self.speed, 0)):
                 self.adjust_height(ground, -self.speed)
-            else:
-                self.vel.x -= self.speed
         elif keys[K_RIGHT]:
+            self.vel.x += self.speed
             if self.collide_ground(ground, (self.speed, 0)):
                 self.adjust_height(ground, self.speed)
-            else:
-                self.vel.x += self.speed
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
