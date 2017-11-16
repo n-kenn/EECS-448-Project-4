@@ -15,11 +15,12 @@ class Player(Animated_Sprite):
 
     :param sheet: The image used for the sprite sheet of player.
     :param start_pos: Starting position for the Player.
-    :param groups: Groups that the Player Sprite belongs to.
+    :param groups: Groups that the Player Sprite gets added to.
     """
 
-    def __init__(self, sheet, start_pos, groups):
+    def __init__(self, sheet, start_pos, groups, name='Josh'):
         super(Player, self).__init__(10, groups, sheet)
+        self.name = name
         self.speed = 4
         self.vel = math.Vector2(0, 0)
         self.animations = {
@@ -32,7 +33,6 @@ class Player(Animated_Sprite):
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()
         self.projectile = None
-        self.grounded = True
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -43,30 +43,38 @@ class Player(Animated_Sprite):
         if self.health <= 0:
             self.kill()
 
-    def check_slope(self, ground, offset):
-        pass
+    def adjust_height(self, ground, xoffset):
+        for i in range(1, self.speed + 1):
+            if not self.collide_ground(ground, (xoffset, -i)):
+                self.vel.y -= i
 
-    def check_keys(self, keys):
+    def check_keys(self, keys, ground):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
         """
+
         if keys[K_LEFT]:
-            self.vel.x -= self.speed
+            if not self.collide_ground(ground, (-self.speed, 0)):
+                self.vel.x -= self.speed
+            else:
+                self.adjust_height(ground, -self.speed)
         elif keys[K_RIGHT]:
-            self.vel.x += self.speed
-        if keys[K_SPACE] and self.grounded:
-            self.vel.y -= 4 * self.speed
-            self.grounded = False
+            if not self.collide_ground(ground, (self.speed, 0)):
+                self.vel.x += self.speed
+            else:
+                self.adjust_height(ground, self.speed)
+        if keys[K_SPACE]:
+            self.vel.y -= self.speed
+
+    def collide_ground(self, ground, offset):
+        return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left + offset[0], self.rect.top - ground.rect.top + offset[1]))
 
     def draw_health(self):
         """Draws the health bar.
         """
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
-
-    def fall(self, gravity, ground):
-        pass
 
     def fire(self, pos, collidables):
         """Fires A Projectile
@@ -77,6 +85,9 @@ class Player(Animated_Sprite):
         self.projectile = Explosive(self.animations['magic'], self.rect.midtop, atan2(
             self.rect.y - pos[1], self.rect.x - pos[0]), collidables, self.groups())
 
+    def grounded(self, ground, gravity):
+        return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left, self.rect.top - ground.rect.top + gravity))
+
     def update(self, world):
         """Update the Player
 
@@ -84,4 +95,8 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
+        if not self.grounded(world.ground, world.gravity):
+            self.vel.y += world.gravity
+        self.rect.move_ip(self.vel)
+        self.vel = math.Vector2(0, 0)
         self.rect.clamp_ip(world.rect)

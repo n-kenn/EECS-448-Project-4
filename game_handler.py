@@ -1,28 +1,24 @@
-from copy import copy
 from itertools import cycle
 
-class Game_Handler:
-    """Handles Turns in the game.
 
-    :param players: The players in the game.
-    :param world: A reference to the world.
+class Game_Handler:
+    """Handles players in the game.
+
+    :param players: Players to keep track of.
     """
 
-    def __init__(self, players, world):
+    def __init__(self, players):
         self.players = players
-        self.collidables = copy(self.players)
-        self.collidables.append(world.ground)
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
         self.winner = None
 
     def game_over(self):
-        """Returns true when one of the players has died.
+        """Returns true when one player remains.
         """
-        for num, player in enumerate(self.players, 1):
-            if not player.alive():
-                self.winner = 'Winner: Player {:d}'.format(num)
-                return True
+        if len(self.players) is 1:
+            self.winner = 'Winner: ' + self.players.sprites()[0].name
+            return True
 
     def switch_turns(self):
         """When a player's actions are done, switch active player.

@@ -25,15 +25,11 @@ class Explosive(Projectile):
             If it has, then remove the projectile, and draw an elipse to represent the blast
             of the explosion.
         """
-        # this will probably get refactored somehow.
         for collidable in self.collidables:
-            # check for rectangular collision
             if self.rect.colliderect(collidable.rect):
-                # then check for per pixel collision to make algorithm more efficient
                 if self.mask.overlap(collidable.mask, tuple(map(sub, collidable.rect.topleft, self.rect.topleft))):
                     self.kill()
                     if type(collidable).__name__ is 'Ground':
-                        # ellipse is relative to the Surface being drawn on
                         draw.ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
                             lambda x: x * 4, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
                         collidable.update()
