@@ -12,17 +12,16 @@ class Projectile(Animated_Sprite):
     :param strip: A list of surface images.
     :param start_pos: The starting position for the projectile.
     :param angle: Used to set the initial velocity.
-    :param power: Used to set the initial velocity.
     :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, strip, start_pos, angle, power, groups):
+    def __init__(self, strip, start_pos, angle, groups):
         super(Projectile, self).__init__(10, groups)
         self.current_animation = cycle(strip)
         self.image = self.current_animation.next()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
-        self.vel = math.Vector2(power * cos(angle), -power * sin(angle))
+        self.vel = -10 * math.Vector2(cos(angle), sin(angle))
 
     def update(self, world):
         """Updates the projectile's position

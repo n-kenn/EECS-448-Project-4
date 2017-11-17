@@ -1,57 +1,54 @@
-import os
-import sys
+from os import path
+from sys import exit
 
 import pygame as pg
 
-from explosive import Explosive
 from game_handler import Game_Handler
-from ground import Ground
 from player import Player
 from world import World
 
-width, height = 1024, 512
-FPS = 60
-
 pg.init()
-display = pg.display.set_mode((width, height))
+display = pg.display.set_mode((1024, 512))
+
+images = {
+    'sky': pg.image.load(path.join('images', 'sky.png')).convert(),
+    'ground': pg.image.load(path.join('images', 'ground.png')).convert_alpha(),
+    'player_ss': pg.image.load(path.join('images', 'wizard_ss.png')).convert_alpha()
+}
+
+font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
+
 clock = pg.time.Clock()
+world = World(images['sky'], images['ground'])
+fallables = pg.sprite.Group()
+statics = pg.sprite.GroupSingle(world)
+handler = Game_Handler(pg.sprite.Group(
+    [Player(images['player_ss'], loc, fallables) for loc in world.start_locs]))
 
 
-world = World(pg.image.load(os.path.join('images', 'sky.png')).convert(), Ground(pg.image.load(
-    os.path.join('images', 'ground.png')).convert_alpha(), (display.get_rect().left, height / 2)), 0.1)
-
-statics = pg.sprite.LayeredUpdates(world)
-fallables = pg.sprite.LayeredUpdates()
-
-players = [Player(pg.image.load(os.path.join('sprite_sheets', 'wizard.png')).convert_alpha(), start_pos, fallables)
-    for start_pos in world.start_positions]
-
-game_handler = Game_Handler(players)
-
-def check_keys():
-    active_player = game_handler.active_player
-    active_player.check_keys(pg.key.get_pressed())
+def get_events():
+    handler.active.check_keys(pg.key.get_pressed(), world.ground)
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
-            sys.exit()
+            exit()
         elif event.type is pg.MOUSEBUTTONDOWN:
-            active_player.fire(pg.mouse.get_pos(), [
-                               world.ground, game_handler.inactive_player])
-            active_player = game_handler.switch_turns()
+            handler.active.fire(pg.mouse.get_pos(),
+                                handler.players.sprites() + [world.ground])
+            handler.switch_turns()
 
 
 if __name__ == '__main__':
     while True:
-        check_keys()
-        fallables.update(world)
+        get_events()
         statics.update()
+        fallables.update(world)
         statics.draw(display)
         fallables.draw(display)
-        if game_handler.game_over():
-            text = pg.font.Font(os.path.join('font', 'kindergarten.ttf'), 64).render(
-                game_handler.winner, False, pg.Color('yellow'))
-            display.blit(text, text.get_rect(center=(width / 2, height / 2)))
+        if handler.game_over():
+            text = font.render(handler.winner, False, pg.Color('yellow'))
+            display.blit(text, text.get_rect(
+                center=(map(lambda x: x / 2, display.get_size()))))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
-        clock.tick(FPS)
+        clock.tick(60)

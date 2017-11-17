@@ -8,9 +8,9 @@ from sprite_sheet import Sprite_Sheet
 class Animated_Sprite(sprite.Sprite):
     """A sprite to be animated.
 
-    :param sheet: The file to be loaded for the spritesheet.
-    :frame_rate: The time to sycle to the next image in the sprite sheet.
+    :param frame_rate: The time to sycle to the next image in the sprite sheet.
     :param groups: Any groups that the sprite should be added to.
+    :param sheet: The file to be loaded for the spritesheet.
     """
 
     def __init__(self, frame_rate, groups, sheet=None):

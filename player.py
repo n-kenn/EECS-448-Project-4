@@ -1,7 +1,8 @@
 from itertools import cycle
 from math import atan2
+from operator import sub
 
-from pygame import Color, mask, math, sprite
+from pygame import Color, mask, math
 from pygame.locals import *
 
 from animated_sprite import Animated_Sprite
@@ -12,17 +13,16 @@ class Player(Animated_Sprite):
 
     """Player class that the user will control.
 
-    :param start_pos: Starting position for the Player.
-    :param groups: Groups that the Player Sprite belongs to.
     :param sheet: The image used for the sprite sheet of player.
+    :param start_pos: Starting position for the Player.
+    :param groups: Groups that the Player Sprite gets added to.
     """
 
-    def __init__(self, sheet, start_pos, groups):
+    def __init__(self, sheet, start_pos, groups, name='Josh'):
         super(Player, self).__init__(10, groups, sheet)
-        self.angle = None
+        self.name = name
         self.speed = 4
         self.vel = math.Vector2(0, 0)
-        self.landed = True
         self.animations = {
             'idle': self.sprite_sheet.load_strip(1, 0),
             'magic': self.sprite_sheet.load_strip(4, 1)
@@ -34,69 +34,69 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
         self.projectile = None
 
-    def check_keys(self, keys):
-        """Perform actions based on what keys are pressed.
-
-        :param keys: The keys that are currently being pressed.
-        """
-        if keys[K_LEFT]:
-            if self.landed:
-                self.vel.x = -self.speed
-            else:
-                self.vel.x = -self.speed // 2
-        elif keys[K_RIGHT]:
-            if self.landed:
-                self.vel.x = self.speed
-            else:
-                self.vel.x = self.speed // 2
-
-        if keys[K_SPACE] and self.landed:
-            self.landed = False
-            self.vel.y -= self.speed
-
-    def fire(self, pos, collidables):
-        """Fires A Projectile
-
-        :param pos: The angle to fire the projectile.
-        :param collidables: The objects a projectile can collide with.
-        """
-        collidables.append(self)
-        self.set_angle(pos)
-        self.explosive = Explosive(self.animations['magic'], self.rect.midtop,
-                                   self.angle, collidables, self.groups())
-
-    def take_damage(self, damage):
+    def apply_damage(self, damage):
         """Has a player take damage.
 
         :param damage: How much damage to take.
         """
         self.health -= damage
-        if not self.health:
+        if self.health <= 0:
             self.kill()
 
-    def find_ground(self, ground):
-        """Method to keep player within the bounds of the map.
+    def adjust_height(self, ground, xoffset):
+        """Adjusts the height of the player to climb slopes.
 
-        :param ground: The ground to stay within the bounds of.
+        :param ground: Reference to the ground.
+        :param xoffset: How many pixels the player wants to move left or right.
         """
-        if self.rect.colliderect(ground.rect):
-            if sprite.collide_mask(self, ground):
-                self.rect.move_ip(0, -self.vel.y)
-                self.vel.y = 0
-                self.landed = True
+        for i in range(1, self.speed + 1):
+            if not self.collide_ground(ground, (xoffset, -i)):
+                self.vel.y -= i
+                break
+        else:
+            self.vel.x = 0
+
+    def check_keys(self, keys, ground):
+        """Perform actions based on what keys are pressed.
+
+        :param keys: The keys that are currently being pressed.
+        :param ground: Reference to the ground to check collision.
+        """
+
+        if keys[K_LEFT]:
+            self.vel.x -= self.speed
+            if self.collide_ground(ground, (-self.speed, 0)):
+                self.adjust_height(ground, -self.speed)
+        elif keys[K_RIGHT]:
+            self.vel.x += self.speed
+            if self.collide_ground(ground, (self.speed, 0)):
+                self.adjust_height(ground, self.speed)
+        if keys[K_SPACE]:
+            self.vel.y -= self.speed
+
+    def collide_ground(self, ground, offset):
+        """Returns the point of collision between player and ground with the given offset.
+
+        :param ground: Ground reference.
+        :param offset: Tuple that offsets the player's mask.
+        """
+        return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left + offset[0], self.rect.top - ground.rect.top + offset[1]))
 
     def draw_health(self):
         """Draws the health bar.
+
         """
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
-    def set_angle(self, pos):
-        """Sets the angle of the player based on mouse position
-            :param pos: A tuple containing the x and y coordinates.
+    def fire(self, pos, collidables):
+        """Fires A Projectile
+
+        :param pos: The mouse position used to calculate the angle to fire the projectile.
+        :param collidables: The objects a projectile can collide with.
         """
-        self.angle = atan2(self.rect.y - pos[1], pos[0] - self.rect.x)
-        print self.angle
+        self.projectile = Explosive(self.animations['magic'], self.rect.midtop, atan2(
+            self.rect.y - pos[1], self.rect.x - pos[0]), collidables, self.groups())
 
     def update(self, world):
         """Update the Player
@@ -105,8 +105,8 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
-        self.vel.y += world.gravity
+        if not self.collide_ground(world.ground, (0, world.gravity)):
+            self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
-        self.vel.x = 0
-        self.find_ground(world.ground)
+        self.vel = math.Vector2(0, 0)
         self.rect.clamp_ip(world.rect)
