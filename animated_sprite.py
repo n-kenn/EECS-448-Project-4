@@ -14,7 +14,7 @@ class Animated_Sprite(sprite.Sprite):
     def __init__(self, sheet=None, frame_rate=10):
         super(Animated_Sprite, self).__init__()
         if sheet:
-            self.sprite_sheet = Sprite_Sheet(sheet, (0, 0, 32, 32))
+            self.sheet = Sprite_Sheet(sheet, (0, 0, 32, 32))
         self.frame_rate = frame_rate
         self.frame_cycler = cycle(range(self.frame_rate))
 
@@ -22,4 +22,4 @@ class Animated_Sprite(sprite.Sprite):
         """Cycles through a frame_counter and updates the sprite's image when time.
         """
         if self.frame_cycler.next() is self.frame_rate - 1:
-            self.image = self.current_animation.next().copy()
+            self.image = self.current_anim.next().copy()

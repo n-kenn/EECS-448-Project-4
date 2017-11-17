@@ -23,12 +23,14 @@ class Player(Animated_Sprite):
         self.name = name
         self.speed = 4
         self.vel = math.Vector2(0, 0)
-        self.animations = {
-            'idle': self.sprite_sheet.load_strip(1, 0),
-            'magic': self.sprite_sheet.load_strip(4, 1)
+        self.anims = {
+            'idle': self.sheet.load_strip(0, 1),
+            'walking_r': self.sheet.load_strip(1, 3),
+            'walking_l': self.sheet.load_strip(2, 3),
+            'magic': self.sheet.load_strip(3, 4)
         }
-        self.current_animation = cycle(self.animations['idle'])
-        self.image = self.current_animation.next().copy()
+        self.current_anim = cycle(self.anims['idle'])
+        self.image = self.current_anim.next().copy()
         self.rect = self.image.get_rect(bottomleft=start_pos)
         self.mask = mask.from_surface(self.image)
         self.health = self.image.get_width()
@@ -63,13 +65,18 @@ class Player(Animated_Sprite):
         :param ground: Reference to the ground to check collision.
         """
         if keys[K_LEFT]:
+            self.current_anim = cycle(self.anims['walking_l'])
             self.vel.x -= self.speed
             if self.collide_ground(ground, (-self.speed, 0)):
                 self.adjust_height(ground, -self.speed)
         elif keys[K_RIGHT]:
+            self.current_anim = cycle(self.anims['walking_r'])
             self.vel.x += self.speed
             if self.collide_ground(ground, (self.speed, 0)):
                 self.adjust_height(ground, self.speed)
+        else:
+            self.current_anim = cycle(self.anims['idle'])
+
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
@@ -101,7 +108,7 @@ class Player(Animated_Sprite):
         :param collidables: The objects a projectile can collide with.
         """
         if not self.projectile:
-            self.projectile = GroupSingle(Explosive(self.animations['magic'],
+            self.projectile = GroupSingle(Explosive(self.anims['magic'],
                                                     self.rect.midtop,
                                                     self.calc_angle(mouse_pos),
                                                     collidables))

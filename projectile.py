@@ -17,8 +17,8 @@ class Projectile(Animated_Sprite):
 
     def __init__(self, strip, start_pos, angle):
         super(Projectile, self).__init__()
-        self.current_animation = cycle(strip)
-        self.image = self.current_animation.next()
+        self.image = strip[0].copy()
+        self.current_anim = cycle(strip)
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
         self.vel = -10 * math.Vector2(cos(angle), sin(angle))
