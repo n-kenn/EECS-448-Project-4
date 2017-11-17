@@ -13,7 +13,7 @@ display = pg.display.set_mode((1024, 512))
 images = {
     'sky': pg.image.load(path.join('images', 'sky.png')).convert(),
     'ground': pg.image.load(path.join('images', 'ground.png')).convert_alpha(),
-    'player_ss': pg.image.load(path.join('sprite_sheets', 'wizard.png')).convert_alpha()
+    'player_ss': pg.image.load(path.join('images', 'wizard_ss.png')).convert_alpha()
 }
 
 font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
