@@ -1,9 +1,9 @@
 from itertools import cycle
 from math import atan2
-from operator import sub
 
 from pygame import Color, mask, math
 from pygame.locals import *
+from pygame.sprite import GroupSingle
 
 from animated_sprite import Animated_Sprite
 from explosive import Explosive
@@ -15,11 +15,11 @@ class Player(Animated_Sprite):
 
     :param sheet: The image used for the sprite sheet of player.
     :param start_pos: Starting position for the Player.
-    :param groups: Groups that the Player Sprite gets added to.
+    :param name: String of the player name.
     """
 
-    def __init__(self, sheet, start_pos, groups, name='Josh'):
-        super(Player, self).__init__(10, groups, sheet)
+    def __init__(self, sheet, start_pos, name='Josh'):
+        super(Player, self).__init__(sheet)
         self.name = name
         self.speed = 4
         self.vel = math.Vector2(0, 0)
@@ -62,7 +62,6 @@ class Player(Animated_Sprite):
         :param keys: The keys that are currently being pressed.
         :param ground: Reference to the ground to check collision.
         """
-
         if keys[K_LEFT]:
             self.vel.x -= self.speed
             if self.collide_ground(ground, (-self.speed, 0)):
@@ -82,6 +81,12 @@ class Player(Animated_Sprite):
         """
         return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left + offset[0], self.rect.top - ground.rect.top + offset[1]))
 
+    def calc_angle(self, pos):
+        """Helper function to calculate angle of trajectory for projectile.
+        :param pos: Position of mouse.
+        """
+        return atan2(self.rect.y - pos[1], self.rect.x - pos[0])
+
     def draw_health(self):
         """Draws the health bar.
 
@@ -89,14 +94,17 @@ class Player(Animated_Sprite):
         self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
             'green'), ((self.image.get_rect().topleft), (self.health, 4)))
 
-    def fire(self, pos, collidables):
+    def fire(self, mouse_pos, collidables):
         """Fires A Projectile
 
-        :param pos: The mouse position used to calculate the angle to fire the projectile.
+        :param mouse_pos: The mouse position used to calculate the angle to fire the projectile.
         :param collidables: The objects a projectile can collide with.
         """
-        self.projectile = Explosive(self.animations['magic'], self.rect.midtop, atan2(
-            self.rect.y - pos[1], self.rect.x - pos[0]), collidables, self.groups())
+        if not self.projectile:
+            self.projectile = GroupSingle(Explosive(self.animations['magic'],
+                                                    self.rect.midtop,
+                                                    self.calc_angle(mouse_pos),
+                                                    collidables))
 
     def update(self, world):
         """Update the Player
@@ -105,6 +113,9 @@ class Player(Animated_Sprite):
         """
         super(Player, self).update()
         self.draw_health()
+        if self.projectile:
+            self.projectile.update(world)
+            self.projectile.draw(world.image)
         if not self.collide_ground(world.ground, (0, world.gravity)):
             self.vel.y += world.gravity
         self.rect.move_ip(self.vel)

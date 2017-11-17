@@ -15,8 +15,8 @@ class Projectile(Animated_Sprite):
     :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, strip, start_pos, angle, groups):
-        super(Projectile, self).__init__(10, groups)
+    def __init__(self, strip, start_pos, angle):
+        super(Projectile, self).__init__()
         self.current_animation = cycle(strip)
         self.image = self.current_animation.next()
         self.mask = mask.from_surface(self.image)
@@ -31,3 +31,5 @@ class Projectile(Animated_Sprite):
         super(Projectile, self).update()
         self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
+        if not world.rect.contains(self.rect):
+            self.kill()

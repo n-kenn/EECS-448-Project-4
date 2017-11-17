@@ -12,11 +12,10 @@ class Explosive(Projectile):
     :param start_pos: Will get passed to projectile.
     :param angle: Will get passed to projectile.
     :param collidables: Sprites that the Explosive can collide with.
-    :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, strip, start_pos, angle, collidables, groups):
-        super(Explosive, self).__init__(strip, start_pos, angle, groups)
+    def __init__(self, strip, start_pos, angle, collidables):
+        super(Explosive, self).__init__(strip, start_pos, angle)
         self.collidables = collidables
         self.damage = 8
 
@@ -43,5 +42,3 @@ class Explosive(Projectile):
         """
         super(Explosive, self).update(world)
         self.collision_check()
-        if not world.rect.contains(self.rect):
-            self.kill()

@@ -3,8 +3,7 @@ from sys import exit
 
 import pygame as pg
 
-from game_handler import Game_Handler
-from player import Player
+from player_handler import Player_Handler
 from world import World
 
 pg.init()
@@ -17,13 +16,9 @@ images = {
 }
 
 font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
-
 clock = pg.time.Clock()
 world = World(images['sky'], images['ground'])
-fallables = pg.sprite.Group()
-statics = pg.sprite.GroupSingle(world)
-handler = Game_Handler(pg.sprite.Group(
-    [Player(images['player_ss'], loc, fallables) for loc in world.start_locs]))
+handler = Player_Handler(images['player_ss'], world.start_locs)
 
 
 def get_events():
@@ -41,14 +36,16 @@ def get_events():
 if __name__ == '__main__':
     while True:
         get_events()
-        statics.update()
-        fallables.update(world)
-        statics.draw(display)
-        fallables.draw(display)
+        world.update()
+        handler.update(world)
+        world.draw(display)
+        handler.draw_players(display)
         if handler.game_over():
-            text = font.render(handler.winner, False, pg.Color('yellow'))
-            display.blit(text, text.get_rect(
-                center=(map(lambda x: x / 2, display.get_size()))))
+            text = font.render('Winner: ' + handler.active.name,
+                               False,
+                               pg.Color('yellow'))
+            display.blit(text,
+                         text.get_rect(center=(display.get_rect().center)))
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(60)

@@ -18,12 +18,15 @@ class World(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.ground = Ground(ground, self.rect.midleft)
         self.gravity = gravity
-        self.start_locs = [self.ground.rect.topleft]
-        #    self.ground.rect.midtop,
-        #    self.ground.rect.topright]
+        self.start_locs = [self.ground.rect.topleft,
+                           self.ground.rect.midtop,
+                           self.ground.rect.topright]
+
+    def draw(self, display):
+        display.blit(self.image, (0, 0))
 
     def update(self):
-        """Updates the World
+        """Resets the image and blits any changes to the ground to the image.
         """
         self.image = self.background.copy()
         self.image.blit(self.ground.image, self.rect.midleft)
