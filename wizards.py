@@ -32,7 +32,6 @@ def get_events():
                                 handler.players.sprites() + [world.ground])
             handler.switch_turns()
 
-
 if __name__ == '__main__':
     while True:
         get_events()

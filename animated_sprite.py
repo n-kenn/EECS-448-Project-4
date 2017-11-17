@@ -22,4 +22,4 @@ class Animated_Sprite(sprite.Sprite):
         """Cycles through a frame_counter and updates the sprite's image when time.
         """
         if self.frame_cycler.next() is self.frame_rate - 1:
-            self.image = self.current_anim.next().copy()
+            self.image = self.current_anim.next().copy

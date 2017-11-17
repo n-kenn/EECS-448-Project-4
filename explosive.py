@@ -1,6 +1,6 @@
 from operator import sub
 
-from pygame import draw
+from pygame.draw import ellipse
 
 from projectile import Projectile
 
@@ -29,7 +29,7 @@ class Explosive(Projectile):
                 if self.mask.overlap(collidable.mask, tuple(map(sub, collidable.rect.topleft, self.rect.topleft))):
                     self.kill()
                     if type(collidable).__name__ is 'Ground':
-                        draw.ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
+                        ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
                             lambda x: x * 4, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
                         collidable.update()
                     elif type(collidable).__name__ is 'Player':

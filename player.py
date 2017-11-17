@@ -76,7 +76,6 @@ class Player(Animated_Sprite):
                 self.adjust_height(ground, self.speed)
         else:
             self.current_anim = cycle(self.anims['idle'])
-
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
