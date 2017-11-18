@@ -19,7 +19,6 @@ class Handler:
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
         self.world = world
-        print self.world.ground
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
