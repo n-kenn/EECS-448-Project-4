@@ -15,9 +15,9 @@ class Projectile(Animated_Sprite):
     """
 
     def __init__(self, anim, start_pos, angle):
-        super(Projectile, self).__init__()
-        self.current_anim = anim
-        self.image = self.current_anim.next()
+        super(Projectile, self).__init__(None, 5)
+        self.curr_anim = anim
+        self.image = self.curr_anim.next()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
         self.vel = -10 * math.Vector2(cos(angle), sin(angle))

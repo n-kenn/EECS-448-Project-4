@@ -24,14 +24,15 @@ class Player(Animated_Sprite):
         super(Player, self).__init__(sheet)
         self.speed = speed
         self.vel = math.Vector2(0, 0)
-        self.anims = {
-            'idle': self.sheet.load_strip(0, 1),
-            'walking_r': self.sheet.load_strip(1, 4),
-            'walking_l': self.sheet.load_strip(2, 4),
+        self.strips = {
+            'idle': self.sheet.load_strip(0, 6),
+            'walking_r': self.sheet.load_strip(1, 6),
+            'walking_l': self.sheet.load_strip(2, 6),
             'magic': self.sheet.load_strip(3, 4)
         }
-        self.current_anim = cycle(self.anims['idle'])
-        self.image = self.current_anim.next().copy()
+        self.curr_strip = self.strips['idle']
+        self.curr_anim = cycle(self.curr_strip)
+        self.image = self.curr_anim.next().copy()
         self.mask = mask.from_surface(self.image)
         self.ground = ground
         self.rect = self.image.get_rect(bottomleft=start_pos)
@@ -63,12 +64,16 @@ class Player(Animated_Sprite):
     def check_keys(self, keys):
         """Perform actions based on what keys are pressed.
 
-        :param keys: The keys that are currently being pressed.
+        :param keys: The keys that are currly being pressed.
         """
         if keys[K_LEFT]:
-            self.transition(self.anims['walking_l'], -self.speed)
+            self.transition(self.strips['walking_l'], -self.speed)
         elif keys[K_RIGHT]:
-            self.transition(self.anims['walking_r'], self.speed)
+            self.transition(self.strips['walking_r'], self.speed)
+        else:
+            if self.curr_strip is not self.strips['idle']:
+                self.curr_strip = self.strips['idle']
+                self.curr_anim = cycle(self.curr_strip)
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
@@ -102,18 +107,20 @@ class Player(Animated_Sprite):
         :param collidables: The objects a projectile can collide with.
         """
         if not self.projectile:
-            self.projectile = GroupSingle(Explosive(cycle(self.anims['magic']),
+            self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
                                                     self.rect.midtop,
                                                     self.calc_angle(mouse_pos),
                                                     collidables))
 
-    def transition(self, new_anim, dx):
+    def transition(self, new_strip, dx):
         """Helper function for updating animation and movement in check_keys
 
-        :param new_anim: New animation to set
+        :param new_strip: New animation to set
         :param dx: Amount that the player will move on the next frame
         """
-        self.current_anim = cycle(new_anim)
+        if self.curr_strip is not new_strip:
+            self.curr_strip = new_strip
+            self.curr_anim = cycle(self.curr_strip)
         self.vel.x += dx
         if self.collide_ground((dx, 0)):
             self.adjust_height(dx)

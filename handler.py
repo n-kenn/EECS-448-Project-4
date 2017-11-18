@@ -5,7 +5,7 @@ from pygame.sprite import Group
 from player import Player
 
 
-class Handler:
+class Handler(object):
     """Handles players in the game.
 
     :param player_ss: spritesheet to use for the player.
