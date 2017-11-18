@@ -14,25 +14,28 @@ class Player(Animated_Sprite):
     """Player class that the user will control.
 
     :param sheet: The image used for the sprite sheet of player.
+    :param ground: Reference to ground to determine if the player is grounded.
     :param start_pos: Starting position for the Player.
+    :param speed: Speed at which the player can move. Both horizontal and vertical.
     :param name: String of the player name.
     """
 
-    def __init__(self, sheet, start_pos, name='Josh'):
+    def __init__(self, sheet, ground, start_pos, speed=4, name='Josh'):
         super(Player, self).__init__(sheet)
-        self.name = name
-        self.speed = 4
+        self.speed = speed
         self.vel = math.Vector2(0, 0)
         self.anims = {
             'idle': self.sheet.load_strip(0, 1),
-            'walking_r': self.sheet.load_strip(1, 3),
-            'walking_l': self.sheet.load_strip(2, 3),
+            'walking_r': self.sheet.load_strip(1, 4),
+            'walking_l': self.sheet.load_strip(2, 4),
             'magic': self.sheet.load_strip(3, 4)
         }
         self.current_anim = cycle(self.anims['idle'])
         self.image = self.current_anim.next().copy()
-        self.rect = self.image.get_rect(bottomleft=start_pos)
         self.mask = mask.from_surface(self.image)
+        self.ground = ground
+        self.rect = self.image.get_rect(bottomleft=start_pos)
+        self.name = name
         self.health = self.image.get_width()
         self.projectile = None
 
@@ -45,51 +48,42 @@ class Player(Animated_Sprite):
         if self.health <= 0:
             self.kill()
 
-    def adjust_height(self, ground, xoffset):
+    def adjust_height(self, xoffset):
         """Adjusts the height of the player to climb slopes.
 
-        :param ground: Reference to the ground.
         :param xoffset: How many pixels the player wants to move left or right.
         """
         for i in range(1, self.speed + 1):
-            if not self.collide_ground(ground, (xoffset, -i)):
+            if not self.collide_ground((xoffset, -i)):
                 self.vel.y -= i
                 break
         else:
             self.vel.x = 0
 
-    def check_keys(self, keys, ground):
+    def check_keys(self, keys):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
-        :param ground: Reference to the ground to check collision.
         """
         if keys[K_LEFT]:
-            self.current_anim = cycle(self.anims['walking_l'])
-            self.vel.x -= self.speed
-            if self.collide_ground(ground, (-self.speed, 0)):
-                self.adjust_height(ground, -self.speed)
+            self.transition(self.anims['walking_l'], -self.speed)
         elif keys[K_RIGHT]:
-            self.current_anim = cycle(self.anims['walking_r'])
-            self.vel.x += self.speed
-            if self.collide_ground(ground, (self.speed, 0)):
-                self.adjust_height(ground, self.speed)
-        else:
-            self.current_anim = cycle(self.anims['idle'])
-
+            self.transition(self.anims['walking_r'], self.speed)
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
-    def collide_ground(self, ground, offset):
+    def collide_ground(self, offset):
         """Returns the point of collision between player and ground with the given offset.
 
-        :param ground: Ground reference.
         :param offset: Tuple that offsets the player's mask.
         """
-        return ground.mask.overlap(self.mask, (self.rect.left - ground.rect.left + offset[0], self.rect.top - ground.rect.top + offset[1]))
+        return self.ground.mask.overlap(self.mask,
+                                        (self.rect.left - self.ground.rect.left + offset[0],
+                                         self.rect.top - self.ground.rect.top + offset[1]))
 
     def calc_angle(self, pos):
         """Helper function to calculate angle of trajectory for projectile.
+
         :param pos: Position of mouse.
         """
         return atan2(self.rect.y - pos[1], self.rect.x - pos[0])
@@ -113,6 +107,17 @@ class Player(Animated_Sprite):
                                                     self.calc_angle(mouse_pos),
                                                     collidables))
 
+    def transition(self, new_anim, dx):
+        """Helper function for updating animation and movement in check_keys
+
+        :param new_anim: New animation to set
+        :param dx: Amount that the player will move on the next frame
+        """
+        self.current_anim = cycle(new_anim)
+        self.vel.x += dx
+        if self.collide_ground((dx, 0)):
+            self.adjust_height(dx)
+
     def update(self, world):
         """Update the Player
 
@@ -123,7 +128,7 @@ class Player(Animated_Sprite):
         if self.projectile:
             self.projectile.update(world)
             self.projectile.draw(world.image)
-        if not self.collide_ground(world.ground, (0, world.gravity)):
+        if not self.collide_ground((0, world.gravity)):
             self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
         self.vel = math.Vector2(0, 0)

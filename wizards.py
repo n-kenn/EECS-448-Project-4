@@ -18,11 +18,11 @@ images = {
 font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
 clock = pg.time.Clock()
 world = World(images['sky'], images['ground'])
-handler = Player_Handler(images['player_ss'], world.start_locs)
+handler = Player_Handler(images['player_ss'], world)
 
 
 def get_events():
-    handler.active.check_keys(pg.key.get_pressed(), world.ground)
+    handler.active.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()

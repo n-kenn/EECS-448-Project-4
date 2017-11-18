@@ -5,7 +5,7 @@ class Sprite_Sheet:
     :param rect: The size of the Sprite Sheet.
     """
 
-    def __init__(self, sheet, rect):
+    def __init__(self, sheet, rect=(0, 0, 32, 32)):
         # loads the sprite sheet onto a surface
         self.sheet = sheet
         self.rect = rect
@@ -26,6 +26,6 @@ class Sprite_Sheet:
         """
         # returns a list of surfaces from a strip in the sprite sheet
         return self.get_images_at([(self.rect[0] + self.rect[2] * i,
-                                    self.rect[1] + row * self.rect[3],
+                                    self.rect[1] + self.rect[2] * row,
                                     self.rect[2],
                                     self.rect[3]) for i in range(count)])

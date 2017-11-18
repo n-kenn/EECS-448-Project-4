@@ -8,11 +8,14 @@ from player import Player
 class Player_Handler:
     """Handles players in the game.
 
-    :param p_sheet: spritesheet to use for the player.
+    :param player_ss: spritesheet to use for the player.
+    :param world: Reference to world to pass information to players.
     """
 
-    def __init__(self, player_ss, start_locs):
-        self.players = Group(Player(player_ss, loc) for loc in start_locs)
+    def __init__(self, player_ss, world):
+        self.players = Group([Player(player_ss,
+                                     world.ground,
+                                     loc) for loc in world.start_locs])
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
 
@@ -30,7 +33,8 @@ class Player_Handler:
     def switch_turns(self):
         """When a player's actions are done, switch active player.
         """
-        self.active = self.player_cycler.next()
+        if not self.game_over():
+            self.active = self.player_cycler.next()
 
     def update(self, world):
         self.players.update(world)

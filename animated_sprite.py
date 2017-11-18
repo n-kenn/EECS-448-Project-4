@@ -8,15 +8,16 @@ from sprite_sheet import Sprite_Sheet
 class Animated_Sprite(sprite.Sprite):
     """A sprite to be animated.
 
-    :param sheet: The file to be loaded for an optional sprite sheet.
+    :param sheet: Surface for an optional sprite sheet.
+    :param frame_rate: Optional frame_rate for how quickly to change sprite image.
     """
 
-    def __init__(self, sheet=None, frame_rate=10):
+    def __init__(self, sheet=None, frame_rate=15):
         super(Animated_Sprite, self).__init__()
         if sheet:
-            self.sheet = Sprite_Sheet(sheet, (0, 0, 32, 32))
+            self.sheet = Sprite_Sheet(sheet)
         self.frame_rate = frame_rate
-        self.frame_cycler = cycle(range(0, self.frame_rate + 1))
+        self.frame_cycler = cycle(range(1, self.frame_rate + 1))
 
     def update(self):
         """Cycles through a frame_counter and updates the sprite's image when time.
