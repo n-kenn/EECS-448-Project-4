@@ -102,7 +102,7 @@ class Player(Animated_Sprite):
         :param collidables: The objects a projectile can collide with.
         """
         if not self.projectile:
-            self.projectile = GroupSingle(Explosive(self.anims['magic'],
+            self.projectile = GroupSingle(Explosive(cycle(self.anims['magic']),
                                                     self.rect.midtop,
                                                     self.calc_angle(mouse_pos),
                                                     collidables))

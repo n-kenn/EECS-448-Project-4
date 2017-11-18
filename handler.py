@@ -5,7 +5,7 @@ from pygame.sprite import Group
 from player import Player
 
 
-class Player_Handler:
+class Handler:
     """Handles players in the game.
 
     :param player_ss: spritesheet to use for the player.
@@ -18,11 +18,14 @@ class Player_Handler:
                                      loc) for loc in world.start_locs])
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
+        self.world = world
+        print self.world.ground
 
-    def draw_players(self, surf):
+    def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
         :param surf: Surface to draw to.
         """
+        self.world.draw(surf)
         self.players.draw(surf)
 
     def game_over(self):
@@ -36,5 +39,6 @@ class Player_Handler:
         if not self.game_over():
             self.active = self.player_cycler.next()
 
-    def update(self, world):
-        self.players.update(world)
+    def update(self):
+        self.world.update()
+        self.players.update(self.world)

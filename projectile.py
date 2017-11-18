@@ -1,4 +1,3 @@
-from itertools import cycle
 from math import cos, sin
 
 from pygame import mask, math
@@ -15,10 +14,10 @@ class Projectile(Animated_Sprite):
     :param groups: Groups to add the sprite to.
     """
 
-    def __init__(self, strip, start_pos, angle):
+    def __init__(self, anim, start_pos, angle):
         super(Projectile, self).__init__()
-        self.image = strip[0].copy()
-        self.current_anim = cycle(strip)
+        self.current_anim = anim
+        self.image = self.current_anim.next()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
         self.vel = -10 * math.Vector2(cos(angle), sin(angle))

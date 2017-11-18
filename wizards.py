@@ -3,7 +3,7 @@ from sys import exit
 
 import pygame as pg
 
-from player_handler import Player_Handler
+from handler import Handler
 from world import World
 
 pg.init()
@@ -17,8 +17,7 @@ images = {
 
 font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
 clock = pg.time.Clock()
-world = World(images['sky'], images['ground'])
-handler = Player_Handler(images['player_ss'], world)
+handler = Handler(images['player_ss'], World(images['sky'], images['ground']))
 
 
 def get_events():
@@ -29,17 +28,15 @@ def get_events():
             exit()
         elif event.type is pg.MOUSEBUTTONDOWN:
             handler.active.fire(pg.mouse.get_pos(),
-                                handler.players.sprites() + [world.ground])
+                                handler.players.sprites() + [handler.world.ground])
             handler.switch_turns()
 
 
 if __name__ == '__main__':
     while True:
         get_events()
-        world.update()
-        handler.update(world)
-        world.draw(display)
-        handler.draw_players(display)
+        handler.update()
+        handler.draw(display)
         if handler.game_over():
             text = font.render('Winner: ' + handler.active.name,
                                False,

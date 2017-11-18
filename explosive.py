@@ -14,8 +14,8 @@ class Explosive(Projectile):
     :param collidables: Sprites that the Explosive can collide with.
     """
 
-    def __init__(self, strip, start_pos, angle, collidables):
-        super(Explosive, self).__init__(strip, start_pos, angle)
+    def __init__(self, anim, start_pos, angle, collidables):
+        super(Explosive, self).__init__(anim, start_pos, angle)
         self.collidables = collidables
         self.damage = 8
 
