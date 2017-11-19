@@ -4,6 +4,7 @@ from sys import exit
 import pygame as pg
 
 from handler import Handler
+from menu import Menu
 from world import World
 
 pg.init()
@@ -20,6 +21,9 @@ clock = pg.time.Clock()
 handler = Handler(images['player_ss'], World(images['sky'], images['ground']))
 
 
+menu = Menu(pg.Surface(display.get_size()), font)
+
+
 def get_events():
     handler.active.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
@@ -34,15 +38,17 @@ def get_events():
 
 if __name__ == '__main__':
     while True:
+        display.blit(menu.image, display.get_rect().topleft)
+        menu.mouseOver(pg.mouse.get_pos())
         get_events()
-        handler.update()
-        handler.draw(display)
-        if handler.game_over():
-            text = font.render('Winner: ' + handler.active.name,
-                               False,
-                               pg.Color('yellow'))
-            display.blit(text,
-                         text.get_rect(center=(display.get_rect().center)))
+        # handler.update()
+        # handler.draw(display)
+        # if handler.game_over():
+        #     text = font.render('Winner: ' + handler.active.name,
+        #                        False,
+        #                        pg.Color('yellow'))
+        #     display.blit(text,
+        #                  text.get_rect(center=(display.get_rect().center)))
         pg.display.update()
-        pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
+        # pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(60)

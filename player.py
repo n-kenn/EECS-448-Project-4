@@ -1,8 +1,9 @@
 from itertools import cycle
 from math import atan2
 
-from pygame import Color, mask, math
+from pygame import Color, mask
 from pygame.locals import *
+from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
 from animated_sprite import Animated_Sprite
@@ -23,7 +24,7 @@ class Player(Animated_Sprite):
     def __init__(self, sheet, ground, start_pos, speed=4, name='Josh'):
         super(Player, self).__init__(sheet)
         self.speed = speed
-        self.vel = math.Vector2(0, 0)
+        self.vel = Vector2(0, 0)
         self.strips = {
             'idle': self.sheet.load_strip(0, 6),
             'walking_r': self.sheet.load_strip(1, 6),
@@ -138,5 +139,5 @@ class Player(Animated_Sprite):
         if not self.collide_ground((0, world.gravity)):
             self.vel.y += world.gravity
         self.rect.move_ip(self.vel)
-        self.vel = math.Vector2(0, 0)
+        self.vel = Vector2(0, 0)
         self.rect.clamp_ip(world.rect)
