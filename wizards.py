@@ -21,11 +21,27 @@ clock = pg.time.Clock()
 handler = Handler(images['player_ss'], World(images['sky'], images['ground']))
 
 
-menu = Menu(pg.Surface(display.get_size()), font)
+def run(mode):
+    def wrapper(*args, **kwargs):
+        get_events()
+        return mode(*args, **kwargs)
+    return wrapper
+
+
+@run
+def play():
+    handler.update(pg.key.get_pressed())
+    handler.draw(display)
+# text = font.render('Winner: ' + handler.active.name,
+#                    False,
+#                    pg.Color('yellow'))
+# display.blit(text, text.get_rect(center=(display.get_rect().center)))
+
+
+menu = Menu(pg.Surface(display.get_size()), ['Start', 'Quit'], font)
 
 
 def get_events():
-    handler.active.check_keys(pg.key.get_pressed())
     for event in pg.event.get():
         if event.type is pg.QUIT:
             pg.quit()
@@ -37,18 +53,7 @@ def get_events():
 
 
 if __name__ == '__main__':
-    while True:
-        display.blit(menu.image, display.get_rect().topleft)
-        menu.mouseOver(pg.mouse.get_pos())
-        get_events()
-        # handler.update()
-        # handler.draw(display)
-        # if handler.game_over():
-        #     text = font.render('Winner: ' + handler.active.name,
-        #                        False,
-        #                        pg.Color('yellow'))
-        #     display.blit(text,
-        #                  text.get_rect(center=(display.get_rect().center)))
+    while not handler.game_over():
+        play()
         pg.display.update()
-        # pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(60)

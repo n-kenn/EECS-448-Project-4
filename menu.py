@@ -1,32 +1,26 @@
 class Menu(object):
-    def __init__(self, image, font, font_color=(255, 255, 0)):
-        self.options = ['Start', 'Quit']
+    def __init__(self, image, opts, font, font_color=(255, 255, 0)):
         self.image = image
+        self.opts = opts
         self.rect = self.image.get_rect()
         self.font = font
         self.font_color = font_color
-        self.option_rects = []
-        self.blit_options()
+        self.opt_rects = []
+        self.blit_opts()
 
-    def blit_option(self, option_surf, spacing, index):
-        return self.image.blit(option_surf, option_surf.get_rect(center=(self.rect.centerx, spacing * index)))
+    def blit_opt(self, opt_surf, y):
+        return self.image.blit(opt_surf, opt_surf.get_rect(center=(self.rect.centerx, y)))
 
-    def blit_options(self):
-        split_height = self.rect.height // (1 + len(self.options))
-        for index, option_surf in enumerate(self.make_option_surfs(), 1):
-            self.option_rects.append(self.blit_option(option_surf,
-                                                      split_height,
-                                                      index))
+    def blit_opts(self):
+        split_height = self.rect.height // (1 + len(self.opts))
+        for i, surf in enumerate(self.make_opt_surfs(), 1):
+            self.opt_rects.append(self.blit_opt(surf, split_height * i))
 
-    def make_option_surfs(self):
-        return [self.font.render(option, False, self.font_color)
-                for option in self.options]
+    def make_opt_surfs(self):
+        return [self.font.render(opt, False, self.font_color)
+                for opt in self.opts]
 
-    def mouseOver(self, mouse_pos):
-        for i, rect in enumerate(self.option_rects):
+    def mouse_over(self, mouse_pos):
+        for i, rect in enumerate(self.opt_rects):
             if rect.collidepoint(mouse_pos):
-                self.image.blit(self.font.render(
-                    self.options[i], False, (255, 255, 255)), rect)
-            else:
-                self.image.blit(self.font.render(
-                    self.options[i], False, self.font_color), rect)
+                return self.opts[i]

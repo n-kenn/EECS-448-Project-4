@@ -38,6 +38,7 @@ class Handler(object):
         if not self.game_over():
             self.active = self.player_cycler.next()
 
-    def update(self):
+    def update(self, keys):
+        self.active.check_keys(keys)
         self.world.update()
         self.players.update(self.world)
