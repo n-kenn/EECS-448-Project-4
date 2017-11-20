@@ -1,0 +1,11 @@
+Date: 11/20/2017
+Time: 11:42 AM -
+Location: Eaton 2
+
+Completed:
+  The prototype.
+
+To be completed:
+  UI
+  More weapons
+  
