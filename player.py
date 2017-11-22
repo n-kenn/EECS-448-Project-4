@@ -68,13 +68,11 @@ class Player(Animated_Sprite):
         :param keys: The keys that are currly being pressed.
         """
         if keys[K_LEFT]:
-            self.transition(self.strips['walking_l'], -self.speed)
+            self.transition('walking_l', -self.speed)
         elif keys[K_RIGHT]:
-            self.transition(self.strips['walking_r'], self.speed)
+            self.transition('walking_r', self.speed)
         else:
-            if self.curr_strip is not self.strips['idle']:
-                self.curr_strip = self.strips['idle']
-                self.curr_anim = cycle(self.curr_strip)
+            self.change_anim('idle')
         if keys[K_SPACE]:
             self.vel.y -= self.speed
 
@@ -93,6 +91,11 @@ class Player(Animated_Sprite):
         :param pos: Position of mouse.
         """
         return atan2(self.rect.y - pos[1], self.rect.x - pos[0])
+
+    def change_anim(self, anim_name):
+        if self.curr_strip is not self.strips[anim_name]:
+            self.curr_strip = self.strips[anim_name]
+            self.curr_anim = cycle(self.curr_strip)
 
     def draw_health(self):
         """Draws the health bar.
@@ -113,15 +116,13 @@ class Player(Animated_Sprite):
                                                     self.calc_angle(mouse_pos),
                                                     collidables))
 
-    def transition(self, new_strip, dx):
+    def transition(self, new_anim, dx):
         """Helper function for updating animation and movement in check_keys
 
         :param new_strip: New animation to set
         :param dx: Amount that the player will move on the next frame
         """
-        if self.curr_strip is not new_strip:
-            self.curr_strip = new_strip
-            self.curr_anim = cycle(self.curr_strip)
+        self.change_anim(new_anim)
         self.vel.x += dx
         if self.collide_ground((dx, 0)):
             self.adjust_height(dx)

@@ -1,8 +1,11 @@
+from pygame.locals import MOUSEBUTTONDOWN, QUIT
+
+
 class Menu(object):
     def __init__(self, image, opts, font, font_color=(255, 255, 0)):
         self.image = image
-        self.opts = opts
         self.rect = self.image.get_rect()
+        self.opts = opts
         self.font = font
         self.font_color = font_color
         self.opt_rects = []
@@ -20,7 +23,12 @@ class Menu(object):
         return [self.font.render(opt, False, self.font_color)
                 for opt in self.opts]
 
-    def mouse_over(self, mouse_pos):
-        for i, rect in enumerate(self.opt_rects):
-            if rect.collidepoint(mouse_pos):
-                return self.opts[i]
+    def update(self, display, events, quit):
+        for event in events:
+            if event.type is QUIT:
+                quit()
+            elif event.type is MOUSEBUTTONDOWN:
+                for rect in self.opt_rects:
+                    if rect.collidepoint(event.pos):
+                        print rect
+        display.blit(self.image, display.get_rect())
