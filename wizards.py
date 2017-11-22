@@ -1,11 +1,8 @@
 from os import path
-from sys import exit
 
 import pygame as pg
 
-from handler import Handler
-from menu import Menu
-from world import World
+from scene_manager import Scene_Manager
 
 pg.init()
 display = pg.display.set_mode((1024, 512))
@@ -18,17 +15,10 @@ images = {
 }
 
 font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
-handler = Handler(images['player_ss'], World(images['sky'], images['ground']))
-menu = Menu(pg.Surface(display.get_size()), ['Start', 'Quit'], font)
-
-
-def quit():
-    pg.quit()
-    exit()
-
+scene_manager = Scene_Manager(display.get_size(), font, images)
 
 if __name__ == '__main__':
-    while True:
-        menu.update(display, pg.event.get(), quit)
+    while scene_manager.active_scene is not None:
+        scene_manager.update(display, pg.event.get(), pg.key.get_pressed())
         pg.display.update()
         clock.tick(60)
