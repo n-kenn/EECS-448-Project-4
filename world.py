@@ -24,6 +24,8 @@ class World(sprite.Sprite):
                            for loc in self.ground.start_locs]
 
     def draw(self, display):
+        """Draws self.image onto the surface.
+        """
         display.blit(self.image, (0, 0))
 
     def update(self):

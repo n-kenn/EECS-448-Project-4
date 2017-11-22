@@ -8,10 +8,9 @@ from animated_sprite import Animated_Sprite
 class Projectile(Animated_Sprite):
     """A Projectile used for weapons.
 
-    :param strip: A list of surface images.
+    :param anim: A list of surface images.
     :param start_pos: The starting position for the projectile.
     :param angle: Used to set the initial velocity.
-    :param groups: Groups to add the sprite to.
     """
 
     def __init__(self, anim, start_pos, angle):

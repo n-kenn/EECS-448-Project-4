@@ -120,7 +120,7 @@ class Player(Animated_Sprite):
     def transition(self, new_anim, dx):
         """Helper function for updating animation and movement in check_keys
 
-        :param new_strip: New animation to set
+        :param new_anim: New animation to set
         :param dx: Amount that the player will move on the next frame
         """
         self.change_anim(new_anim)

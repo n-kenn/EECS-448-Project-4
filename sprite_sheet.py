@@ -1,5 +1,5 @@
 class Sprite_Sheet:
-    """Loads the Sprite Sheet Files.
+    """Surface with multiple Sprite images.
 
     :param sheet: The image to use.
     :param rect: The size of the Sprite Sheet.

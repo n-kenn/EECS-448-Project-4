@@ -8,7 +8,7 @@ from projectile import Projectile
 class Explosive(Projectile):
     """A class for any weapon that has the ability to explode.
 
-    :param sheet: The file to load for the surface.
+    :param anim: The sprite sheet to use for animating.
     :param start_pos: Will get passed to projectile.
     :param angle: Will get passed to projectile.
     :param collidables: Sprites that the Explosive can collide with.

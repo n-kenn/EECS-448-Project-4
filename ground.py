@@ -19,6 +19,8 @@ class Ground(object):
         self.mask = mask.from_surface(self.image)
 
     def make_holes(self, count, size):
+        """Called once in the constructor to make the ground more dynamic and get the players' starting locations.
+        """
         for i in range(count):
             self.start_locs.append(ellipse(self.image, (0, 0, 0, 0), ((
                 randint(0, self.rect.width), randint(0, self.rect.height)), size)).midbottom)
