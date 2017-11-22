@@ -1,5 +1,4 @@
 from operator import add
-from random import choice
 
 from pygame import sprite
 

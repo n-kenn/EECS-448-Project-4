@@ -1,4 +1,5 @@
 from itertools import cycle
+from random import sample
 
 from pygame.locals import MOUSEBUTTONDOWN, QUIT
 from pygame.sprite import Group
@@ -20,7 +21,7 @@ class Game(Scene):
         self.world = World(sky_image, ground_image)
         self.players = Group([Player(player_ss,
                                      self.world.ground,
-                                     loc) for loc in self.world.start_locs])
+                                     loc) for loc in sample(self.world.start_locs, 2)])
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
 

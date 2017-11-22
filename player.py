@@ -74,7 +74,8 @@ class Player(Animated_Sprite):
         else:
             self.change_anim('idle')
         if keys[K_SPACE]:
-            self.vel.y -= self.speed
+            if not self.collide_ground((0, -self.speed)):
+                self.vel.y -= self.speed
 
     def collide_ground(self, offset):
         """Returns the point of collision between player and ground with the given offset.
