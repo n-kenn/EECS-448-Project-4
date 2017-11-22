@@ -1,13 +1,12 @@
 from os import path
-from sys import exit
 
 import pygame as pg
 
-from handler import Handler
-from world import World
+from scene_manager import Scene_Manager
 
 pg.init()
 display = pg.display.set_mode((1024, 512))
+clock = pg.time.Clock()
 
 images = {
     'sky': pg.image.load(path.join('images', 'sky.png')).convert(),
@@ -16,33 +15,10 @@ images = {
 }
 
 font = pg.font.Font(path.join('font', 'kindergarten.ttf'), 64)
-clock = pg.time.Clock()
-handler = Handler(images['player_ss'], World(images['sky'], images['ground']))
-
-
-def get_events():
-    handler.active.check_keys(pg.key.get_pressed())
-    for event in pg.event.get():
-        if event.type is pg.QUIT:
-            pg.quit()
-            exit()
-        elif event.type is pg.MOUSEBUTTONDOWN:
-            handler.active.fire(pg.mouse.get_pos(),
-                                handler.players.sprites() + [handler.world.ground])
-            handler.switch_turns()
-
+scene_manager = Scene_Manager(display.get_size(), font, images)
 
 if __name__ == '__main__':
-    while True:
-        get_events()
-        handler.update()
-        handler.draw(display)
-        if handler.game_over():
-            text = font.render('Winner: ' + handler.active.name,
-                               False,
-                               pg.Color('yellow'))
-            display.blit(text,
-                         text.get_rect(center=(display.get_rect().center)))
+    while scene_manager.active_scene is not None:
+        scene_manager.update(display, pg.event.get(), pg.key.get_pressed())
         pg.display.update()
-        pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(60)
