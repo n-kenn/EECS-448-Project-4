@@ -20,7 +20,7 @@ class Projectile(Animated_Sprite):
         self.image = self.curr_anim.next()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
-        self.vel = -10 * math.Vector2(cos(angle), sin(angle))
+        self.vel = -20 * math.Vector2(cos(angle), sin(angle))
 
     def update(self, world):
         """Updates the projectile's position

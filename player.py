@@ -36,7 +36,7 @@ class Player(Animated_Sprite):
         self.image = self.curr_anim.next().copy()
         self.mask = mask.from_surface(self.image)
         self.ground = ground
-        self.rect = self.image.get_rect(bottomleft=start_pos)
+        self.rect = self.image.get_rect(midbottom=start_pos)
         self.name = name
         self.health = self.image.get_width()
         self.projectile = None
