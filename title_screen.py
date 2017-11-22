@@ -1,5 +1,5 @@
 from pygame import Surface
-from pygame.locals import MOUSEBUTTONDOWN, QUIT
+from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, QUIT
 
 from game import Game
 from scene import Scene
@@ -34,9 +34,14 @@ class Title_Screen(Scene):
         for event in events:
             if event.type is QUIT:
                 self.switch_scene(None)
+            elif event.type is MOUSEMOTION:
+                for i, opt_rect in enumerate(self.opt_rects):
+                    if opt_rect.collidepoint(event.pos):
+                        self.image.blit(self.font.render(
+                            self.opts[i], False, (255, 255, 255)), opt_rect)
             elif event.type is MOUSEBUTTONDOWN:
-                for rect in self.opt_rects:
-                    if rect.collidepoint(event.pos):
+                for opt_rect in self.opt_rects:
+                    if opt_rect.collidepoint(event.pos):
                         self.switch_scene(self.game_scene)
 
     def update(self, display, events, keys):
