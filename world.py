@@ -1,3 +1,4 @@
+from itertools import cycle
 from operator import add
 
 from pygame import sprite
@@ -17,6 +18,7 @@ class World(sprite.Sprite):
         super(World, self).__init__()
         self.background = background
         self.image = self.background.copy()
+        self.scroll = cycle(range(self.background.get_width()))
         self.rect = self.image.get_rect()
         self.ground = Ground(ground_image, self.rect.midleft)
         self.gravity = gravity
@@ -31,5 +33,8 @@ class World(sprite.Sprite):
     def update(self):
         """Resets the image and blits any changes to the ground to the image.
         """
-        self.image = self.background.copy()
+        offset = self.scroll.next()
+        self.image.blit(self.background, (offset, 0))
+        self.image.blit(self.background,
+                        (offset - self.background.get_width(), 0))
         self.image.blit(self.ground.image, self.rect.midleft)

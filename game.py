@@ -46,8 +46,8 @@ class Game(Scene):
             if event.type is QUIT:
                 self.switch_scene(None)
             elif event.type is MOUSEBUTTONDOWN:
-                self.active.fire(
-                    event.pos, self.players.sprites() + [self.world.ground])
+                self.active.fire(event.pos,
+                                 self.players.sprites() + [self.world.ground])
                 self.switch_turns()
 
     def switch_turns(self):
