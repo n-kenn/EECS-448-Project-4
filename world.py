@@ -9,18 +9,17 @@ from ground import Ground
 class World(sprite.Sprite):
     """The world in the game.
 
-    :param background: Surface image used for the background.
-    :param ground_image: Surface image used for the ground.
+    :param images: Contains images use for ground and background.
     :param gravity: The gravity in the world.
     """
 
-    def __init__(self, background, ground_image, gravity=1):
+    def __init__(self, images, gravity=1):
         super(World, self).__init__()
-        self.background = background
+        self.background = images['sky']
         self.image = self.background.copy()
         self.scroll = cycle(range(self.background.get_width()))
         self.rect = self.image.get_rect()
-        self.ground = Ground(ground_image, self.rect.midleft)
+        self.ground = Ground(images['ground'], self.rect.midleft)
         self.gravity = gravity
         self.start_locs = [tuple(map(add, (0, self.ground.rect.height), loc))
                            for loc in self.ground.start_locs]

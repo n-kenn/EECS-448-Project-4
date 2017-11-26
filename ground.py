@@ -23,7 +23,7 @@ class Ground(object):
         """
         for i in range(count):
             self.start_locs.append(ellipse(self.image, (0, 0, 0, 0), ((
-                randint(0, self.rect.width), randint(0, self.rect.height)), size)).midbottom)
+                randint(0, self.rect.width), randint(0, self.rect.height - size[1])), size)).midbottom)
 
     def update(self):
         """Update mask to compensate for explosions occuring.

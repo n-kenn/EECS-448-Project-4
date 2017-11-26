@@ -1,29 +1,28 @@
-from pygame import Surface
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, QUIT
 
-from game import Game
+# from game import Game
+from name_input import Name_Input
 from scene import Scene
 
 
 class Title_Screen(Scene):
     """Provides a menu for UI.
 
-    :param size: Dimensions to make the screen.
+    :param images: Will get passed to Game constructor.
     :param opts: Iterable of options as strings available to select.
     :param font: Which font to render opt_surfs in.
-    :param images: will be passed to Game constructor.
     """
 
-    def __init__(self, size, opts, font, images):
+    def __init__(self, images, opts, font):
         super(Title_Screen, self).__init__()
-        self.image = Surface(size)
+        self.image = images['sky'].copy()
         self.rect = self.image.get_rect()
         self.opts = opts
         self.font = font
         self.opt_rects = []
         self.blit_opts()
-        self.game_scene = Game(
-            images['player_ss'], images['sky'], images['ground'])
+        self.next_scene = Name_Input(images, self.font)
+        # self.game_scene = Game(images, font)
 
     def blit_opt(self, opt_surf, y):
         """Blits a single opt_surf to self.image and returns a Rect of the effected area.
@@ -37,10 +36,10 @@ class Title_Screen(Scene):
         for i, surf in enumerate(self.make_opt_surfs(), 1):
             self.opt_rects.append(self.blit_opt(surf, split_height * i))
 
-    def make_opt_surf(self, opt, font_color=(255, 255, 0)):
+    def make_opt_surf(self, opt, font_col=(156, 68, 108)):
         """Returns a new surface using the font passed into the constructor.
         """
-        return self.font.render(opt, False, font_color)
+        return self.font.render(opt, False, font_col).convert()
 
     def make_opt_surfs(self):
         """Returns a list of surfaces from the opts passed into the constructor
@@ -55,13 +54,17 @@ class Title_Screen(Scene):
                 self.switch_scene(None)
             elif event.type is MOUSEMOTION:
                 for i, opt_rect in enumerate(self.opt_rects):
-                    self.image.blit(self.make_opt_surf(self.opts[i], (255, 255, 255 if opt_rect.collidepoint(event.pos) else 0)),
-                                    opt_rect)
+                    if opt_rect.collidepoint(event.pos):
+                        self.image.blit(self.make_opt_surf(
+                            self.opts[i], (70, 0, 6)), opt_rect)
+                    else:
+                        self.image.blit(self.make_opt_surf(
+                            self.opts[i]), opt_rect)
             elif event.type is MOUSEBUTTONDOWN:
                 for i, opt_rect in enumerate(self.opt_rects):
                     if opt_rect.collidepoint(event.pos):
                         if self.opts[i] is 'Start':
-                            self.switch_scene(self.game_scene)
+                            self.switch_scene(self.next_scene)
                         elif self.opts[i] is 'Quit':
                             self.switch_scene(None)
 

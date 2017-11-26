@@ -12,19 +12,18 @@ from world import World
 class Game(Scene):
     """Scene that implements the actual game.
 
-    :param player_ss: spritesheet to use for the player.
-    :param bg_image: surface to use for the background
-    :param ground_image: surface to use for the ground
+    :param images: Image surfaces for various things.
     """
 
-    def __init__(self, player_ss, bg_image, ground_image):
+    def __init__(self, images, font):
         super(Game, self).__init__()
-        self.world = World(bg_image, ground_image)
-        self.players = Group([Player(player_ss,
+        self.world = World(images)
+        self.players = Group([Player(images['player_ss'],
                                      self.world.ground,
                                      loc) for loc in sample(self.world.start_locs, 2)])
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
+        self.font = font
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
@@ -63,3 +62,7 @@ class Game(Scene):
         self.world.update()
         self.players.update(self.world)
         self.draw(display)
+        if self.game_over():
+            win = self.font.render('Winner: {}'.format(
+                self.active.name), False, (156, 68, 108)).convert()
+            display.blit(win, win.get_rect(center=display.get_rect().center))
