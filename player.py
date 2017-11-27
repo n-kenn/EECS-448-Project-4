@@ -2,7 +2,7 @@ from itertools import cycle
 from math import atan2
 
 from pygame import Color, mask
-from pygame.locals import *
+from pygame.locals import K_a, K_d, K_SPACE
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
@@ -17,8 +17,8 @@ class Player(Animated_Sprite):
     :param sheet: The image used for the sprite sheet of player.
     :param ground: Reference to ground to determine if the player is grounded.
     :param start_pos: Starting position for the Player.
-    :param speed: Speed at which the player can move. Both horizontal and vertical.
     :param name: String of the player name.
+    :param speed: Speed at which the player can move. Both horizontal and vertical.
     """
 
     def __init__(self, sheet, ground, start_pos, name, speed=4):
@@ -27,9 +27,9 @@ class Player(Animated_Sprite):
         self.vel = Vector2(0, 0)
         self.strips = {
             'idle': self.sheet.load_strip(0, 6),
+            'magic': self.sheet.load_strip(3, 4),
             'walking_r': self.sheet.load_strip(1, 6),
-            'walking_l': self.sheet.load_strip(2, 6),
-            'magic': self.sheet.load_strip(3, 4)
+            'walking_l': self.sheet.load_strip(2, 6)
         }
         self.curr_strip = self.strips['idle']
         self.curr_anim = cycle(self.curr_strip)
@@ -65,11 +65,11 @@ class Player(Animated_Sprite):
     def check_keys(self, keys):
         """Perform actions based on what keys are pressed.
 
-        :param keys: The keys that are currly being pressed.
+        :param keys: The keys that are currently being pressed.
         """
-        if keys[K_LEFT]:
+        if keys[K_a]:
             self.transition('walking_l', -self.speed)
-        elif keys[K_RIGHT]:
+        elif keys[K_d]:
             self.transition('walking_r', self.speed)
         else:
             self.change_anim('idle')
@@ -104,10 +104,9 @@ class Player(Animated_Sprite):
 
     def draw_health(self):
         """Draws the health bar.
-
         """
-        self.image.fill(Color('red') if self.health < self.image.get_width() else Color(
-            'green'), ((self.image.get_rect().topleft), (self.health, 4)))
+        self.image.fill((255, 0, 0) if self.health < self.image.get_width() else (0, 255, 0),
+                        ((self.image.get_rect().topleft), (self.health, 4)))
 
     def fire(self, mouse_pos, collidables):
         """Fires A Projectile
@@ -124,8 +123,8 @@ class Player(Animated_Sprite):
     def transition(self, new_anim, dx):
         """Helper function for updating animation and movement in check_keys
 
-        :param new_anim: New animation to set
-        :param dx: Amount that the player will move on the next frame
+        :param new_anim: New animation to set.
+        :param dx: Amount that the player will move on the next frame.
         """
         self.change_anim(new_anim)
         self.vel.x += dx

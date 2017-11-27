@@ -4,15 +4,15 @@ from game import Game
 from scene import Scene
 
 
-class Name_Input(Scene):
+class Input_Screen(Scene):
     """Handles title screen input
 
-    :param images: The images to load (clouds, background etc.)
+    :param images: The images to load (sky, sprites, etc.)
     :param font: The font to load in.
     """
 
     def __init__(self, images, font):
-        super(Name_Input, self).__init__()
+        super(Input_Screen, self).__init__()
         self.images = images
         self.background = self.images['sky'].copy()
         self.image = self.background.copy()
@@ -64,7 +64,7 @@ class Name_Input(Scene):
     def update(self, display, events, keys):
         """Updates self and processes user input.
 
-        :param display: The window size.
+        :param display: The game display.
         :param events: The events to be handled.
         :param keys: The list of keys and which ones are pressed down or not.
         """

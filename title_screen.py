@@ -1,7 +1,6 @@
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, QUIT
 
-# from game import Game
-from name_input import Name_Input
+from input_screen import Input_Screen
 from scene import Scene
 
 
@@ -13,13 +12,13 @@ class Title_Screen(Scene):
     :param font: Which font to render opt_surfs in.
     """
 
-    def __init__(self, images, opts, font):
+    def __init__(self, images, font):
         super(Title_Screen, self).__init__()
         self.images = images
         self.image = self.images['sky'].copy()
         self.rect = self.image.get_rect()
-        self.opts = opts
         self.font = font
+        self.opts = ['START', 'QUIT']
         self.opt_rects = []
         self.blit_opts()
 
@@ -71,19 +70,17 @@ class Title_Screen(Scene):
             elif event.type is MOUSEBUTTONDOWN:
                 for i, opt_rect in enumerate(self.opt_rects):
                     if opt_rect.collidepoint(event.pos):
-                        if self.opts[i] is 'Start':
-                            self.switch_scene(Name_Input(self.images,
-                                                         self.font))
-                        elif self.opts[i] is 'Quit':
+                        if self.opts[i] is 'START':
+                            self.switch_scene(Input_Screen(self.images, self.font))
+                        elif self.opts[i] is 'QUIT':
                             self.switch_scene(None)
 
     def update(self, display, events, keys):
         """Updates self and processes user input.
 
-        :param display: The size of the window.
+        :param display: The game display.
         :param events: The events to be handled.
         :param keys: The list of all keys and whether they are pressed or not.
         """
         self.process_input(events, keys)
         display.blit(self.image, display.get_rect())
-        

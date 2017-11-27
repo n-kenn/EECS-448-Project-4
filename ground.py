@@ -15,7 +15,7 @@ class Ground(object):
         self.image = image
         self.rect = self.image.get_rect(topleft=pos)
         self.start_locs = []
-        self.make_holes(8, (128, 128))
+        self.make_holes(16, (128, 128))
         self.mask = mask.from_surface(self.image)
 
     def make_holes(self, count, size):

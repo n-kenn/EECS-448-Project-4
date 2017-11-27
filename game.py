@@ -13,7 +13,7 @@ class Game(Scene):
     """Scene that implements the actual game.
 
     :param images: Image surfaces for various things.
-    :param names: List of character names.
+    :param names: List of player names.
     :param font: The font to load up.
     """
 
@@ -34,8 +34,9 @@ class Game(Scene):
         """
         self.world.draw(surf)
         self.players.draw(surf)
-        surf.blit(self.render, self.render.get_rect(
-            midtop=surf.get_rect().midtop))
+        if not self.game_over():
+            surf.blit(self.render,
+                      self.render.get_rect(midtop=surf.get_rect().midtop))
 
     def game_over(self):
         """Returns true when one player remains in the players sprite group.
@@ -76,7 +77,7 @@ class Game(Scene):
     def update(self, display, events, keys):
         """Updates self and processes user input.
 
-        :param display: The size of the window.
+        :param display: The game display.
         :param events: The events to be handled.
         :param keys: The list of all keys and whether they are pressed or not.
         """
@@ -85,6 +86,7 @@ class Game(Scene):
         self.players.update(self.world)
         self.draw(display)
         if self.game_over():
-            win = self.font.render('Winner: {}'.format(
-                self.active.name), False, (156, 68, 108)).convert()
+            win = self.font.render('Winner: {}'.format(self.active.name),
+                                   False,
+                                   (156, 68, 108)).convert()
             display.blit(win, win.get_rect(center=display.get_rect().center))
