@@ -26,6 +26,8 @@ class World(sprite.Sprite):
 
     def draw(self, display):
         """Draws self.image onto the surface.
+
+        :param display: The size of the window.
         """
         display.blit(self.image, (0, 0))
 

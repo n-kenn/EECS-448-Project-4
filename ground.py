@@ -20,6 +20,9 @@ class Ground(object):
 
     def make_holes(self, count, size):
         """Called once in the constructor to make the ground more dynamic and get the players' starting locations.
+
+        :param count: How many holes to make.
+        :param size: The size of the holes.
         """
         for i in range(count):
             self.start_locs.append(ellipse(self.image, (0, 0, 0, 0), ((

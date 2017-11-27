@@ -13,6 +13,10 @@ class Scene_Manager(object):
 
     def update(self, display, events, keys):
         """Called every frame to update self and process user input.
+
+        :param display: The size of the window.
+        :param events: The events to be processed.
+        :param keys: The list of keys and whether they are pressed down or not.
         """
         self.active_scene.update(display, events, keys)
         self.active_scene = self.active_scene.next

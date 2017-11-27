@@ -94,6 +94,10 @@ class Player(Animated_Sprite):
         return atan2(self.rect.y - pos[1], self.rect.x - pos[0])
 
     def change_anim(self, anim_name):
+        """Changes the current animation to something different, for example,  from idle to moving left or moving right to idle.
+
+        :param anim_name: The name of the animation to be manipulated.
+        """
         if self.curr_strip is not self.strips[anim_name]:
             self.curr_strip = self.strips[anim_name]
             self.curr_anim = cycle(self.curr_strip)

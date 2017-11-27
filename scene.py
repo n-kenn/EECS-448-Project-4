@@ -7,6 +7,10 @@ class Scene(object):
 
     def process_input(self, events, keys):
         """Each scene must define how it processes user input
+        
+        :param display: The size of the window.
+        :param events: The events to be handled.
+        :param keys: The list of all keys and whether they are pressed or not.
         """
         raise NotImplementedError
 
@@ -17,5 +21,7 @@ class Scene(object):
 
     def switch_scene(self, next):
         """Used to change the current scene to a new one.
+        
+        :param next: The scene to be swapped with the current scene.
         """
         self.next = next

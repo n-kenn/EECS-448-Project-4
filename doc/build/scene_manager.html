@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>explosive module &#8212; Wizards .1 documentation</title>
+    <title>scene_manager module &#8212; Wizards .1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -39,40 +39,42 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-explosive">
-<span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-scene_manager">
+<span id="scene-manager-module"></span><h1>scene_manager module<a class="headerlink" href="#module-scene_manager" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="explosive.Explosive">
-<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="projectile.html#projectile.Projectile" title="projectile.Projectile"><code class="xref py py-class docutils literal"><span class="pre">projectile.Projectile</span></code></a></p>
-<p>A class for any weapon that has the ability to explode.</p>
+<dt id="scene_manager.Scene_Manager">
+<em class="property">class </em><code class="descclassname">scene_manager.</code><code class="descname">Scene_Manager</code><span class="sig-paren">(</span><em>images</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#scene_manager.Scene_Manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Facilitates scene transitions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>anim</strong> – The sprite sheet to use for animating.</li>
-<li><strong>start_pos</strong> – Will get passed to projectile.</li>
-<li><strong>angle</strong> – Will get passed to projectile.</li>
-<li><strong>collidables</strong> – Sprites that the Explosive can collide with.</li>
+<li><strong>images</strong> – Dictionary of images that will eventually be used in the Game constructor.</li>
+<li><strong>font</strong> – Used to construct the title screen’s text.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="explosive.Explosive.collision_check">
-<code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>Looks to see if the explosive projectile has collided with anything.
-If it has, then remove the projectile, and draw an elipse to represent the blast
-of the explosion.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="explosive.Explosive.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>world</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the explosive weapon.
-:param world: The world in which the explosive exists.</p>
+<dt id="scene_manager.Scene_Manager.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#scene_manager.Scene_Manager.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called every frame to update self and process user input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> – The size of the window.</li>
+<li><strong>events</strong> – The events to be processed.</li>
+<li><strong>keys</strong> – The list of keys and whether they are pressed down or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -113,7 +115,7 @@ of the explosion.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/explosive.rst.txt"
+      <a href="_sources/scene_manager.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

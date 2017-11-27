@@ -43,16 +43,15 @@
 <span id="sprite-sheet-module"></span><h1>sprite_sheet module<a class="headerlink" href="#module-sprite_sheet" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="sprite_sheet.Sprite_Sheet">
-<em class="property">class </em><code class="descclassname">sprite_sheet.</code><code class="descname">Sprite_Sheet</code><span class="sig-paren">(</span><em>sheet</em>, <em>rect</em>, <em>colorkey=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the Sprite Sheet Files.</p>
+<em class="property">class </em><code class="descclassname">sprite_sheet.</code><code class="descname">Sprite_Sheet</code><span class="sig-paren">(</span><em>sheet</em>, <em>rect=(0</em>, <em>0</em>, <em>32</em>, <em>32)</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Surface with multiple Sprite images.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>sheet</strong> – The file.</li>
+<li><strong>sheet</strong> – The image to use.</li>
 <li><strong>rect</strong> – The size of the Sprite Sheet.</li>
-<li><strong>colorkey</strong> – The background of the images.</li>
 </ul>
 </td>
 </tr>
@@ -74,15 +73,15 @@
 
 <dl class="method">
 <dt id="sprite_sheet.Sprite_Sheet.load_strip">
-<code class="descname">load_strip</code><span class="sig-paren">(</span><em>count</em>, <em>y_offset</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet.load_strip" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load_strip</code><span class="sig-paren">(</span><em>row</em>, <em>count</em><span class="sig-paren">)</span><a class="headerlink" href="#sprite_sheet.Sprite_Sheet.load_strip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of surfaces from a strip in the sprite sheet.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>count</strong> – How many images are in the sprite sheet.</li>
-<li><strong>y_offset</strong> – How far down in the sheet the images begin.</li>
+<li><strong>count</strong> – How many images are in the animation.</li>
+<li><strong>row</strong> – Row index for the animation.</li>
 </ul>
 </td>
 </tr>

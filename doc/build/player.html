@@ -43,7 +43,7 @@
 <span id="player-module"></span><h1>player module<a class="headerlink" href="#module-player" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="player.Player">
-<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>file_name</em>, <em>magic_file</em>, <em>sprite_size</em>, <em>frame_rate</em>, <em>start_pos</em>, <em>speed</em>, <em>groups</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>sheet</em>, <em>ground</em>, <em>start_pos</em>, <em>name</em>, <em>speed=4</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="animated_sprite.html#animated_sprite.Animated_Sprite" title="animated_sprite.Animated_Sprite"><code class="xref py py-class docutils literal"><span class="pre">animated_sprite.Animated_Sprite</span></code></a></p>
 <p>Player class that the user will control.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -51,18 +51,72 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>file_name</strong> – The file to be used for the sprite sheet of player.</li>
-<li><strong>magic_file</strong> – The file to use for the sprite_sheet for the player’s Projectile.</li>
-<li><strong>sprite_size</strong> – The size of the player sprite.</li>
-<li><strong>frame_rate</strong> – The frame rate for the particular player character.</li>
+<li><strong>sheet</strong> – The image used for the sprite sheet of player.</li>
+<li><strong>ground</strong> – Reference to ground to determine if the player is grounded.</li>
 <li><strong>start_pos</strong> – Starting position for the Player.</li>
-<li><strong>speed</strong> – The speed of the player.</li>
-<li><strong>groups</strong> – Groups that the Player Sprite belongs to.</li>
+<li><strong>speed</strong> – Speed at which the player can move. Both horizontal and vertical.</li>
+<li><strong>name</strong> – String of the player name.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="player.Player.adjust_height">
+<code class="descname">adjust_height</code><span class="sig-paren">(</span><em>xoffset</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.adjust_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjusts the height of the player to climb slopes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xoffset</strong> – How many pixels the player wants to move left or right.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.apply_damage">
+<code class="descname">apply_damage</code><span class="sig-paren">(</span><em>damage</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.apply_damage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Has a player take damage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>damage</strong> – How much damage to take.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.calc_angle">
+<code class="descname">calc_angle</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.calc_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to calculate angle of trajectory for projectile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> – Position of mouse.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.change_anim">
+<code class="descname">change_anim</code><span class="sig-paren">(</span><em>anim_name</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.change_anim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the current animation to something different, for example,  from idle to moving left or moving right to idle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>anim_name</strong> – The name of the animation to be manipulated.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="player.Player.check_keys">
 <code class="descname">check_keys</code><span class="sig-paren">(</span><em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.check_keys" title="Permalink to this definition">¶</a></dt>
@@ -71,7 +125,21 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> – The keys that are currently being pressed.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> – The keys that are currly being pressed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="player.Player.collide_ground">
+<code class="descname">collide_ground</code><span class="sig-paren">(</span><em>offset</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.collide_ground" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the point of collision between player and ground with the given offset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>offset</strong> – Tuple that offsets the player’s mask.</td>
 </tr>
 </tbody>
 </table>
@@ -84,29 +152,15 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="player.Player.find_ground">
-<code class="descname">find_ground</code><span class="sig-paren">(</span><em>ground</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.find_ground" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to keep player within the bounds of the map.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ground</strong> – The ground to stay within the bounds of.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="player.Player.fire">
-<code class="descname">fire</code><span class="sig-paren">(</span><em>pos</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.fire" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fire</code><span class="sig-paren">(</span><em>mouse_pos</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.fire" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fires A Projectile</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pos</strong> – The angle to fire the projectile</li>
+<li><strong>mouse_pos</strong> – The mouse position used to calculate the angle to fire the projectile.</li>
 <li><strong>collidables</strong> – The objects a projectile can collide with.</li>
 </ul>
 </td>
@@ -116,21 +170,18 @@
 </dd></dl>
 
 <dl class="method">
-<dt id="player.Player.set_angle">
-<code class="descname">set_angle</code><span class="sig-paren">(</span><em>(mouse_x</em>, <em>mouse_y)</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.set_angle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the angle of the player based on mouse position
-:param (mouse_x,mouse_y): A tuple containing the x and y coordinates of the mouse</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="player.Player.take_damage">
-<code class="descname">take_damage</code><span class="sig-paren">(</span><em>damage</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.take_damage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Has a player take damage.</p>
+<dt id="player.Player.transition">
+<code class="descname">transition</code><span class="sig-paren">(</span><em>new_anim</em>, <em>dx</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function for updating animation and movement in check_keys</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>damage</strong> – How much damage to take.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>new_anim</strong> – New animation to set</li>
+<li><strong>dx</strong> – Amount that the player will move on the next frame</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

@@ -43,7 +43,7 @@
 <span id="projectile-module"></span><h1>projectile module<a class="headerlink" href="#module-projectile" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="projectile.Projectile">
-<em class="property">class </em><code class="descclassname">projectile.</code><code class="descname">Projectile</code><span class="sig-paren">(</span><em>file_name</em>, <em>rect</em>, <em>frame_rate</em>, <em>angle</em>, <em>pos</em>, <em>power</em>, <em>groups</em><span class="sig-paren">)</span><a class="headerlink" href="#projectile.Projectile" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">projectile.</code><code class="descname">Projectile</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em><span class="sig-paren">)</span><a class="headerlink" href="#projectile.Projectile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="animated_sprite.html#animated_sprite.Animated_Sprite" title="animated_sprite.Animated_Sprite"><code class="xref py py-class docutils literal"><span class="pre">animated_sprite.Animated_Sprite</span></code></a></p>
 <p>A Projectile used for weapons.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -51,9 +51,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>size</strong> – The size of the projectile.</li>
-<li><strong>pos</strong> – The position to be made at.</li>
-<li><strong>color</strong> – The color of the projectile.</li>
+<li><strong>anim</strong> – A list of surface images.</li>
+<li><strong>start_pos</strong> – The starting position for the projectile.</li>
+<li><strong>angle</strong> – Used to set the initial velocity.</li>
 </ul>
 </td>
 </tr>

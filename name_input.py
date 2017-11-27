@@ -5,6 +5,12 @@ from scene import Scene
 
 
 class Name_Input(Scene):
+    """Handles title screen input
+
+    :param images: The images to load (clouds, background etc.)
+    :param font: The font to load in.
+    """
+
     def __init__(self, images, font):
         super(Name_Input, self).__init__()
         self.images = images
@@ -29,6 +35,9 @@ class Name_Input(Scene):
 
     def process_input(self, events, keys):
         """Handles all user input and checks if valid input.
+
+        :param events: The events to be handled.
+        :param keys: The list of keys and which ones are pressed down or not.
         """
         for event in events:
             if event.type is QUIT:
@@ -54,6 +63,10 @@ class Name_Input(Scene):
 
     def update(self, display, events, keys):
         """Updates self and processes user input.
+
+        :param display: The window size.
+        :param events: The events to be handled.
+        :param keys: The list of keys and which ones are pressed down or not.
         """
         self.process_input(events, keys)
         self.image = self.background.copy()

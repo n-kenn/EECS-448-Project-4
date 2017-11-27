@@ -13,6 +13,8 @@ class Game(Scene):
     """Scene that implements the actual game.
 
     :param images: Image surfaces for various things.
+    :param names: List of character names.
+    :param font: The font to load up.
     """
 
     def __init__(self, images, names, font):
@@ -27,6 +29,7 @@ class Game(Scene):
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
+
         :param surf: Surface to draw to.
         """
         self.world.draw(surf)
@@ -41,6 +44,9 @@ class Game(Scene):
 
     def process_input(self, events, keys):
         """Handles all user input
+
+        :param events: The events to be handled, which in this case correspond to either quit or mousebuttondown
+        :param keys: The keys to be processed.
         """
         self.active.check_keys(keys)
         for event in events:
@@ -53,6 +59,7 @@ class Game(Scene):
 
     def render_turn(self, name):
         """Helper function to render players' names.
+
         :param name: The name of the active player.
         """
         return self.font.render('{}\'s turn'.format(self.active.name),
@@ -68,6 +75,10 @@ class Game(Scene):
 
     def update(self, display, events, keys):
         """Updates self and processes user input.
+
+        :param display: The size of the window.
+        :param events: The events to be handled.
+        :param keys: The list of all keys and whether they are pressed or not.
         """
         self.process_input(events, keys)
         self.world.update()

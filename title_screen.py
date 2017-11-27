@@ -25,6 +25,9 @@ class Title_Screen(Scene):
 
     def blit_opt(self, opt_surf, y):
         """Blits a single opt_surf to self.image and returns a Rect of the effected area.
+
+        :param opt_surf: The option to be displayed.
+        :param y: The y coordinate to put the option on.
         """
         return self.image.blit(opt_surf, opt_surf.get_rect(center=(self.rect.centerx, y)))
 
@@ -37,6 +40,9 @@ class Title_Screen(Scene):
 
     def make_opt_surf(self, opt, font_col=(156, 68, 108)):
         """Returns a new surface using the font passed into the constructor.
+
+        :param opt: The option to be displayed.
+        :param font_col: The surface to display the option on.
         """
         return self.font.render(opt, False, font_col).convert()
 
@@ -47,6 +53,9 @@ class Title_Screen(Scene):
 
     def process_input(self, events, keys):
         """Handles input from the user.
+
+        :param events: The events to be handled.
+        :param keys: The list of all keys and whether they are pressed or not.
         """
         for event in events:
             if event.type is QUIT:
@@ -70,6 +79,11 @@ class Title_Screen(Scene):
 
     def update(self, display, events, keys):
         """Updates self and processes user input.
+
+        :param display: The size of the window.
+        :param events: The events to be handled.
+        :param keys: The list of all keys and whether they are pressed or not.
         """
         self.process_input(events, keys)
         display.blit(self.image, display.get_rect())
+        

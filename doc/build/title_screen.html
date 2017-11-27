@@ -1,0 +1,193 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>title_screen module &#8212; Wizards .1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-title_screen">
+<span id="title-screen-module"></span><h1>title_screen module<a class="headerlink" href="#module-title_screen" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="title_screen.Title_Screen">
+<em class="property">class </em><code class="descclassname">title_screen.</code><code class="descname">Title_Screen</code><span class="sig-paren">(</span><em>images</em>, <em>opts</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="scene.html#scene.Scene" title="scene.Scene"><code class="xref py py-class docutils literal"><span class="pre">scene.Scene</span></code></a></p>
+<p>Provides a menu for UI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>images</strong> – Will get passed to Game constructor.</li>
+<li><strong>opts</strong> – Iterable of options as strings available to select.</li>
+<li><strong>font</strong> – Which font to render opt_surfs in.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="title_screen.Title_Screen.blit_opt">
+<code class="descname">blit_opt</code><span class="sig-paren">(</span><em>opt_surf</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.blit_opt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blits a single opt_surf to self.image and returns a Rect of the effected area.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>opt_surf</strong> – The option to be displayed.</li>
+<li><strong>y</strong> – The y coordinate to put the option on.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="title_screen.Title_Screen.blit_opts">
+<code class="descname">blit_opts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.blit_opts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blits multiple opts by calling self.blit_opt on each opt.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="title_screen.Title_Screen.make_opt_surf">
+<code class="descname">make_opt_surf</code><span class="sig-paren">(</span><em>opt</em>, <em>font_col=(156</em>, <em>68</em>, <em>108)</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.make_opt_surf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new surface using the font passed into the constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>opt</strong> – The option to be displayed.</li>
+<li><strong>font_col</strong> – The surface to display the option on.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="title_screen.Title_Screen.make_opt_surfs">
+<code class="descname">make_opt_surfs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.make_opt_surfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of surfaces from the opts passed into the constructor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="title_screen.Title_Screen.process_input">
+<code class="descname">process_input</code><span class="sig-paren">(</span><em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.process_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles input from the user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>events</strong> – The events to be handled.</li>
+<li><strong>keys</strong> – The list of all keys and whether they are pressed or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="title_screen.Title_Screen.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates self and processes user input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>display</strong> – The size of the window.</li>
+<li><strong>events</strong> – The events to be handled.</li>
+<li><strong>keys</strong> – The list of all keys and whether they are pressed or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Noah, Josh, Thomas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/title_screen.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

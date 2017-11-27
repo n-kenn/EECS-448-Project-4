@@ -44,14 +44,13 @@
 <dl class="class">
 <dt id="ground.Ground">
 <em class="property">class </em><code class="descclassname">ground.</code><code class="descname">Ground</code><span class="sig-paren">(</span><em>image</em>, <em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#ground.Ground" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>The surface on which players can stand.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>Sprite</strong> – The reference of the sprite.</li>
 <li><strong>image</strong> – Image to use.</li>
 <li><strong>pos</strong> – Position of the ground.</li>
 </ul>
@@ -59,6 +58,24 @@
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="ground.Ground.make_holes">
+<code class="descname">make_holes</code><span class="sig-paren">(</span><em>count</em>, <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#ground.Ground.make_holes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called once in the constructor to make the ground more dynamic and get the players’ starting locations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>count</strong> – How many holes to make.</li>
+<li><strong>size</strong> – The size of the holes.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="ground.Ground.update">
 <code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ground.Ground.update" title="Permalink to this definition">¶</a></dt>

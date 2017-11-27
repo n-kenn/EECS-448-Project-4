@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>explosive module &#8212; Wizards .1 documentation</title>
+    <title>scene module &#8212; Wizards .1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -39,40 +39,50 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-explosive">
-<span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-scene">
+<span id="scene-module"></span><h1>scene module<a class="headerlink" href="#module-scene" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="explosive.Explosive">
-<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="projectile.html#projectile.Projectile" title="projectile.Projectile"><code class="xref py py-class docutils literal"><span class="pre">projectile.Projectile</span></code></a></p>
-<p>A class for any weapon that has the ability to explode.</p>
+<dt id="scene.Scene">
+<em class="property">class </em><code class="descclassname">scene.</code><code class="descname">Scene</code><a class="headerlink" href="#scene.Scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class that encompasses a ‘mode’ of the game.</p>
+<dl class="method">
+<dt id="scene.Scene.process_input">
+<code class="descname">process_input</code><span class="sig-paren">(</span><em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#scene.Scene.process_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each scene must define how it processes user input</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>anim</strong> – The sprite sheet to use for animating.</li>
-<li><strong>start_pos</strong> – Will get passed to projectile.</li>
-<li><strong>angle</strong> – Will get passed to projectile.</li>
-<li><strong>collidables</strong> – Sprites that the Explosive can collide with.</li>
+<li><strong>display</strong> – The size of the window.</li>
+<li><strong>events</strong> – The events to be handled.</li>
+<li><strong>keys</strong> – The list of all keys and whether they are pressed or not.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="explosive.Explosive.collision_check">
-<code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>Looks to see if the explosive projectile has collided with anything.
-If it has, then remove the projectile, and draw an elipse to represent the blast
-of the explosion.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="explosive.Explosive.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>world</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the explosive weapon.
-:param world: The world in which the explosive exists.</p>
+<dt id="scene.Scene.switch_scene">
+<code class="descname">switch_scene</code><span class="sig-paren">(</span><em>next</em><span class="sig-paren">)</span><a class="headerlink" href="#scene.Scene.switch_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to change the current scene to a new one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>next</strong> – The scene to be swapped with the current scene.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scene.Scene.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scene.Scene.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each scene must define how it updates itself</p>
 </dd></dl>
 
 </dd></dl>
@@ -113,7 +123,7 @@ of the explosion.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/explosive.rst.txt"
+      <a href="_sources/scene.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
