@@ -15,14 +15,13 @@ class Title_Screen(Scene):
 
     def __init__(self, images, opts, font):
         super(Title_Screen, self).__init__()
-        self.image = images['sky'].copy()
+        self.images = images
+        self.image = self.images['sky'].copy()
         self.rect = self.image.get_rect()
         self.opts = opts
         self.font = font
         self.opt_rects = []
         self.blit_opts()
-        self.next_scene = Name_Input(images, self.font)
-        # self.game_scene = Game(images, font)
 
     def blit_opt(self, opt_surf, y):
         """Blits a single opt_surf to self.image and returns a Rect of the effected area.
@@ -64,12 +63,13 @@ class Title_Screen(Scene):
                 for i, opt_rect in enumerate(self.opt_rects):
                     if opt_rect.collidepoint(event.pos):
                         if self.opts[i] is 'Start':
-                            self.switch_scene(self.next_scene)
+                            self.switch_scene(Name_Input(self.images,
+                                                         self.font))
                         elif self.opts[i] is 'Quit':
                             self.switch_scene(None)
 
     def update(self, display, events, keys):
-        """Processes event and key input from user and blits to display self.image each frame.
+        """Updates self and processes user input.
         """
         self.process_input(events, keys)
         display.blit(self.image, display.get_rect())

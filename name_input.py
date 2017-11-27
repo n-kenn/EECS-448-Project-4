@@ -7,30 +7,58 @@ from scene import Scene
 class Name_Input(Scene):
     def __init__(self, images, font):
         super(Name_Input, self).__init__()
-        self.background = images['sky'].copy()
+        self.images = images
+        self.background = self.images['sky'].copy()
         self.image = self.background.copy()
+        self.rect = self.image.get_rect()
+        self.split = self.rect.height // 3
         self.font = font
-        self.name = ''
-        self.next_scene = Game(images, self.font)
+        self.font_col = (156, 68, 108)
+        self.input = ''
+        self.gen = self.active_num = None
+        self.names = []
+        self.num, self.name = True, False
+
+    def ask(self):
+        """Blits to self.image a question to get num players and names of players.
+        """
+        q = self.font.render('How many are playing?' if self.num else 'Name of Player {}?'.format(self.active_num),
+                             False,
+                             self.font_col).convert()
+        self.image.blit(q, q.get_rect(center=(self.rect.centerx, self.split)))
 
     def process_input(self, events, keys):
+        """Handles all user input and checks if valid input.
+        """
         for event in events:
             if event.type is QUIT:
                 self.switch_scene(None)
             elif event.type is KEYDOWN:
-                if event.unicode.isalpha():
-                    if len(self.name) < 8:
-                        self.name += event.unicode
+                if event.unicode.isalnum():
+                    self.input += event.unicode
                 elif event.key == K_BACKSPACE:
-                    self.name = self.name[:-1]
+                    self.input = self.input[:-1]
                 elif event.key == K_RETURN:
-                    self.switch_scene(self.next_scene)
+                    if self.num and self.input.isdigit() and int(self.input) > 1:
+                        self.gen = (p for p in range(1, 1 + int(self.input)))
+                        self.num, self.name = self.name, self.num
+                        self.active_num = self.gen.next()
+                    elif self.name and self.input.isalpha() and len(self.input) < 8:
+                        self.names.append(self.input)
+                        try:
+                            self.active_num = self.gen.next()
+                        except StopIteration:
+                            self.switch_scene(
+                                Game(self.images, self.names, self.font))
+                    self.input = ''
 
     def update(self, display, events, keys):
+        """Updates self and processes user input.
+        """
         self.process_input(events, keys)
         self.image = self.background.copy()
-        if self.name:
-            name = self.font.render(self.name, False, (156, 68, 108))
-            self.image.blit(name,
-                            name.get_rect(center=display.get_rect().center))
+        self.ask()
+        input = self.font.render(self.input, False, self.font_col)
+        self.image.blit(input,
+                        input.get_rect(center=(self.rect.centerx, 2 * self.split)))
         display.blit(self.image, (0, 0))

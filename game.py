@@ -15,15 +15,15 @@ class Game(Scene):
     :param images: Image surfaces for various things.
     """
 
-    def __init__(self, images, font):
+    def __init__(self, images, names, font):
         super(Game, self).__init__()
         self.world = World(images)
-        self.players = Group([Player(images['player_ss'],
-                                     self.world.ground,
-                                     loc) for loc in sample(self.world.start_locs, 2)])
+        self.players = Group(Player(images['player_ss'], self.world.ground, loc, names[i])
+                             for i, loc in enumerate(sample(self.world.start_locs, len(names))))
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
         self.font = font
+        self.render = self.render_turn(self.active.name)
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
@@ -31,6 +31,8 @@ class Game(Scene):
         """
         self.world.draw(surf)
         self.players.draw(surf)
+        surf.blit(self.render, self.render.get_rect(
+            midtop=surf.get_rect().midtop))
 
     def game_over(self):
         """Returns true when one player remains in the players sprite group.
@@ -49,11 +51,20 @@ class Game(Scene):
                                  self.players.sprites() + [self.world.ground])
                 self.switch_turns()
 
+    def render_turn(self, name):
+        """Helper function to render players' names.
+        :param name: The name of the active player.
+        """
+        return self.font.render('{}\'s turn'.format(self.active.name),
+                                False,
+                                (156, 68, 108))
+
     def switch_turns(self):
-        """When a player's actions are done, switch active player.
+        """When a player's actions are done, switch active player and render new text.
         """
         if not self.game_over():
             self.active = self.player_cycler.next()
+            self.render = self.render_turn(self.active.name)
 
     def update(self, display, events, keys):
         """Updates self and processes user input.

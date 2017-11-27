@@ -21,7 +21,7 @@ class Player(Animated_Sprite):
     :param name: String of the player name.
     """
 
-    def __init__(self, sheet, ground, start_pos, speed=4, name='Josh'):
+    def __init__(self, sheet, ground, start_pos, name, speed=4):
         super(Player, self).__init__(sheet)
         self.speed = speed
         self.vel = Vector2(0, 0)

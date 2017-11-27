@@ -1,6 +1,7 @@
 from math import cos, sin
 
-from pygame import mask, math
+from pygame import mask
+from pygame.math import Vector2
 
 from animated_sprite import Animated_Sprite
 
@@ -19,7 +20,7 @@ class Projectile(Animated_Sprite):
         self.image = self.curr_anim.next()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
-        self.vel = -20 * math.Vector2(cos(angle), sin(angle))
+        self.vel = -20 * Vector2(cos(angle), sin(angle))
 
     def update(self, world):
         """Updates the projectile's position
