@@ -21,23 +21,20 @@ class Input_Screen(Scene):
         self.font = font
         self.font_col = (156, 68, 108)
         self.input = ''
-        self.gen = self.active_num = None
-        self.names = []
-        self.num, self.name = True, False
+        self.num = True
 
     def ask(self):
-        """Blits to self.image a question to get num players and names of players.
+        """Blits to self.image a question to get num players.
         """
-        q = self.font.render('How many are playing?' if self.num else 'Name of Player {}?'.format(self.active_num),
+        q = self.font.render('How many are playing?',
                              False,
                              self.font_col).convert()
         self.image.blit(q, q.get_rect(center=(self.rect.centerx, self.split)))
 
-    def process_input(self, events, keys):
+    def process_input(self, events):
         """Handles all user input and checks if valid input.
 
         :param events: The events to be handled.
-        :param keys: The list of keys and which ones are pressed down or not.
         """
         for event in events:
             if event.type is QUIT:
@@ -48,27 +45,15 @@ class Input_Screen(Scene):
                 elif event.key == K_BACKSPACE:
                     self.input = self.input[:-1]
                 elif event.key == K_RETURN:
-                    if self.num and self.input.isdigit() and int(self.input) > 1:
-                        self.gen = (p for p in range(1, 1 + int(self.input)))
-                        self.num, self.name = self.name, self.num
-                        self.active_num = self.gen.next()
-                    elif self.name and self.input.isalpha() and len(self.input) < 8:
-                        self.names.append(self.input)
-                        try:
-                            self.active_num = self.gen.next()
-                        except StopIteration:
-                            self.switch_scene(
-                                Game(self.images, self.names, self.font))
-                    self.input = ''
+                    self.switch_scene(Game(self.images, self.font))
 
-    def update(self, display, events, keys):
+    def update(self, display, events):
         """Updates self and processes user input.
 
         :param display: The game display.
         :param events: The events to be handled.
-        :param keys: The list of keys and which ones are pressed down or not.
         """
-        self.process_input(events, keys)
+        self.process_input(events)
         self.image = self.background.copy()
         self.ask()
         input = self.font.render(self.input, False, self.font_col)

@@ -19,7 +19,7 @@ scene_manager = Scene_Manager(images, font)
 
 if __name__ == '__main__':
     while scene_manager.active_scene is not None:
-        scene_manager.update(display, pg.event.get(), pg.key.get_pressed())
+        scene_manager.update(display, pg.event.get())
         pg.display.update()
         pg.display.set_caption('Wizards {:.2f}'.format(clock.get_fps()))
         clock.tick(60)

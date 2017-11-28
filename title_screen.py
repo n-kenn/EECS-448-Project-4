@@ -50,11 +50,10 @@ class Title_Screen(Scene):
         """
         return [self.make_opt_surf(opt) for opt in self.opts]
 
-    def process_input(self, events, keys):
+    def process_input(self, events):
         """Handles input from the user.
 
         :param events: The events to be handled.
-        :param keys: The list of all keys and whether they are pressed or not.
         """
         for event in events:
             if event.type is QUIT:
@@ -71,16 +70,16 @@ class Title_Screen(Scene):
                 for i, opt_rect in enumerate(self.opt_rects):
                     if opt_rect.collidepoint(event.pos):
                         if self.opts[i] is 'START':
-                            self.switch_scene(Input_Screen(self.images, self.font))
+                            self.switch_scene(
+                                Input_Screen(self.images, self.font))
                         elif self.opts[i] is 'QUIT':
                             self.switch_scene(None)
 
-    def update(self, display, events, keys):
+    def update(self, display, events):
         """Updates self and processes user input.
 
         :param display: The game display.
         :param events: The events to be handled.
-        :param keys: The list of all keys and whether they are pressed or not.
         """
-        self.process_input(events, keys)
+        self.process_input(events)
         display.blit(self.image, display.get_rect())
