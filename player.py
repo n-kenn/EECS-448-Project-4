@@ -2,14 +2,14 @@ from itertools import cycle
 from math import atan2
 from random import randint
 
-from pygame import Color, mask
+from pygame import mask
 from pygame.locals import K_a, K_d, K_SPACE, K_1, K_2, K_w, K_s
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
 from animated_sprite import Animated_Sprite
 from explosive import Explosive
-from Beam_Shot import Beam_Shot
+from beam_shot import Beam_Shot
 
 
 class Player(Animated_Sprite):
@@ -40,7 +40,7 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
         self.projectile = None
         self.power = 30
-        self.current_weapon ="Beam_Shot"
+        self.current_weapon = "Beam_Shot"
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -110,7 +110,7 @@ class Player(Animated_Sprite):
     def change_anim(self, anim_name):
         """Changes the current animation to something different, for example,  from idle to moving left or moving right to idle.
 
-        :param anim_name: The name of the animation to be manipulated.
+        :param anim_name: The name of the animation to be set.
         """
         if self.curr_strip is not self.strips[anim_name]:
             self.curr_strip = self.strips[anim_name]
@@ -131,10 +131,10 @@ class Player(Animated_Sprite):
         """Fires A Projectile
 
         :param mouse_pos: The mouse position used to calculate the angle to fire the projectile.
-        :param collidables: The objects a projectile can collide with.
+        :param collidables: A list of objects a projectile can collide with.
         """
         if not self.projectile:
-            if (self.current_weapon == "Explosive"):
+            if (self.current_weapon is "Explosive"):
                 self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
                                                     self.rect.midtop,
                                                     self.calc_angle(mouse_pos),
@@ -169,7 +169,6 @@ class Player(Animated_Sprite):
         :param world: The world the player inhabits.
         """
         super(Player, self).update()
-        self.draw_health()
         self.draw_health()
         if self.projectile:
             self.projectile.update(world)

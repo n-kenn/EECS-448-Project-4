@@ -1,7 +1,3 @@
-from operator import sub
-
-from pygame.draw import ellipse
-
 from explosive import Explosive
 
 
@@ -22,6 +18,7 @@ class Beam_Shot(Explosive):
         self.rect.move_ip(self.vel)
         if not world.rect.contains(self.rect):
             self.kill()
+            return
         self.active_timer -= 1
         if self.active_timer <= 0:
             self.collision_check()

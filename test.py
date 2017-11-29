@@ -1,5 +1,4 @@
 from os.path import join
-
 import pygame as pg
 
 from game import Game
@@ -7,10 +6,6 @@ from game import Game
 pg.init()
 display = pg.display.set_mode((1024, 512))
 clock = pg.time.Clock()
-
-music = pg.mixer.Sound(join('music', 'BadMusic.ogg'))
-music.set_volume(0.5)
-music.play(-1)
 
 images = {
     'sky': pg.image.load(join('images', 'sky.png')).convert(),
@@ -21,8 +16,15 @@ images = {
 
 font = pg.font.Font(join('font', 'kindergarten.ttf'), 128)
 
-game = Game(images, font)
+num_players = 2
+team_names = ['Wizards', 'Clowns']
+game = Game(images, num_players, font)
 
 if __name__ == '__main__':
-    while True:
-        game.update(display, pg.event.get())
+    assert hasattr(game, 'process_input') and hasattr(game, 'update'), 'Game does not have a required scene attribute.'
+    assert game.game_over() is False, 'Game over from the beginning.'
+    assert game.next is game, 'Next scene is self.'
+    assert len(game.teams) is 2, 'Number of teams is not 2 upon game creation.'
+    for i, team in enumerate(game.teams):
+        assert len(team) is num_players, 'Members on team is not equal to num_players.'
+        assert game.teams[i].name is team_names[i], 'Turn order not initialized correctly'
