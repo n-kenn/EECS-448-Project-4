@@ -20,6 +20,7 @@ class World(sprite.Sprite):
         self.scroll = cycle(range(self.background.get_width()))
         self.rect = self.image.get_rect()
         self.ground = Ground(images['ground'], self.rect.midleft)
+        self.background.fill((33, 22, 7), self.ground.rect)
         self.gravity = gravity
         self.start_locs = [tuple(map(add, (0, self.ground.rect.height), loc))
                            for loc in self.ground.start_locs]
