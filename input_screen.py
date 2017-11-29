@@ -34,7 +34,22 @@ class Input_Screen(Scene):
                 elif event.key == K_BACKSPACE:
                     self.input = self.input[:-1]
                 elif event.key == K_RETURN:
+<<<<<<< HEAD
                     self.switch_scene(Game(self.images, self.font))
+=======
+                    if self.num and self.input.isdigit() and int(self.input) > 1:
+                        self.gen = (p for p in range(1, 1 + int(self.input)))
+                        self.num, self.name = self.name, self.num
+                        self.active_num = self.gen.next()
+                    elif self.name and self.input.isalpha() and len(self.input) < 10:
+                        self.names.append(self.input)
+                        try:
+                            self.active_num = self.gen.next()
+                        except StopIteration:
+                            self.switch_scene(
+                                Game(self.images, self.names, self.font))
+                    self.input = ''
+>>>>>>> 8f07b4eaf26fec23dc8a4a34b27715f5f957a713
 
     def update(self, display, events):
         """Updates self and processes user input.
