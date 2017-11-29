@@ -8,7 +8,7 @@ pg.init()
 display = pg.display.set_mode((1024, 512))
 clock = pg.time.Clock()
 
-music = pg.mixer.Sound('music/BadMusic.ogg')
+music = pg.mixer.Sound(join('music', 'BadMusic.ogg'))
 music.set_volume(0.5)
 music.play(-1)
 

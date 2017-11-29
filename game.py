@@ -39,7 +39,9 @@ class Game(Scene):
     def game_over(self):
         """Returns true when one player remains in the team sprite group.
         """
-        return not len(self.teams[1])
+        for team in self.teams:
+            if not team:
+                return True
 
     def collidables(self):
         """Adds every sprite to a collidables list.
@@ -102,7 +104,7 @@ class Game(Scene):
         self.update_teams()
         self.draw(display)
         if self.game_over():
-            win = self.font.render('Winner: {}'.format(self.teams[0].name),
+            win = self.font.render('Winner: {}'.format(self.teams[1].name),
                                    False,
                                    self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
             display.blit(win, win.get_rect(center=display.get_rect().center))

@@ -26,11 +26,14 @@ class Team(Group):
         """Begins the cycling process. (Used especially when a player dies so that the game will not get stuck.)
         """
         self.cycler = cycle(self)
-        self.next()
+        try:
+            self.next()
+        except StopIteration:
+            pass
 
     def update(self, world):
         for sprite in self.sprites():
             sprite.update(world)
         if len(self) is not self.curr_len:
-            self.reset_cycle()
             self.curr_len = len(self)
+            self.reset_cycle()
