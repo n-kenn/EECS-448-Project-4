@@ -12,6 +12,7 @@ class Explosive(Projectile):
     :param start_pos: Will get passed to projectile.
     :param angle: Will get passed to projectile.
     :param collidables: Sprites that the Explosive can collide with.
+    :param power: The multiplier added to the distance of the shot. 
     """
 
     def __init__(self, anim, start_pos, angle, collidables, power):
@@ -20,9 +21,7 @@ class Explosive(Projectile):
         self.damage = 8
 
     def collision_check(self):
-        """Looks to see if the explosive projectile has collided with anything.
-            If it has, then remove the projectile, and draw an elipse to represent the blast
-            of the explosion.
+        """If collision with any collidables occurs, draw an ellipse representing the explosion
         """
         for collidable in self.collidables:
             if self.rect.colliderect(collidable.rect):
@@ -38,6 +37,7 @@ class Explosive(Projectile):
 
     def update(self, world):
         """Update the explosive weapon.
+        
         :param world: The world in which the explosive exists.
         """
         super(Explosive, self).update(world)

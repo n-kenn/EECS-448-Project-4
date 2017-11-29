@@ -15,7 +15,7 @@ class Ground(object):
         self.image = image
         self.rect = self.image.get_rect(topleft=pos)
         self.start_locs = []
-        self.make_holes(16, (128, 128))
+        self.make_holes(24, (128, 128))
         self.mask = mask.from_surface(self.image)
 
     def make_holes(self, count, size):
@@ -26,7 +26,7 @@ class Ground(object):
         """
         for i in range(count):
             self.start_locs.append(ellipse(self.image, (0, 0, 0, 0), ((
-                randint(0, self.rect.width), randint(0, self.rect.height - size[1])), size)).midbottom)
+                randint(0, self.rect.width), randint(-size[0], self.rect.height - size[0])), size)).midbottom)
 
     def update(self):
         """Update mask to compensate for explosions occuring.

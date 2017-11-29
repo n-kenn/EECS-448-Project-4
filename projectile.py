@@ -12,6 +12,7 @@ class Projectile(Animated_Sprite):
     :param anim: A list of surface images.
     :param start_pos: The starting position for the projectile.
     :param angle: Used to set the initial velocity.
+    :param power: The multiplier added to the velocity of the shot.
     """
 
     def __init__(self, anim, start_pos, angle, power):

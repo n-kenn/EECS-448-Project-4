@@ -43,7 +43,7 @@
 <span id="title-screen-module"></span><h1>title_screen module<a class="headerlink" href="#module-title_screen" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="title_screen.Title_Screen">
-<em class="property">class </em><code class="descclassname">title_screen.</code><code class="descname">Title_Screen</code><span class="sig-paren">(</span><em>images</em>, <em>opts</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">title_screen.</code><code class="descname">Title_Screen</code><span class="sig-paren">(</span><em>images</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="scene.html#scene.Scene" title="scene.Scene"><code class="xref py py-class docutils literal"><span class="pre">scene.Scene</span></code></a></p>
 <p>Provides a menu for UI.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -52,7 +52,6 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>images</strong> – Will get passed to Game constructor.</li>
-<li><strong>opts</strong> – Iterable of options as strings available to select.</li>
 <li><strong>font</strong> – Which font to render opt_surfs in.</li>
 </ul>
 </td>
@@ -85,7 +84,7 @@
 
 <dl class="method">
 <dt id="title_screen.Title_Screen.make_opt_surf">
-<code class="descname">make_opt_surf</code><span class="sig-paren">(</span><em>opt</em>, <em>font_col=(156</em>, <em>68</em>, <em>108)</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.make_opt_surf" title="Permalink to this definition">¶</a></dt>
+<code class="descname">make_opt_surf</code><span class="sig-paren">(</span><em>opt</em>, <em>font_col=(70</em>, <em>0</em>, <em>6)</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.make_opt_surf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new surface using the font passed into the constructor.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -109,17 +108,13 @@
 
 <dl class="method">
 <dt id="title_screen.Title_Screen.process_input">
-<code class="descname">process_input</code><span class="sig-paren">(</span><em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.process_input" title="Permalink to this definition">¶</a></dt>
+<code class="descname">process_input</code><span class="sig-paren">(</span><em>events</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.process_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles input from the user.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>events</strong> – The events to be handled.</li>
-<li><strong>keys</strong> – The list of all keys and whether they are pressed or not.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>events</strong> – The events to be handled.</td>
 </tr>
 </tbody>
 </table>
@@ -127,16 +122,15 @@
 
 <dl class="method">
 <dt id="title_screen.Title_Screen.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em><span class="sig-paren">)</span><a class="headerlink" href="#title_screen.Title_Screen.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates self and processes user input.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>display</strong> – The size of the window.</li>
+<li><strong>display</strong> – The game display.</li>
 <li><strong>events</strong> – The events to be handled.</li>
-<li><strong>keys</strong> – The list of all keys and whether they are pressed or not.</li>
 </ul>
 </td>
 </tr>

@@ -43,7 +43,7 @@
 <span id="game-module"></span><h1>game module<a class="headerlink" href="#module-game" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="game.Game">
-<em class="property">class </em><code class="descclassname">game.</code><code class="descname">Game</code><span class="sig-paren">(</span><em>images</em>, <em>names</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">game.</code><code class="descname">Game</code><span class="sig-paren">(</span><em>images</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="scene.html#scene.Scene" title="scene.Scene"><code class="xref py py-class docutils literal"><span class="pre">scene.Scene</span></code></a></p>
 <p>Scene that implements the actual game.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -52,13 +52,18 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>images</strong> – Image surfaces for various things.</li>
-<li><strong>names</strong> – List of character names.</li>
 <li><strong>font</strong> – The font to load up.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="game.Game.collidables">
+<code class="descname">collidables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.collidables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds every sprite to a collidables list.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="game.Game.draw">
 <code class="descname">draw</code><span class="sig-paren">(</span><em>surf</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.draw" title="Permalink to this definition">¶</a></dt>
@@ -76,36 +81,30 @@
 <dl class="method">
 <dt id="game.Game.game_over">
 <code class="descname">game_over</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.game_over" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns true when one player remains in the players sprite group.</p>
+<dd><p>Returns true when one player remains in the team sprite group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.make_banner">
+<code class="descname">make_banner</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.make_banner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function to render whose turn it is.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.make_teams">
+<code class="descname">make_teams</code><span class="sig-paren">(</span><em>images</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.make_teams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates two lists of players for each time based on the quantity of starting locations.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="game.Game.process_input">
-<code class="descname">process_input</code><span class="sig-paren">(</span><em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.process_input" title="Permalink to this definition">¶</a></dt>
+<code class="descname">process_input</code><span class="sig-paren">(</span><em>events</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.process_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handles all user input</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>events</strong> – The events to be handled, which in this case correspond to either quit or mousebuttondown</li>
-<li><strong>keys</strong> – The keys to be processed.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="game.Game.render_turn">
-<code class="descname">render_turn</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.render_turn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper function to render players’ names.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – The name of the active player.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>events</strong> – The events to be handled, which in this case correspond to either quit or mousebuttondown</td>
 </tr>
 </tbody>
 </table>
@@ -119,21 +118,26 @@
 
 <dl class="method">
 <dt id="game.Game.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em>, <em>keys</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates self and processes user input.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>display</strong> – The size of the window.</li>
+<li><strong>display</strong> – The game display.</li>
 <li><strong>events</strong> – The events to be handled.</li>
-<li><strong>keys</strong> – The list of all keys and whether they are pressed or not.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="game.Game.update_teams">
+<code class="descname">update_teams</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.update_teams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells the game to update the conditions of the teams.</p>
 </dd></dl>
 
 </dd></dl>

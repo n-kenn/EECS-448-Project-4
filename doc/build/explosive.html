@@ -43,7 +43,7 @@
 <span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="explosive.Explosive">
-<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em>, <em>collidables</em>, <em>power</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="projectile.html#projectile.Projectile" title="projectile.Projectile"><code class="xref py py-class docutils literal"><span class="pre">projectile.Projectile</span></code></a></p>
 <p>A class for any weapon that has the ability to explode.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -55,6 +55,7 @@
 <li><strong>start_pos</strong> – Will get passed to projectile.</li>
 <li><strong>angle</strong> – Will get passed to projectile.</li>
 <li><strong>collidables</strong> – Sprites that the Explosive can collide with.</li>
+<li><strong>power</strong> – The multiplier added to the distance of the shot.</li>
 </ul>
 </td>
 </tr>
@@ -63,16 +64,21 @@
 <dl class="method">
 <dt id="explosive.Explosive.collision_check">
 <code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>Looks to see if the explosive projectile has collided with anything.
-If it has, then remove the projectile, and draw an elipse to represent the blast
-of the explosion.</p>
+<dd><p>If collision with any collidables occurs, draw an ellipse representing the explosion</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="explosive.Explosive.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>world</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the explosive weapon.
-:param world: The world in which the explosive exists.</p>
+<dd><p>Update the explosive weapon.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>world</strong> – The world in which the explosive exists.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

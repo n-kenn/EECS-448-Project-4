@@ -1,11 +1,11 @@
-from itertools import cycle
 from random import sample
 
+from pygame.key import get_pressed
 from pygame.locals import MOUSEBUTTONDOWN, QUIT
-from pygame.sprite import Group
 
 from player import Player
 from scene import Scene
+from team import Team
 from world import World
 
 
@@ -13,19 +13,16 @@ class Game(Scene):
     """Scene that implements the actual game.
 
     :param images: Image surfaces for various things.
-    :param names: List of player names.
     :param font: The font to load up.
     """
 
-    def __init__(self, images, names, font):
+    def __init__(self, images, font):
         super(Game, self).__init__()
         self.world = World(images)
-        self.players = Group(Player(images['player_spritesheet'], self.world.ground, loc, names[i])
-                             for i, loc in enumerate(sample(self.world.start_locs, len(names))))
-        self.player_cycler = cycle(self.players)
-        self.active = self.player_cycler.next()
+        self.teams = self.make_teams(images)
         self.font = font
-        self.render = self.render_turn(self.active.name)
+        self.wiz_col, self.clown_col = (156, 68, 108), (255, 20, 55)
+        self.banner = self.make_banner()
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
@@ -33,60 +30,77 @@ class Game(Scene):
         :param surf: Surface to draw to.
         """
         self.world.draw(surf)
-        self.players.draw(surf)
+        for team in self.teams:
+            team.draw(surf)
         if not self.game_over():
-            surf.blit(self.render,
-                      self.render.get_rect(midtop=surf.get_rect().midtop))
+            surf.blit(self.banner,
+                      self.banner.get_rect(midtop=surf.get_rect().midtop))
 
     def game_over(self):
-        """Returns true when one player remains in the players sprite group.
+        """Returns true when one player remains in the team sprite group.
         """
-        return len(self.players) is 1
+        return not len(self.teams[1])
 
-    def process_input(self, events, keys):
+    def collidables(self):
+        """Adds every sprite to a collidables list.
+        """
+        temp = [self.world.ground]
+        for team in self.teams:
+            for sprite in team.sprites():
+                temp.append(sprite)
+        return temp
+
+    def process_input(self, events):
         """Handles all user input
 
         :param events: The events to be handled, which in this case correspond to either quit or mousebuttondown
-        :param keys: The keys to be processed.
         """
-        self.active.check_keys(keys)
         for event in events:
             if event.type is QUIT:
                 self.switch_scene(None)
             elif event.type is MOUSEBUTTONDOWN:
-                self.active.fire(event.pos,
-                                 self.players.sprites() + [self.world.ground])
+                self.teams[0].active.fire(event.pos, self.collidables())
                 self.switch_turns()
 
-    def render_turn(self, name):
-        """Helper function to render players' names.
-
-        :param name: The name of the active player.
+    def make_banner(self):
+        """Helper function to render whose turn it is.
         """
-        return self.font.render('{}\'s turn'.format(self.active.name),
+        return self.font.render('Go, {}!'.format(self.teams[0].name),
                                 False,
-                                (156, 68, 108))
+                                self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
+
+    def make_teams(self, images):
+        """Generates two lists of players for each time based on the quantity of starting locations.
+        """
+        return [Team(name, [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc) for loc in sample(self.world.start_locs, 2)]) for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
         """When a player's actions are done, switch active player and render new text.
         """
         if not self.game_over():
-            self.active = self.player_cycler.next()
-            self.render = self.render_turn(self.active.name)
+            self.teams.reverse()
+            self.teams[0].next()
+            self.banner = self.make_banner()
 
-    def update(self, display, events, keys):
+    def update_teams(self):
+        """Tells the game to update the conditions of the teams.
+        """
+        for team in self.teams:
+            team.update(self.world)
+
+    def update(self, display, events):
         """Updates self and processes user input.
 
         :param display: The game display.
         :param events: The events to be handled.
-        :param keys: The list of all keys and whether they are pressed or not.
         """
-        self.process_input(events, keys)
+        self.process_input(events)
+        self.teams[0].active.check_movement(self.world.ground, get_pressed())
         self.world.update()
-        self.players.update(self.world)
+        self.update_teams()
         self.draw(display)
         if self.game_over():
-            win = self.font.render('Winner: {}'.format(self.active.name),
+            win = self.font.render('Winner: {}'.format(self.teams[0].name),
                                    False,
-                                   (156, 68, 108)).convert()
+                                   self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
             display.blit(win, win.get_rect(center=display.get_rect().center))
