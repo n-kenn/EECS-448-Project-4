@@ -3,12 +3,13 @@ from math import atan2
 from random import randint
 
 from pygame import Color, mask
-from pygame.locals import K_a, K_d, K_SPACE
+from pygame.locals import K_a, K_d, K_SPACE, K_1, K_2
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
 from animated_sprite import Animated_Sprite
 from explosive import Explosive
+from Beam_Shot import Beam_Shot
 
 
 class Player(Animated_Sprite):
@@ -42,7 +43,7 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
         self.projectile = None
         self.power = 30
-        self.current_weapon ="Explosive"
+        self.current_weapon ="Beam_Shot"
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -79,6 +80,10 @@ class Player(Animated_Sprite):
         if keys[K_SPACE]:
             if not self.collide_ground((0, -self.speed)):
                 self.vel.y -= self.speed
+        if keys[K_1]:
+            self.current_weapon = "Explosive"
+        if keys[K_2]:
+            self.current_weapon = "Beam_Shot"
 
     def collide_ground(self, offset):
         """Returns the point of collision between player and ground with the given offset.
@@ -126,6 +131,14 @@ class Player(Animated_Sprite):
                                                     self.power,
                                                     8,
                                                     3))
+            else:
+                self.projectile = GroupSingle(Beam_Shot(cycle(self.strips['magic']),
+                                                    self.rect.midtop,
+                                                    self.calc_angle(mouse_pos),
+                                                    collidables,
+                                                    self.power,
+                                                    6,
+                                                    2))
 
 
     def transition(self, new_anim, dx):
