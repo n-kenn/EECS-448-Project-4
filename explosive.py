@@ -19,6 +19,7 @@ class Explosive(Projectile):
         self.collidables = collidables
         self.damage = damage
         self.explosion_radius = radius
+        self.active_timer = 2
 
     def collision_check(self):
         """Looks to see if the explosive projectile has collided with anything.
@@ -42,4 +43,6 @@ class Explosive(Projectile):
         :param world: The world in which the explosive exists.
         """
         super(Explosive, self).update(world)
-        self.collision_check()
+        self.active_timer -= 1
+        if self.active_timer <= 0:
+            self.collision_check()

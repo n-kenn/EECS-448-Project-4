@@ -3,7 +3,7 @@ from math import atan2
 from random import randint
 
 from pygame import Color, mask
-from pygame.locals import K_a, K_d, K_SPACE, K_1, K_2
+from pygame.locals import K_a, K_d, K_SPACE, K_1, K_2, K_w, K_s
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
@@ -84,6 +84,12 @@ class Player(Animated_Sprite):
             self.current_weapon = "Explosive"
         if keys[K_2]:
             self.current_weapon = "Beam_Shot"
+        if keys[K_w]:
+            if self.power < 50:
+                self.power+=1
+        if keys[K_s]:
+            if self.power > 1:
+                self.power-=1
 
     def collide_ground(self, offset):
         """Returns the point of collision between player and ground with the given offset.
@@ -99,7 +105,8 @@ class Player(Animated_Sprite):
 
         :param pos: Position of mouse.
         """
-        return atan2(self.rect.y - pos[1], self.rect.x - pos[0])
+        (temp_x, temp_y) = self.rect.midtop
+        return atan2(temp_y - pos[1], temp_x - pos[0])
 
     def change_anim(self, anim_name):
         """Changes the current animation to something different, for example,  from idle to moving left or moving right to idle.
@@ -115,6 +122,11 @@ class Player(Animated_Sprite):
         """
         self.image.fill((255, 0, 0) if self.health < self.image.get_width() else (0, 255, 0),
                         ((self.image.get_rect().topleft), (self.health, 4)))
+
+    def draw_power(self):
+        """Draws the power bar.
+        """
+        self.image.fill((0,0,int((self.power/50)*255)), ((self.image.get_rect().topleft), (4, self.power)))
 
     def fire(self, mouse_pos, collidables):
         """Fires A Projectile
@@ -158,6 +170,7 @@ class Player(Animated_Sprite):
         :param world: The world the player inhabits.
         """
         super(Player, self).update()
+        self.draw_health()
         self.draw_health()
         if self.projectile:
             self.projectile.update(world)

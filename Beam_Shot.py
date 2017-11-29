@@ -22,4 +22,6 @@ class Beam_Shot(Explosive):
         self.rect.move_ip(self.vel)
         if not world.rect.contains(self.rect):
             self.kill()
-        self.collision_check()
+        self.active_timer -= 1
+        if self.active_timer <= 0:
+            self.collision_check()
