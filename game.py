@@ -20,7 +20,7 @@ class Game(Scene):
     def __init__(self, images, names, font):
         super(Game, self).__init__()
         self.world = World(images)
-        self.players = Group(Player(images['player_ss'], self.world.ground, loc, names[i])
+        self.players = Group(Player(images['player_spritesheet'], self.world.ground, loc, names[i])
                              for i, loc in enumerate(sample(self.world.start_locs, len(names))))
         self.player_cycler = cycle(self.players)
         self.active = self.player_cycler.next()
