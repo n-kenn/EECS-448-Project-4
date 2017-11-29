@@ -21,8 +21,7 @@ class Game(Scene):
         self.world = World(images)
         self.teams = self.make_teams(images)
         self.font = font
-        self.wiz_col, self.clown_col = (156, 68, 108), (255, 20, 55)
-        self.banner = self.make_banner()
+        self.banner = self.make_banner('Go {}'.format(self.teams[0].name), self.teams[0].color)
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
@@ -64,18 +63,23 @@ class Game(Scene):
                 self.teams[0].active.fire(event.pos, self.collidables())
                 self.switch_turns()
 
-    def make_banner(self):
+    def make_banner(self, text, col):
         """Helper function to render whose turn it is.
+
+        :param text: Text to render.
+        :param col: Color to render the font in.
         """
-        return self.font.render('Go, {}!'.format(self.teams[0].name),
+        return self.font.render(text,
                                 False,
-                                self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
+                                col).convert()
 
     def make_teams(self, images):
         """Generates two lists of players for each time based on the quantity of starting locations.
+
+        :param images: Used to get the spritesheet for the players.
         """
-        return [Team(name, [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc)
-                for loc in sample(self.world.start_locs, 2)])
+        return [Team(name, (156, 68, 108) if name == 'Wizards' else (255, 20, 55), [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc)
+                for loc in sample(self.world.start_locs, 1)])
                 for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
@@ -84,7 +88,7 @@ class Game(Scene):
         if not self.game_over():
             self.teams.reverse()
             self.teams[0].next()
-            self.banner = self.make_banner()
+            self.banner = self.make_banner('Go {}!'.format(self.teams[0].name), self.teams[0].color)
 
     def update_teams(self):
         """Tells the game to update the conditions of the teams.
@@ -104,7 +108,7 @@ class Game(Scene):
         self.update_teams()
         self.draw(display)
         if self.game_over():
-            win = self.font.render('Winner: {}'.format(self.teams[1].name),
-                                   False,
-                                   self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
-            display.blit(win, win.get_rect(center=display.get_rect().center))
+            for team in self.teams:
+                if team:
+                    win = self.make_banner('Winner: {}'.format(team.name), team.color)
+            display.blit(win, win.get_rect(midtop=display.get_rect().midtop))

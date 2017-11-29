@@ -8,12 +8,14 @@ class Team(Group):
     of turns, and determining the winner.
 
     :param name: Name of the team.
+    :param color: Color of the team text.
     :param members: The players.
     """
 
-    def __init__(self, name, members):
+    def __init__(self, name, color, members):
         super(Team, self).__init__(members)
         self.name = name
+        self.color = color
         self.reset_cycle()
         self.curr_len = len(self)
 
@@ -32,6 +34,10 @@ class Team(Group):
             pass
 
     def update(self, world):
+        """Updates the sprites in the group and checks if the group length has changed.
+
+        :param world: Reference to world.
+        """
         for sprite in self.sprites():
             sprite.update(world)
         if len(self) is not self.curr_len:
