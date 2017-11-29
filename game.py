@@ -21,7 +21,7 @@ class Game(Scene):
         self.world = World(images)
         self.teams = self.make_teams(images)
         self.font = font
-        self.banner = self.make_banner('Go {}'.format(self.teams[0].name), self.teams[0].color)
+        self.banner = self.make_banner('Go, {}!'.format(self.teams[0].name), self.teams[0].color)
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.

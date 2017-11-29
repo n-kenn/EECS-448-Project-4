@@ -1,0 +1,7 @@
+﻿Possible tests:
+1. Player health modifications
+2. Team generation
+3. Team / turn cycling
+4. World boundaries
+5. Projectile physics / behavior
+6. Rendering text
