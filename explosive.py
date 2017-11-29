@@ -12,6 +12,7 @@ class Explosive(Projectile):
     :param start_pos: Will get passed to projectile.
     :param angle: Will get passed to projectile.
     :param collidables: Sprites that the Explosive can collide with.
+    :param power: The multiplier added to the distance of the shot. 
     """
 
     def __init__(self, anim, start_pos, angle, collidables, power):
@@ -36,6 +37,7 @@ class Explosive(Projectile):
 
     def update(self, world):
         """Update the explosive weapon.
+        
         :param world: The world in which the explosive exists.
         """
         super(Explosive, self).update(world)

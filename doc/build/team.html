@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>scene_manager module &#8212; Wizards .1 documentation</title>
+    <title>team module &#8212; Wizards .1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -39,41 +39,36 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-scene_manager">
-<span id="scene-manager-module"></span><h1>scene_manager module<a class="headerlink" href="#module-scene_manager" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-team">
+<span id="team-module"></span><h1>team module<a class="headerlink" href="#module-team" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="scene_manager.Scene_Manager">
-<em class="property">class </em><code class="descclassname">scene_manager.</code><code class="descname">Scene_Manager</code><span class="sig-paren">(</span><em>images</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#scene_manager.Scene_Manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Facilitates scene transitions.</p>
+<dt id="team.Team">
+<em class="property">class </em><code class="descclassname">team.</code><code class="descname">Team</code><span class="sig-paren">(</span><em>name</em>, <em>members</em><span class="sig-paren">)</span><a class="headerlink" href="#team.Team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pygame.sprite.Group</span></code></p>
+<p>Defines a type team for which players will belong to. This class helps with the cycling
+of turns, and determining the winner.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>images</strong> – Dictionary of images that will eventually be used in the Game constructor.</li>
-<li><strong>font</strong> – Used to construct the title screen’s text.</li>
+<li><strong>name</strong> – Name of the team.</li>
+<li><strong>members</strong> – The players</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="scene_manager.Scene_Manager.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>display</em>, <em>events</em><span class="sig-paren">)</span><a class="headerlink" href="#scene_manager.Scene_Manager.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called every frame to update self and process user input.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>display</strong> – The game display.</li>
-<li><strong>events</strong> – The events to be processed.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<dt id="team.Team.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#team.Team.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the next player to take a turn.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="team.Team.reset_cycle">
+<code class="descname">reset_cycle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#team.Team.reset_cycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begins the cycling process. (Used especially when a player dies so that the game will not get stuck.)</p>
 </dd></dl>
 
 </dd></dl>
@@ -114,7 +109,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/scene_manager.rst.txt"
+      <a href="_sources/team.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

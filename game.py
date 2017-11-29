@@ -42,6 +42,8 @@ class Game(Scene):
         return not len(self.teams[1])
 
     def collidables(self):
+        """Adds every sprite to a collidables list.
+        """
         temp = [self.world.ground]
         for team in self.teams:
             for sprite in team.sprites():
@@ -68,6 +70,8 @@ class Game(Scene):
                                 self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
 
     def make_teams(self, images):
+        """Generates two lists of players for each time based on the quantity of starting locations.
+        """
         return [Team(name, [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc) for loc in sample(self.world.start_locs, 2)]) for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
@@ -79,6 +83,8 @@ class Game(Scene):
             self.banner = self.make_banner()
 
     def update_teams(self):
+        """Tells the game to update the conditions of the teams.
+        """
         for team in self.teams:
             team.update(self.world)
 

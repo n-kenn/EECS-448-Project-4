@@ -66,6 +66,7 @@ class Player(Animated_Sprite):
         """Perform actions based on what keys are pressed.
 
         :param keys: The keys that are currently being pressed.
+        :param ground: The surface the player is walking on.
         """
         if keys[K_a]:
             self.transition('walking_l', ground, -self.speed)
@@ -126,6 +127,7 @@ class Player(Animated_Sprite):
         """Helper function for updating animation and movement in check_movement.
 
         :param new_anim: New animation to set.
+        :param ground: The surface the player is walking on.
         :param dx: Amount that the player will move on the next frame.
         """
         self.change_anim(new_anim)
