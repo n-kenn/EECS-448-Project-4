@@ -1,5 +1,6 @@
 from itertools import cycle
 from math import atan2
+from random import randint
 
 from pygame import Color, mask
 from pygame.locals import K_a, K_d, K_SPACE
@@ -40,7 +41,8 @@ class Player(Animated_Sprite):
         self.name = name
         self.health = self.image.get_width()
         self.projectile = None
-        self.power = 20
+        self.power = 30
+        self.current_weapon ="Explosive"
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -116,11 +118,15 @@ class Player(Animated_Sprite):
         :param collidables: The objects a projectile can collide with.
         """
         if not self.projectile:
-            self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
+            if (self.current_weapon == "Explosive"):
+                self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
                                                     self.rect.midtop,
                                                     self.calc_angle(mouse_pos),
                                                     collidables,
-                                                    self.power))
+                                                    self.power,
+                                                    8,
+                                                    3))
+
 
     def transition(self, new_anim, dx):
         """Helper function for updating animation and movement in check_keys
