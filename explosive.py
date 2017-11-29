@@ -15,10 +15,12 @@ class Explosive(Projectile):
     :param power: The multiplier added to the distance of the shot. 
     """
 
-    def __init__(self, anim, start_pos, angle, collidables, power):
+    def __init__(self, anim, start_pos, angle, collidables, power, damage, radius):
         super(Explosive, self).__init__(anim, start_pos, angle, power)
         self.collidables = collidables
-        self.damage = 8
+        self.damage = damage
+        self.explosion_radius = radius
+        self.active_timer = 2
 
     def collision_check(self):
         """If collision with any collidables occurs, draw an ellipse representing the explosion
@@ -29,7 +31,7 @@ class Explosive(Projectile):
                     self.kill()
                     if type(collidable).__name__ is 'Ground':
                         ellipse(collidable.image, (0, 0, 0, 0), self.rect.inflate(map(
-                            lambda x: x * 4, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
+                            lambda x: x * self.explosion_radius, self.image.get_size())).move(0, self.image.get_rect().centery - collidable.rect.height))
                         collidable.update()
                     elif type(collidable).__name__ is 'Player':
                         collidable.apply_damage(self.damage)
@@ -41,4 +43,6 @@ class Explosive(Projectile):
         :param world: The world in which the explosive exists.
         """
         super(Explosive, self).update(world)
-        self.collision_check()
+        self.active_timer -= 1
+        if self.active_timer <= 0:
+            self.collision_check()
