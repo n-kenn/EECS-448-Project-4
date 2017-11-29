@@ -72,7 +72,9 @@ class Game(Scene):
     def make_teams(self, images):
         """Generates two lists of players for each time based on the quantity of starting locations.
         """
-        return [Team(name, [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc) for loc in sample(self.world.start_locs, 2)]) for name in ['Wizards', 'Clowns']]
+        return [Team(name, [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc)
+                for loc in sample(self.world.start_locs, 2)])
+                for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
         """When a player's actions are done, switch active player and render new text.

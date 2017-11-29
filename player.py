@@ -46,8 +46,6 @@ class Player(Animated_Sprite):
         """
         self.health -= damage
         if self.health <= 0:
-            for team in self.groups():
-                team.reset_cycle()
             self.kill()
 
     def adjust_height(self, ground, xoffset):

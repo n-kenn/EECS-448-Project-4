@@ -8,13 +8,14 @@ class Team(Group):
     of turns, and determining the winner.
 
     :param name: Name of the team.
-    :param members: The players
+    :param members: The players.
     """
 
     def __init__(self, name, members):
         super(Team, self).__init__(members)
         self.name = name
         self.reset_cycle()
+        self.curr_len = len(self)
 
     def next(self):
         """Sets the next player to take a turn.
@@ -26,3 +27,10 @@ class Team(Group):
         """
         self.cycler = cycle(self)
         self.next()
+
+    def update(self, world):
+        for sprite in self.sprites():
+            sprite.update(world)
+        if len(self) is not self.curr_len:
+            self.reset_cycle()
+            self.curr_len = len(self)
