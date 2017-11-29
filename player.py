@@ -40,6 +40,7 @@ class Player(Animated_Sprite):
         self.name = name
         self.health = self.image.get_width()
         self.projectile = None
+        self.power = 20
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -118,7 +119,8 @@ class Player(Animated_Sprite):
             self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
                                                     self.rect.midtop,
                                                     self.calc_angle(mouse_pos),
-                                                    collidables))
+                                                    collidables,
+                                                    self.power))
 
     def transition(self, new_anim, dx):
         """Helper function for updating animation and movement in check_keys

@@ -11,7 +11,7 @@ clock = pg.time.Clock()
 images = {
     'sky': pg.image.load(join('images', 'sky.png')).convert(),
     'ground': pg.image.load(join('images', 'ground.png')).convert_alpha(),
-    'player_ss': pg.image.load(join('images', 'wizard_ss.png')).convert_alpha()
+    'player_ss': pg.image.load(join('images', 'wizard_spritesheet.png')).convert_alpha()
 }
 
 font = pg.font.Font(join('font', 'kindergarten.ttf'), 96)

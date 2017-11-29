@@ -52,7 +52,7 @@ class Input_Screen(Scene):
                         self.gen = (p for p in range(1, 1 + int(self.input)))
                         self.num, self.name = self.name, self.num
                         self.active_num = self.gen.next()
-                    elif self.name and self.input.isalpha() and len(self.input) < 8:
+                    elif self.name and self.input.isalpha() and len(self.input) < 10:
                         self.names.append(self.input)
                         try:
                             self.active_num = self.gen.next()

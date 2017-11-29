@@ -14,13 +14,13 @@ class Projectile(Animated_Sprite):
     :param angle: Used to set the initial velocity.
     """
 
-    def __init__(self, anim, start_pos, angle):
+    def __init__(self, anim, start_pos, angle, power):
         super(Projectile, self).__init__(None, 5)
         self.curr_anim = anim
         self.image = self.curr_anim.next()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
-        self.vel = -20 * Vector2(cos(angle), sin(angle))
+        self.vel = -power * Vector2(cos(angle), sin(angle))
 
     def update(self, world):
         """Updates the projectile's position
