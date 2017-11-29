@@ -9,7 +9,7 @@ class Scene_Manager(object):
     """
 
     def __init__(self, images, font):
-        self.active_scene = Title_Screen(images, font)
+        self.scene = Title_Screen(images, font)
 
     def update(self, display, events):
         """Called every frame to update self and process user input.
@@ -17,5 +17,5 @@ class Scene_Manager(object):
         :param display: The game display.
         :param events: The events to be processed.
         """
-        self.active_scene.update(display, events)
-        self.active_scene = self.active_scene.next
+        self.scene.update(display, events)
+        self.scene = self.scene.next
