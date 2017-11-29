@@ -14,7 +14,7 @@ images = {
     'player_ss': pg.image.load(join('images', 'wizard_ss.png')).convert_alpha()
 }
 
-font = pg.font.Font(join('font', 'kindergarten.ttf'), 96)
+font = pg.font.Font(join('font', 'kindergarten.ttf'), 128)
 scene_manager = Scene_Manager(images, font)
 
 if __name__ == '__main__':

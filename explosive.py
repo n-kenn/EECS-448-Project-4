@@ -20,9 +20,7 @@ class Explosive(Projectile):
         self.damage = 8
 
     def collision_check(self):
-        """Looks to see if the explosive projectile has collided with anything.
-            If it has, then remove the projectile, and draw an elipse to represent the blast
-            of the explosion.
+        """If collision with any collidables occurs, draw an ellipse representing the explosion
         """
         for collidable in self.collidables:
             if self.rect.colliderect(collidable.rect):

@@ -17,19 +17,8 @@ class Input_Screen(Scene):
         self.background = self.images['sky'].copy()
         self.image = self.background.copy()
         self.rect = self.image.get_rect()
-        self.split = self.rect.height // 3
         self.font = font
         self.font_col = (156, 68, 108)
-        self.input = ''
-        self.num = True
-
-    def ask(self):
-        """Blits to self.image a question to get num players.
-        """
-        q = self.font.render('How many are playing?',
-                             False,
-                             self.font_col).convert()
-        self.image.blit(q, q.get_rect(center=(self.rect.centerx, self.split)))
 
     def process_input(self, events):
         """Handles all user input and checks if valid input.
@@ -55,8 +44,4 @@ class Input_Screen(Scene):
         """
         self.process_input(events)
         self.image = self.background.copy()
-        self.ask()
-        input = self.font.render(self.input, False, self.font_col)
-        self.image.blit(input,
-                        input.get_rect(center=(self.rect.centerx, 2 * self.split)))
         display.blit(self.image, (0, 0))

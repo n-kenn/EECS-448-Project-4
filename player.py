@@ -22,8 +22,6 @@ class Player(Animated_Sprite):
 
     def __init__(self, sheet, start_pos, speed=4):
         super(Player, self).__init__(sheet)
-        self.speed = speed
-        self.vel = Vector2(0, 0)
         self.strips = {
             'idle': self.sheet.load_strip(0, 6),
             'magic': self.sheet.load_strip(3, 4),
@@ -35,6 +33,8 @@ class Player(Animated_Sprite):
         self.image = self.curr_anim.next().copy()
         self.mask = mask.from_surface(self.image)
         self.rect = self.image.get_rect(midbottom=start_pos)
+        self.speed = speed
+        self.vel = Vector2(0, 0)
         self.health = self.image.get_width()
         self.projectile = None
 
@@ -45,6 +45,8 @@ class Player(Animated_Sprite):
         """
         self.health -= damage
         if self.health <= 0:
+            for team in self.groups():
+                team.reset_cycle()
             self.kill()
 
     def adjust_height(self, ground, xoffset):
@@ -77,6 +79,7 @@ class Player(Animated_Sprite):
     def collide_ground(self, ground, offset):
         """Returns the point of collision between player and ground with the given offset.
 
+        :param ground: Reference to ground.
         :param offset: Tuple that offsets the player's mask.
         """
         return ground.mask.overlap(self.mask,
