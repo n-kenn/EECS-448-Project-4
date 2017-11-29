@@ -19,7 +19,7 @@ class Game(Scene):
     def __init__(self, images, font):
         super(Game, self).__init__()
         self.world = World(images)
-        self.teams = self.make_teams(images['player_ss'])
+        self.teams = self.make_teams(images['player_spritesheet'])
         self.font = font
         self.wiz_col, self.clown_col = (156, 68, 108), (255, 20, 55)
         self.banner = self.make_banner()
@@ -39,7 +39,7 @@ class Game(Scene):
     def game_over(self):
         """Returns true when one player remains in the team sprite group.
         """
-        return len(self.teams[0]) is 1
+        return not len(self.teams[1])
 
     def collidables(self):
         temp = [self.world.ground]
