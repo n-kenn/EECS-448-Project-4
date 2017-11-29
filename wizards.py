@@ -15,7 +15,8 @@ music.play(-1)
 images = {
     'sky': pg.image.load(join('images', 'sky.png')).convert(),
     'ground': pg.image.load(join('images', 'ground.png')).convert_alpha(),
-    'player_spritesheet': pg.image.load(join('images', 'wizard_spritesheet.png')).convert_alpha()
+    'wizard_spritesheet': pg.image.load(join('images', 'wizard_spritesheet.png')).convert_alpha(),
+    'clown_spritesheet': pg.image.load(join('images', 'clown_spritesheet.png')).convert_alpha()
 }
 
 font = pg.font.Font(join('font', 'kindergarten.ttf'), 128)

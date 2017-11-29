@@ -19,7 +19,7 @@ class Game(Scene):
     def __init__(self, images, font):
         super(Game, self).__init__()
         self.world = World(images)
-        self.teams = self.make_teams(images['player_spritesheet'])
+        self.teams = self.make_teams(images)
         self.font = font
         self.wiz_col, self.clown_col = (156, 68, 108), (255, 20, 55)
         self.banner = self.make_banner()
@@ -67,8 +67,8 @@ class Game(Scene):
                                 False,
                                 self.wiz_col if self.teams[0].name is 'Wizards' else self.clown_col).convert()
 
-    def make_teams(self, image):
-        return [Team(name, [Player(image, loc) for loc in sample(self.world.start_locs, 2)]) for name in ['Wizards', 'Clowns']]
+    def make_teams(self, images):
+        return [Team(name, [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc) for loc in sample(self.world.start_locs, 2)]) for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
         """When a player's actions are done, switch active player and render new text.
