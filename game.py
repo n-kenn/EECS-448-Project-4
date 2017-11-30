@@ -40,10 +40,7 @@ class Game(Scene):
     def game_over(self):
         """Returns true when one player remains in the team sprite group.
         """
-        for team in self.teams:
-            if not team:
-                return True
-        return False
+        return len(self.teams) is 1
 
     def collidables(self):
         """Adds every sprite to a collidables list.
@@ -98,7 +95,10 @@ class Game(Scene):
         """Tells the game to update the conditions of the teams.
         """
         for team in self.teams:
-            team.update(self.world)
+            if team:
+                team.update(self.world)
+            else:
+                self.teams.remove(team)
 
     def update(self, display, events):
         """Updates self and processes user input.

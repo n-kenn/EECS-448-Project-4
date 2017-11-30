@@ -11,8 +11,13 @@ class Beam_Shot(Explosive):
     """
 
     def __init__(self, anim, start_pos, angle, collidables, power, damage, radius):
-        super(Beam_Shot, self).__init__(anim, start_pos, angle, collidables, power, damage, radius)
-
+        super(Beam_Shot, self).__init__(anim,
+                                        start_pos,
+                                        angle,
+                                        collidables,
+                                        power,
+                                        damage,
+                                        radius)
 
     def update(self, world):
         self.rect.move_ip(self.vel)

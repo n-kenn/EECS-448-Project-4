@@ -21,7 +21,7 @@ class Player(Animated_Sprite):
     :param speed: Speed at which the player can move. Both horizontal and vertical.
     """
 
-    def __init__(self, sheet, start_pos, speed=4):
+    def __init__(self, sheet, start_pos, speed=4, power=30):
         super(Player, self).__init__(sheet)
         self.strips = {
             'idle': self.sheet.load_strip(0, 6),
@@ -38,7 +38,7 @@ class Player(Animated_Sprite):
         self.vel = Vector2(0, 0)
         self.health = self.image.get_width()
         self.projectile = None
-        self.power = 30
+        self.power = power
         self.current_weapon = "Beam_Shot"
 
     def apply_damage(self, damage):
@@ -79,12 +79,12 @@ class Player(Animated_Sprite):
                 self.vel.y -= self.speed
         if keys[K_1]:
             self.current_weapon = "Explosive"
-        if keys[K_2]:
+        elif keys[K_2]:
             self.current_weapon = "Beam_Shot"
         if keys[K_w]:
             if self.power < 50:
                 self.power += 1
-        if keys[K_s]:
+        elif keys[K_s]:
             if self.power > 1:
                 self.power -= 1
 
@@ -134,7 +134,7 @@ class Player(Animated_Sprite):
         :param collidables: A list of objects a projectile can collide with.
         """
         if not self.projectile:
-            if (self.current_weapon is "Explosive"):
+            if (self.current_weapon is 'Explosive'):
                 self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
                                                         self.rect.midtop,
                                                         self.calc_angle(

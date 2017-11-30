@@ -53,12 +53,24 @@ class Test_Game(object):
     def test_cycling(self):
         assert game.teams[0].active is not game.teams[0].cycler.next()
 
-    def test_kill(self):
-        game.teams[0].active.kill()
-        assert len(game.teams[0]) is 1
-        game.update_teams()
-        assert game.teams[0].active is game.teams[0].cycler.next()
-
     def test_kill_team(self):
-        game.teams[0].active.kill()
-        assert len(game.teams[0]) is 0 and game.game_over()
+        for member in game.teams[0]:
+            member.kill()
+        game.update_teams()
+        assert len(game.teams) is 1 and game.game_over()
+
+    def test_other_team(self):
+        assert len(game.teams[0]) is num_members
+
+    def test_damage(self):
+        game.teams[0].active.apply_damage(game.teams[0].active.rect.width)
+        game.teams[0].next()
+        assert len(game.teams[0]) is 1 and game.teams[0].active
+
+    def test_game_input_quit(self):
+        game.process_input([pg.event.Event(pg.QUIT)])
+        assert game.next is None
+
+    def test_game_mouse_button_down(self):
+        game.process_input([pg.event.Event(pg.MOUSEBUTTONDOWN, pos=(0, 0))])
+        assert game.teams[0].active.projectile
