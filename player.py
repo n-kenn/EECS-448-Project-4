@@ -54,6 +54,7 @@ class Player(Animated_Sprite):
     def adjust_height(self, ground, xoffset):
         """Adjusts the height of the player to climb slopes.
 
+        :param ground: The surface the player is comparing to check if they are on a solid or not.
         :param xoffset: How many pixels the player wants to move left or right.
         """
         for i in range(1, self.speed + 1):

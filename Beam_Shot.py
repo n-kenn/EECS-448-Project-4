@@ -19,6 +19,10 @@ class Beam_Shot(Explosive):
 
 
     def update(self, world):
+        """Updates the conditions of the projectile (existence, movement, collision checking).
+
+        :param world: The display window and its objects.
+        """
         self.rect.move_ip(self.vel)
         if not world.rect.contains(self.rect):
             self.kill()
