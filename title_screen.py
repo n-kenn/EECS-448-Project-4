@@ -69,7 +69,7 @@ class Title_Screen(Scene):
                     if opt_rect.collidepoint(event.pos):
                         if self.opts[i] is 'QUIT':
                             self.switch_scene(None)
-                        elif self.opts[i] is 'START':
+                        elif self.opts[i] is 'PLAY':
                             self.switch_scene(Game(self.images, 2, self.font))
                         else:
                             call(['pytest', 'test.py'])

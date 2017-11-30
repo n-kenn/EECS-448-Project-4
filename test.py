@@ -16,7 +16,7 @@ images = {
 }
 
 num_members = 2
-font = pg.font.Font(join('font', 'kindergarten.ttf'), 128)
+font = pg.font.Font(join('font', 'kindergarten.ttf'), 64)
 game = Game(images, num_members, font)
 
 
