@@ -1,4 +1,5 @@
 from os.path import join
+
 import pygame as pg
 
 from game import Game
@@ -14,17 +15,30 @@ images = {
     'clown_spritesheet': pg.image.load(join('images', 'clown_spritesheet.png')).convert_alpha()
 }
 
+num_members = 2
 font = pg.font.Font(join('font', 'kindergarten.ttf'), 128)
+game = Game(images, num_members, font)
 
-num_players = 2
-team_names = ['Wizards', 'Clowns']
-game = Game(images, num_players, font)
 
-if __name__ == '__main__':
-    assert hasattr(game, 'process_input') and hasattr(game, 'update'), 'Game does not have a required scene attribute.'
-    assert game.game_over() is False, 'Game over from the beginning.'
-    assert game.next is game, 'Next scene is self.'
-    assert len(game.teams) is 2, 'Number of teams is not 2 upon game creation.'
-    for i, team in enumerate(game.teams):
-        assert len(team) is num_players, 'Members on team is not equal to num_players.'
-        assert game.teams[i].name is team_names[i], 'Turn order not initialized correctly'
+class Test(object):
+    def test_game_process_input(self):
+        assert hasattr(game, 'process_input')
+
+    def test_game_update(self):
+        assert hasattr(game, 'update')
+
+    def test_game_over_init(self):
+        assert game.game_over() is False
+
+    def test_game_next_scene(self):
+        assert game.next is game
+
+    def test_team_count(self):
+        assert len(game.teams) is 2
+
+    def test_len_team(self):
+        for i, team in enumerate(game.teams):
+            assert len(team) is num_members
+
+    def test_team_names(self):
+        assert game.teams[0].name is 'Wizards' and game.teams[1].name is 'Clowns'

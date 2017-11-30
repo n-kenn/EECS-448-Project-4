@@ -1,15 +1,14 @@
 from itertools import cycle
 from math import atan2
-from random import randint
 
 from pygame import mask
-from pygame.locals import K_a, K_d, K_SPACE, K_1, K_2, K_w, K_s
+from pygame.locals import K_1, K_2, K_SPACE, K_a, K_d, K_s, K_w
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
 from animated_sprite import Animated_Sprite
-from explosive import Explosive
 from beam_shot import Beam_Shot
+from explosive import Explosive
 
 
 class Player(Animated_Sprite):
@@ -84,10 +83,10 @@ class Player(Animated_Sprite):
             self.current_weapon = "Beam_Shot"
         if keys[K_w]:
             if self.power < 50:
-                self.power+=1
+                self.power += 1
         if keys[K_s]:
             if self.power > 1:
-                self.power-=1
+                self.power -= 1
 
     def collide_ground(self, ground, offset):
         """Returns the point of collision between player and ground with the given offset.
@@ -125,7 +124,8 @@ class Player(Animated_Sprite):
     def draw_power(self):
         """Draws the power bar.
         """
-        self.image.fill((0,0,int((self.power/50)*255)), ((self.image.get_rect().topleft), (4, self.power)))
+        self.image.fill((0, 0, int((self.power / 50) * 255)),
+                        ((self.image.get_rect().topleft), (4, self.power)))
 
     def fire(self, mouse_pos, collidables):
         """Fires A Projectile
@@ -136,20 +136,22 @@ class Player(Animated_Sprite):
         if not self.projectile:
             if (self.current_weapon is "Explosive"):
                 self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
-                                                    self.rect.midtop,
-                                                    self.calc_angle(mouse_pos),
-                                                    collidables,
-                                                    self.power,
-                                                    8,
-                                                    3))
+                                                        self.rect.midtop,
+                                                        self.calc_angle(
+                                                            mouse_pos),
+                                                        collidables,
+                                                        self.power,
+                                                        8,
+                                                        3))
             else:
                 self.projectile = GroupSingle(Beam_Shot(cycle(self.strips['magic']),
-                                                    self.rect.midtop,
-                                                    self.calc_angle(mouse_pos),
-                                                    collidables,
-                                                    self.power,
-                                                    6,
-                                                    2))
+                                                        self.rect.midtop,
+                                                        self.calc_angle(
+                                                            mouse_pos),
+                                                        collidables,
+                                                        self.power,
+                                                        6,
+                                                        2))
 
     def transition(self, new_anim, ground, dx):
         """Helper function for updating animation and movement in check_movement.
