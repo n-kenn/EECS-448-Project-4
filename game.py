@@ -22,7 +22,8 @@ class Game(Scene):
         self.world = World(images)
         self.teams = self.make_teams(images, num_members)
         self.font = font
-        self.banner = self.make_banner('Go, {}!'.format(self.teams[0].name), self.teams[0].color)
+        self.banner = self.make_banner('Go, {}!'.format(
+            self.teams[0].name), self.teams[0].color)
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
@@ -81,7 +82,7 @@ class Game(Scene):
         :param images: Used to get the spritesheet for the players.
         """
         return [Team(name, (156, 68, 108) if name == 'Wizards' else (255, 20, 55), [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc)
-                for loc in sample(self.world.start_locs, num_players)])
+                                                                                    for loc in sample(self.world.start_locs, num_players)])
                 for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
@@ -90,7 +91,8 @@ class Game(Scene):
         if not self.game_over():
             self.teams.reverse()
             self.teams[0].next()
-            self.banner = self.make_banner('Go {}!'.format(self.teams[0].name), self.teams[0].color)
+            self.banner = self.make_banner('Go {}!'.format(
+                self.teams[0].name), self.teams[0].color)
 
     def update_teams(self):
         """Tells the game to update the conditions of the teams.
@@ -112,5 +114,6 @@ class Game(Scene):
         if self.game_over():
             for team in self.teams:
                 if team:
-                    win = self.make_banner('Winner: {}'.format(team.name), team.color)
+                    win = self.make_banner('Winner: {}'.format(team.name),
+                                           team.color)
             display.blit(win, win.get_rect(midtop=display.get_rect().midtop))

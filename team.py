@@ -27,7 +27,7 @@ class Team(Group):
     def reset_cycle(self):
         """Begins the cycling process. (Used especially when a player dies so that the game will not get stuck.)
         """
-        self.cycler = cycle(self)
+        self.cycler = cycle(self.sprites())
         try:
             self.next()
         except StopIteration:
