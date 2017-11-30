@@ -1,4 +1,4 @@
-from os import system
+from subprocess import call
 
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, QUIT
 
@@ -72,7 +72,7 @@ class Title_Screen(Scene):
                         elif self.opts[i] is 'START':
                             self.switch_scene(Game(self.images, 2, self.font))
                         else:
-                            system('pytest test.py')
+                            call(['pytest', 'test.py'])
                             self.switch_scene(None)
 
     def update(self, display, events):
