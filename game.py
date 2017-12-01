@@ -13,15 +13,17 @@ class Game(Scene):
     """Scene that implements the actual game.
 
     :param images: Image surfaces for various things.
+    :param num_members: How many sprites are on a team.
     :param font: The font to load up.
     """
 
-    def __init__(self, images, font):
+    def __init__(self, images, num_members, font):
         super(Game, self).__init__()
         self.world = World(images)
-        self.teams = self.make_teams(images)
+        self.teams = self.make_teams(images, num_members)
         self.font = font
-        self.banner = self.make_banner('Go, {}!'.format(self.teams[0].name), self.teams[0].color)
+        self.banner = self.make_banner('Go, {}!'.format(
+            self.teams[0].name), self.teams[0].color)
 
     def draw(self, surf):
         """Draws players to the display using the sprites' image and rect.
@@ -38,9 +40,7 @@ class Game(Scene):
     def game_over(self):
         """Returns true when one player remains in the team sprite group.
         """
-        for team in self.teams:
-            if not team:
-                return True
+        return len(self.teams) is 1
 
     def collidables(self):
         """Adds every sprite to a collidables list.
@@ -73,13 +73,13 @@ class Game(Scene):
                                 False,
                                 col).convert()
 
-    def make_teams(self, images):
+    def make_teams(self, images, num_players):
         """Generates two lists of players for each time based on the quantity of starting locations.
 
         :param images: Used to get the spritesheet for the players.
         """
         return [Team(name, (156, 68, 108) if name == 'Wizards' else (255, 20, 55), [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc)
-                for loc in sample(self.world.start_locs, 1)])
+                                                                                    for loc in sample(self.world.start_locs, num_players)])
                 for name in ['Wizards', 'Clowns']]
 
     def switch_turns(self):
@@ -88,13 +88,17 @@ class Game(Scene):
         if not self.game_over():
             self.teams.reverse()
             self.teams[0].next()
-            self.banner = self.make_banner('Go {}!'.format(self.teams[0].name), self.teams[0].color)
+            self.banner = self.make_banner('Go {}!'.format(
+                self.teams[0].name), self.teams[0].color)
 
     def update_teams(self):
         """Tells the game to update the conditions of the teams.
         """
         for team in self.teams:
-            team.update(self.world)
+            if team:
+                team.update(self.world)
+            else:
+                self.teams.remove(team)
 
     def update(self, display, events):
         """Updates self and processes user input.
@@ -110,5 +114,6 @@ class Game(Scene):
         if self.game_over():
             for team in self.teams:
                 if team:
-                    win = self.make_banner('Winner: {}'.format(team.name), team.color)
+                    win = self.make_banner('Winner: {}'.format(team.name),
+                                           team.color)
             display.blit(win, win.get_rect(midtop=display.get_rect().midtop))

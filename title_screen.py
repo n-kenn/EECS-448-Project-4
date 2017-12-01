@@ -1,3 +1,5 @@
+from subprocess import call
+
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, QUIT
 
 from game import Game
@@ -17,8 +19,8 @@ class Title_Screen(Scene):
         self.image = self.images['sky'].copy()
         self.rect = self.image.get_rect()
         self.font = font
-        self.opts = {'PLAY': Game(self.images, self.font), 'QUIT': None}
-        self.assoc = {k: v for k, v in enumerate(self.opts.keys())}
+        self.opts = ['PLAY', 'QUIT', 'TEST']
+        self.assoc = {k: v for k, v in enumerate(self.opts)}
         self.opt_rects = []
         self.blit_opts()
 
@@ -48,7 +50,7 @@ class Title_Screen(Scene):
     def make_opt_surfs(self):
         """Returns a list of surfaces from the opts passed into the constructor
         """
-        return [self.make_opt_surf(opt) for opt in self.opts.keys()]
+        return [self.make_opt_surf(opt) for opt in self.opts]
 
     def process_input(self, events):
         """Handles input from the user.
@@ -65,7 +67,13 @@ class Title_Screen(Scene):
             elif event.type is MOUSEBUTTONDOWN:
                 for i, opt_rect in enumerate(self.opt_rects):
                     if opt_rect.collidepoint(event.pos):
-                        self.switch_scene(self.opts[self.assoc[i]])
+                        if self.opts[i] is 'QUIT':
+                            self.switch_scene(None)
+                        elif self.opts[i] is 'PLAY':
+                            self.switch_scene(Game(self.images, 2, self.font))
+                        else:
+                            call(['pytest', 'test.py'])
+                            self.switch_scene(None)
 
     def update(self, display, events):
         """Updates self and processes user input.

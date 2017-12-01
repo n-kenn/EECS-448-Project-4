@@ -1,15 +1,14 @@
 from itertools import cycle
 from math import atan2
-from random import randint
 
-from pygame import Color, mask
-from pygame.locals import K_a, K_d, K_SPACE, K_1, K_2, K_w, K_s
+from pygame import mask
+from pygame.locals import K_1, K_2, K_SPACE, K_a, K_d, K_s, K_w
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
 
 from animated_sprite import Animated_Sprite
+from beam_shot import Beam_Shot
 from explosive import Explosive
-from Beam_Shot import Beam_Shot
 
 
 class Player(Animated_Sprite):
@@ -22,7 +21,7 @@ class Player(Animated_Sprite):
     :param speed: Speed at which the player can move. Both horizontal and vertical.
     """
 
-    def __init__(self, sheet, start_pos, speed=4):
+    def __init__(self, sheet, start_pos, speed=4, power=30):
         super(Player, self).__init__(sheet)
         self.strips = {
             'idle': self.sheet.load_strip(0, 6),
@@ -39,8 +38,8 @@ class Player(Animated_Sprite):
         self.vel = Vector2(0, 0)
         self.health = self.image.get_width()
         self.projectile = None
-        self.power = 30
-        self.current_weapon ="Beam_Shot"
+        self.power = power
+        self.current_weapon = "Beam_Shot"
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -81,14 +80,14 @@ class Player(Animated_Sprite):
                 self.vel.y -= self.speed
         if keys[K_1]:
             self.current_weapon = "Explosive"
-        if keys[K_2]:
+        elif keys[K_2]:
             self.current_weapon = "Beam_Shot"
         if keys[K_w]:
             if self.power < 50:
-                self.power+=1
-        if keys[K_s]:
+                self.power += 1
+        elif keys[K_s]:
             if self.power > 1:
-                self.power-=1
+                self.power -= 1
 
     def collide_ground(self, ground, offset):
         """Returns the point of collision between player and ground with the given offset.
@@ -111,7 +110,7 @@ class Player(Animated_Sprite):
     def change_anim(self, anim_name):
         """Changes the current animation to something different, for example,  from idle to moving left or moving right to idle.
 
-        :param anim_name: The name of the animation to be manipulated.
+        :param anim_name: The name of the animation to be set.
         """
         if self.curr_strip is not self.strips[anim_name]:
             self.curr_strip = self.strips[anim_name]
@@ -126,31 +125,34 @@ class Player(Animated_Sprite):
     def draw_power(self):
         """Draws the power bar.
         """
-        self.image.fill((0,0,int((self.power/50)*255)), ((self.image.get_rect().topleft), (4, self.power)))
+        self.image.fill((0, 0, int((self.power / 50) * 255)),
+                        ((self.image.get_rect().topleft), (4, self.power)))
 
     def fire(self, mouse_pos, collidables):
         """Fires A Projectile
 
         :param mouse_pos: The mouse position used to calculate the angle to fire the projectile.
-        :param collidables: The objects a projectile can collide with.
+        :param collidables: A list of objects a projectile can collide with.
         """
         if not self.projectile:
-            if (self.current_weapon == "Explosive"):
+            if (self.current_weapon is 'Explosive'):
                 self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
-                                                    self.rect.midtop,
-                                                    self.calc_angle(mouse_pos),
-                                                    collidables,
-                                                    self.power,
-                                                    8,
-                                                    3))
+                                                        self.rect.midtop,
+                                                        self.calc_angle(
+                                                            mouse_pos),
+                                                        collidables,
+                                                        self.power,
+                                                        8,
+                                                        3))
             else:
                 self.projectile = GroupSingle(Beam_Shot(cycle(self.strips['magic']),
-                                                    self.rect.midtop,
-                                                    self.calc_angle(mouse_pos),
-                                                    collidables,
-                                                    self.power,
-                                                    6,
-                                                    2))
+                                                        self.rect.midtop,
+                                                        self.calc_angle(
+                                                            mouse_pos),
+                                                        collidables,
+                                                        self.power,
+                                                        6,
+                                                        2))
 
     def transition(self, new_anim, ground, dx):
         """Helper function for updating animation and movement in check_movement.
@@ -170,7 +172,6 @@ class Player(Animated_Sprite):
         :param world: The world the player inhabits.
         """
         super(Player, self).update()
-        self.draw_health()
         self.draw_health()
         if self.projectile:
             self.projectile.update(world)
