@@ -19,6 +19,7 @@ class Player(Animated_Sprite):
     :param start_pos: Starting position for the Player.
     :param name: String of the player name.
     :param speed: Speed at which the player can move. Both horizontal and vertical.
+    :param power: Multiplier added to the distance of the shot.
     """
 
     def __init__(self, sheet, start_pos, speed=4, power=30):

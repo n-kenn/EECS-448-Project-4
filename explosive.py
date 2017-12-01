@@ -13,6 +13,8 @@ class Explosive(Projectile):
     :param angle: Will get passed to projectile.
     :param collidables: Sprites that the Explosive can collide with.
     :param power: The multiplier added to the distance of the shot.
+    :param damage: The damage to be applied to the object collided.
+    :param radius: The radius of the explosion to make.
     """
 
     def __init__(self, anim, start_pos, angle, collidables, power, damage, radius):

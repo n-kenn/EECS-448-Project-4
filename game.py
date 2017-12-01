@@ -88,6 +88,7 @@ class Game(Scene):
         """Generates two lists of players for each time based on the quantity of starting locations.
 
         :param images: Used to get the spritesheet for the players.
+        :param num_players: The number of players to be created.
         """
         return [Team(name, (156, 68, 108) if name == 'Wizards' else (255, 20, 55), [Player(images['wizard_spritesheet' if name == 'Wizards' else 'clown_spritesheet'], loc)
                                                                                     for loc in sample(self.world.start_locs, num_players)])
