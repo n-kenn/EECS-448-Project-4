@@ -39,7 +39,7 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
         self.projectile = None
         self.power = power
-        self.current_weapon = "Beam_Shot"
+        self.current_weapon = "Beam Shot"
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -81,7 +81,7 @@ class Player(Animated_Sprite):
         if keys[K_1]:
             self.current_weapon = "Explosive"
         elif keys[K_2]:
-            self.current_weapon = "Beam_Shot"
+            self.current_weapon = "Beam Shot"
         if keys[K_w] and self.power < 50:
             self.power += 1
         elif keys[K_s] and self.power > 10:

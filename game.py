@@ -40,8 +40,13 @@ class Game(Scene):
             power = self.make_banner(str(self.teams[0].active.power),
                                      (255, 0, 255 * self.teams[0].active.power // 50))
             power = scale(power, map(lambda x: x // 4, power.get_size()))
-            surf.blit(power,
-                      power.get_rect(midtop=self.teams[0].active.rect.midbottom))
+            surf.blit(power, power.get_rect(
+                midtop=self.teams[0].active.rect.midbottom))
+            weapon = self.make_banner('Current weapon: {}'.format(
+                self.teams[0].active.current_weapon), self.teams[0].color)
+            weapon = scale(weapon, map(lambda x: x // 4, weapon.get_size()))
+            surf.blit(weapon, weapon.get_rect(
+                midbottom=surf.get_rect().midbottom))
 
     def game_over(self):
         """Returns true when one player remains in the team sprite group.
