@@ -19,7 +19,7 @@ images = {
     'clown_spritesheet': pg.image.load(join('images', 'clown_spritesheet.png')).convert_alpha()
 }
 
-font = pg.font.Font(join('font', 'kindergarten.ttf'), 128)
+font = pg.font.Font(join('font', 'kindergarten.ttf'), 64)
 scene_manager = Scene_Manager(images, font)
 
 if __name__ == '__main__':

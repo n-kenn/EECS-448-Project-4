@@ -1,6 +1,7 @@
 from subprocess import call
 
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, QUIT
+from pygame.transform import scale2x
 
 from game import Game
 from scene import Scene
@@ -17,27 +18,31 @@ class Title_Screen(Scene):
         super(Title_Screen, self).__init__()
         self.images = images
         self.image = self.images['sky'].copy()
-        self.rect = self.image.get_rect()
         self.font = font
+        self.rect = self.image.get_rect()
+        title = self.font.render('WIZARDS', False, (70, 0, 6))
+        title = scale2x(title)
+        self.image.blit(title, (title.get_rect(
+            center=(self.rect.centerx, self.rect.height // 3))))
         self.opts = ['PLAY', 'QUIT', 'TEST']
         self.assoc = {k: v for k, v in enumerate(self.opts)}
         self.opt_rects = []
         self.blit_opts()
 
-    def blit_opt(self, opt_surf, y):
+    def blit_opt(self, opt_surf, x):
         """Blits a single opt_surf to self.image and returns a Rect of the effected area.
 
         :param opt_surf: The option to be displayed.
         :param y: The y coordinate to put the option on.
         """
-        return self.image.blit(opt_surf, opt_surf.get_rect(center=(self.rect.centerx, y)))
+        return self.image.blit(opt_surf, opt_surf.get_rect(center=(x, self.rect.height * 3 // 4)))
 
     def blit_opts(self):
         """Blits multiple opts by calling self.blit_opt on each opt.
         """
-        split_height = self.rect.height // (1 + len(self.opts))
+        split_width = self.rect.width // (1 + len(self.opts))
         for i, surf in enumerate(self.make_opt_surfs(), 1):
-            self.opt_rects.append(self.blit_opt(surf, split_height * i))
+            self.opt_rects.append(self.blit_opt(surf, split_width * i))
 
     def make_opt_surf(self, opt, font_col=(70, 0, 6)):
         """Returns a new surface using the font passed into the constructor.
