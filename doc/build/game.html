@@ -43,7 +43,7 @@
 <span id="game-module"></span><h1>game module<a class="headerlink" href="#module-game" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="game.Game">
-<em class="property">class </em><code class="descclassname">game.</code><code class="descname">Game</code><span class="sig-paren">(</span><em>images</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">game.</code><code class="descname">Game</code><span class="sig-paren">(</span><em>images</em>, <em>num_members</em>, <em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="scene.html#scene.Scene" title="scene.Scene"><code class="xref py py-class docutils literal"><span class="pre">scene.Scene</span></code></a></p>
 <p>Scene that implements the actual game.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -52,6 +52,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>images</strong> – Image surfaces for various things.</li>
+<li><strong>num_members</strong> – How many sprites are on a team.</li>
 <li><strong>font</strong> – The font to load up.</li>
 </ul>
 </td>
@@ -104,13 +105,17 @@
 
 <dl class="method">
 <dt id="game.Game.make_teams">
-<code class="descname">make_teams</code><span class="sig-paren">(</span><em>images</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.make_teams" title="Permalink to this definition">¶</a></dt>
+<code class="descname">make_teams</code><span class="sig-paren">(</span><em>images</em>, <em>num_players</em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.make_teams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates two lists of players for each time based on the quantity of starting locations.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>images</strong> – Used to get the spritesheet for the players.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>images</strong> – Used to get the spritesheet for the players.</li>
+<li><strong>num_players</strong> – The number of players to be created.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

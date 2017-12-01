@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>explosive module &#8212; Wizards .1 documentation</title>
+    <title>beam_shot module &#8212; Wizards .1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -39,12 +39,12 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-explosive">
-<span id="explosive-module"></span><h1>explosive module<a class="headerlink" href="#module-explosive" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-beam_shot">
+<span id="beam-shot-module"></span><h1>beam_shot module<a class="headerlink" href="#module-beam_shot" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="explosive.Explosive">
-<em class="property">class </em><code class="descclassname">explosive.</code><code class="descname">Explosive</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em>, <em>collidables</em>, <em>power</em>, <em>damage</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="projectile.html#projectile.Projectile" title="projectile.Projectile"><code class="xref py py-class docutils literal"><span class="pre">projectile.Projectile</span></code></a></p>
+<dt id="beam_shot.Beam_Shot">
+<em class="property">class </em><code class="descclassname">beam_shot.</code><code class="descname">Beam_Shot</code><span class="sig-paren">(</span><em>anim</em>, <em>start_pos</em>, <em>angle</em>, <em>collidables</em>, <em>power</em>, <em>damage</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#beam_shot.Beam_Shot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="explosive.html#explosive.Explosive" title="explosive.Explosive"><code class="xref py py-class docutils literal"><span class="pre">explosive.Explosive</span></code></a></p>
 <p>A class for any weapon that has the ability to explode.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -54,30 +54,21 @@
 <li><strong>anim</strong> – The sprite sheet to use for animating.</li>
 <li><strong>start_pos</strong> – Will get passed to projectile.</li>
 <li><strong>angle</strong> – Will get passed to projectile.</li>
-<li><strong>collidables</strong> – Sprites that the Explosive can collide with.</li>
-<li><strong>power</strong> – The multiplier added to the distance of the shot.</li>
-<li><strong>damage</strong> – The damage to be applied to the object collided.</li>
-<li><strong>radius</strong> – The radius of the explosion to make.</li>
+<li><strong>collidables</strong> – Sprites that the Beam_Shot can collide with.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="explosive.Explosive.collision_check">
-<code class="descname">collision_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.collision_check" title="Permalink to this definition">¶</a></dt>
-<dd><p>If collision with any collidables occurs, draw an ellipse representing the explosion</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="explosive.Explosive.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>world</em><span class="sig-paren">)</span><a class="headerlink" href="#explosive.Explosive.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update the explosive weapon.</p>
+<dt id="beam_shot.Beam_Shot.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>world</em><span class="sig-paren">)</span><a class="headerlink" href="#beam_shot.Beam_Shot.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the conditions of the projectile (existence, movement, collision checking).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>world</strong> – The world in which the explosive exists.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>world</strong> – The display window and its objects.</td>
 </tr>
 </tbody>
 </table>
@@ -121,7 +112,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/explosive.rst.txt"
+      <a href="_sources/beam_shot.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
