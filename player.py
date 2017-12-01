@@ -82,7 +82,7 @@ class Player(Animated_Sprite):
             self.current_weapon = "Explosive"
         elif keys[K_2]:
             self.current_weapon = "Beam Shot"
-        if keys[K_w] and self.power < 50:
+        if keys[K_w] and self.power < 30:
             self.power += 1
         elif keys[K_s] and self.power > 10:
             self.power -= 1
@@ -145,7 +145,6 @@ class Player(Animated_Sprite):
                                                         self.power,
                                                         6,
                                                         2))
-            
 
     def transition(self, new_anim, ground, dx):
         """Helper function for updating animation and movement in check_movement.
