@@ -19,7 +19,6 @@ class Player(Animated_Sprite):
     :param start_pos: Starting position for the Player.
     :param name: String of the player name.
     :param speed: Speed at which the player can move. Both horizontal and vertical.
-    :param power: Multiplier added to the distance of the shot.
     """
 
     def __init__(self, sheet, start_pos, speed=4, power=30):
@@ -40,7 +39,7 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
         self.projectile = None
         self.power = power
-        self.current_weapon = "Explosive"
+        self.current_weapon = 'Arc Shot'
 
     def apply_damage(self, damage):
         """Has a player take damage.
@@ -80,9 +79,9 @@ class Player(Animated_Sprite):
             if not self.collide_ground(ground, (0, -self.speed)):
                 self.vel.y -= self.speed
         if keys[K_1]:
-            self.current_weapon = "Explosive"
+            self.current_weapon = 'Arc Shot'
         elif keys[K_2]:
-            self.current_weapon = "Beam Shot"
+            self.current_weapon = 'Beam Shot'
         if keys[K_w] and self.power < 30:
             self.power += 1
         elif keys[K_s] and self.power > 10:
@@ -128,7 +127,7 @@ class Player(Animated_Sprite):
         :param collidables: A list of objects a projectile can collide with.
         """
         if not self.projectile:
-            if (self.current_weapon is 'Explosive'):
+            if self.current_weapon == 'Arc Shot':
                 self.projectile = GroupSingle(Explosive(cycle(self.strips['magic']),
                                                         self.rect.midtop,
                                                         self.calc_angle(
