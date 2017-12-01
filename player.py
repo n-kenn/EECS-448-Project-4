@@ -1,12 +1,10 @@
 from itertools import cycle
 from math import atan2
-from os.path import join
 
 from pygame import mask
 from pygame.locals import K_1, K_2, K_SPACE, K_a, K_d, K_s, K_w
 from pygame.math import Vector2
 from pygame.sprite import GroupSingle
-from pygame.mixer import Sound
 
 from animated_sprite import Animated_Sprite
 from beam_shot import Beam_Shot
@@ -41,9 +39,7 @@ class Player(Animated_Sprite):
         self.health = self.image.get_width()
         self.projectile = None
         self.power = power
-        self.current_weapon = "Beam Shot"
-        self.fire_sound = Sound(join('music', 'magic_woosh.ogg'))
-        self.fire_sound.set_volume(0.25)
+        self.current_weapon = "Explosive"
 
     def apply_damage(self, damage):
         """Has a player take damage.
