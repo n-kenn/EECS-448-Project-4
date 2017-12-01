@@ -145,7 +145,7 @@ class Player(Animated_Sprite):
                                                         self.power,
                                                         6,
                                                         2))
-            self.fire_sound.play()
+            
 
     def transition(self, new_anim, ground, dx):
         """Helper function for updating animation and movement in check_movement.
