@@ -21,6 +21,7 @@ class Beam_Shot(Explosive):
 
     def update(self, world):
         self.rect.move_ip(self.vel)
+        
         if not world.rect.contains(self.rect):
             self.kill()
             return
