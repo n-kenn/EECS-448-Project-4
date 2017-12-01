@@ -82,12 +82,10 @@ class Player(Animated_Sprite):
             self.current_weapon = "Explosive"
         elif keys[K_2]:
             self.current_weapon = "Beam_Shot"
-        if keys[K_w]:
-            if self.power < 50:
-                self.power += 1
-        elif keys[K_s]:
-            if self.power > 1:
-                self.power -= 1
+        if keys[K_w] and self.power < 50:
+            self.power += 1
+        elif keys[K_s] and self.power > 10:
+            self.power -= 1
 
     def collide_ground(self, ground, offset):
         """Returns the point of collision between player and ground with the given offset.
@@ -121,12 +119,6 @@ class Player(Animated_Sprite):
         """
         self.image.fill((255, 0, 0) if self.health < self.image.get_width() else (0, 255, 0),
                         ((self.image.get_rect().topleft), (self.health, 4)))
-
-    def draw_power(self):
-        """Draws the power bar.
-        """
-        self.image.fill((0, 0, int((self.power / 50) * 255)),
-                        ((self.image.get_rect().topleft), (4, self.power)))
 
     def fire(self, mouse_pos, collidables):
         """Fires A Projectile

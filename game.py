@@ -2,6 +2,7 @@ from random import sample
 
 from pygame.key import get_pressed
 from pygame.locals import MOUSEBUTTONDOWN, QUIT
+from pygame.transform import scale
 
 from player import Player
 from scene import Scene
@@ -36,6 +37,11 @@ class Game(Scene):
         if not self.game_over():
             surf.blit(self.banner,
                       self.banner.get_rect(midtop=surf.get_rect().midtop))
+            power = self.make_banner(str(self.teams[0].active.power),
+                                     (255, 0, 255 * self.teams[0].active.power // 50))
+            power = scale(power, map(lambda x: x // 4, power.get_size()))
+            surf.blit(power,
+                      power.get_rect(midtop=self.teams[0].active.rect.midbottom))
 
     def game_over(self):
         """Returns true when one player remains in the team sprite group.
