@@ -8,7 +8,7 @@ To play, clone the repository and run the wizards script using
 
 <code>python wizards.py</code>
 
-To run the test suit, you need to have pytest.
+To run the test suite, you need to have pytest.
 How to install pytest:
 
 <code>pip install pytest </code>
