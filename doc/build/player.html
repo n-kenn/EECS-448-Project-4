@@ -43,7 +43,7 @@
 <span id="player-module"></span><h1>player module<a class="headerlink" href="#module-player" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="player.Player">
-<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>sheet</em>, <em>start_pos</em>, <em>speed=4</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">player.</code><code class="descname">Player</code><span class="sig-paren">(</span><em>sheet</em>, <em>start_pos</em>, <em>speed=4</em>, <em>power=30</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="animated_sprite.html#animated_sprite.Animated_Sprite" title="animated_sprite.Animated_Sprite"><code class="xref py py-class docutils literal"><span class="pre">animated_sprite.Animated_Sprite</span></code></a></p>
 <p>Player class that the user will control.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -110,7 +110,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>anim_name</strong> – The name of the animation to be manipulated.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>anim_name</strong> – The name of the animation to be set.</td>
 </tr>
 </tbody>
 </table>
@@ -159,6 +159,12 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="player.Player.draw_power">
+<code class="descname">draw_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.draw_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the power bar.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="player.Player.fire">
 <code class="descname">fire</code><span class="sig-paren">(</span><em>mouse_pos</em>, <em>collidables</em><span class="sig-paren">)</span><a class="headerlink" href="#player.Player.fire" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fires A Projectile</p>
@@ -168,7 +174,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>mouse_pos</strong> – The mouse position used to calculate the angle to fire the projectile.</li>
-<li><strong>collidables</strong> – The objects a projectile can collide with.</li>
+<li><strong>collidables</strong> – A list of objects a projectile can collide with.</li>
 </ul>
 </td>
 </tr>

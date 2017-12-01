@@ -1,3 +1,4 @@
 {
+  "test.py::Test_Game::()::test_make_teams": true, 
   "test.py::Test_Game::()::test_projectile": true
 }
