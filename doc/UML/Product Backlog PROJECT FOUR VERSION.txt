@@ -1,0 +1,14 @@
+Product Backlog:
+
+    -By Project 3 Due Date
+        *Turn Based (Complete)
+        *Ground Dynamic (Complete)
+        *Animated Sprites (Complete)
+        *Neat Background (Complete)
+        *Jump (Evolved into fly)
+        *Health (Complete)
+        *Damage Calculation (Complete)
+        
+    -By Project 4 Due Date
+        *Networked (Abandoned Due to Time and Design Constraints)
+        *Procedural Ground Generation (Complete)
